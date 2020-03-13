@@ -39,11 +39,9 @@ const CurrentInfoByAreas = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch(
-        "https://covid2019-api.herokuapp.com/current"
-      );
+      const response = await fetch("/world_current");
       const data = await response.json();
-      setData(data);
+      setData(data.results);
     };
     getData();
   }, []);
@@ -75,36 +73,36 @@ const CurrentInfoByAreas = () => {
   );
 };
 
-const InfoByAreas = () => {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    const getData = async () => {
-      const response = await fetch("/area_latest");
-      const data = await response.json();
-      setData(data.latest_data);
-    };
-    getData();
-  }, []);
-  return (
-    <div className="area-data-sets">
-      {data.map(d => (
-        <div className="data-set" key={d.country}>
-          <div className="country-name">{d.country}</div>
-          <div className="set-title">累計確診</div>
-          <div className="confirmed-count numerical-data">
-            {d.confirmedCount}
-          </div>
-          <div className="set-title">累計死亡</div>
-          <div className="dead-count numerical-data">{d.deadCount}</div>
-          <div className="set-title">病死率</div>
-          <div className="current-dead-rate numerical-data">
-            {d.currentDeathRate}%
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
+//const InfoByAreas = () => {
+//const [data, setData] = useState([]);
+//useEffect(() => {
+//const getData = async () => {
+//const response = await fetch("/area_latest");
+//const data = await response.json();
+//setData(data.latest_data);
+//};
+//getData();
+//}, []);
+//return (
+//<div className="area-data-sets">
+//{data.map(d => (
+//<div className="data-set" key={d.country}>
+//<div className="country-name">{d.country}</div>
+//<div className="set-title">累計確診</div>
+//<div className="confirmed-count numerical-data">
+//{d.confirmedCount}
+//</div>
+//<div className="set-title">累計死亡</div>
+//<div className="dead-count numerical-data">{d.deadCount}</div>
+//<div className="set-title">病死率</div>
+//<div className="current-dead-rate numerical-data">
+//{d.currentDeathRate}%
+//</div>
+//</div>
+//))}
+//</div>
+//);
+//};
 
 const WorldRecoveryProgressChart = () => {
   const [data, setData] = useState([]);

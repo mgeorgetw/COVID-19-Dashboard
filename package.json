@@ -1,5 +1,5 @@
 {
-  "name": "covid_19",
+  "name": "covid_19_monitor",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:5000",

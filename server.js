@@ -12,6 +12,7 @@ require("./api/area_latest")(app);
 require("./api/china_latest")(app);
 require("./api/china_overall")(app);
 require("./api/world_overall")(app);
+require("./api/world_current")(app);
 
 if (process.env.NODE_ENV === "production") {
   // Serve any static files
