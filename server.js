@@ -10,9 +10,10 @@ app.use(express.json());
 
 require("./api/area_latest")(app);
 require("./api/china_latest")(app);
-require("./api/china_overall")(app);
 require("./api/world_overall")(app);
-require("./api/world_current")(app);
+require("./api/area_timeseries")(app);
+require("./api/daily_reports")(app);
+require("./api/time_series")(app);
 
 if (process.env.NODE_ENV === "production") {
   // Serve any static files

@@ -1,7 +1,7 @@
 const axios = require("axios");
 const log = require("debug")("log");
 
-const API = "https://covid2019-api.herokuapp.com/total";
+const API = "https://covid.mathdro.id/api";
 
 const fetcher = url =>
   axios.get(url).then(res => {
@@ -15,9 +15,9 @@ module.exports = app => {
       try {
         const results = await fetcher(API);
         res.send({
-          confirmed: results.confirmed,
-          deaths: results.deaths,
-          recovered: results.recovered
+          confirmed: results.confirmed.value,
+          deaths: results.deaths.value,
+          recovered: results.recovered.value
         });
       } catch (e) {
         console.error(e);
