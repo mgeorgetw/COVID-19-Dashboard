@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import * as V from "victory";
 
 // API Users
-const useMathdroDailyApi = () => {
-  const [data, setData] = useState([]);
-  const [url, setUrl] = useState("https://covid.mathdro.id/api/daily");
+const useDataApi = (initialUrl, initialData) => {
+  const [data, setData] = useState(initialData);
+  const [url, setUrl] = useState(initialUrl);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   useEffect(() => {
@@ -14,10 +14,6 @@ const useMathdroDailyApi = () => {
       try {
         const response = await fetch(url);
         const data = await response.json();
-        // Shortens date strings to show more on the axis
-        data.forEach(
-          d => (d.reportDate = d.reportDate.replace(/^\d{4}-/g, ""))
-        );
         setData(data);
       } catch (error) {
         setIsError(true);
@@ -26,7 +22,7 @@ const useMathdroDailyApi = () => {
     };
     fetchData();
   }, [url]);
-  return [{ data, isLoading, isError }, setUrl];
+  return [{ data, isLoading, isError }, setData, setUrl];
 };
 
 // SMALL COMPONENTS / HELPER FUNCTIONS
@@ -157,7 +153,20 @@ const DailyNewCasesInAnAreaLineChart = ({ area }) => {
 };
 
 const ConfirmedCasesChinaVsWorldLineChart = () => {
-  const [{ data, isLoading, isError }] = useMathdroDailyApi();
+  const [{ data, isLoading, isError }, setData] = useDataApi(
+    "https://covid.mathdro.id/api/daily",
+    []
+  );
+  useEffect(() => {
+    // Shortens date strings to show more on the axis
+    data.forEach(
+      d =>
+        (d.reportDate = d.reportDate
+          .replace(/-/g, "/")
+          .replace(/^\d{4}\//g, ""))
+    );
+    setData(data);
+  }, [data, setData]);
   return (
     <>
       {isError && <div>Something went wrong</div>}
@@ -487,7 +496,21 @@ const FatalityRateInAnAreaLineChart = ({ area }) => {
 };
 
 const DailyNewCasesWorldwideLineChart = () => {
-  const [{ data, isLoading, isError }] = useMathdroDailyApi();
+  const [{ data, isLoading, isError }, setData] = useDataApi(
+    "https://covid.mathdro.id/api/daily",
+    []
+  );
+  useEffect(() => {
+    // Shortens date strings to show more on the axis
+    data.forEach(
+      d =>
+        (d.reportDate = d.reportDate
+          .replace(/-/g, "/")
+          .replace(/^\d{4}\//g, ""))
+    );
+    setData(data);
+  }, [data, setData]);
+  //const [{ data, isLoading, isError }] = useDataApi();
   const axis_style = {
     grid: {
       stroke: "#f3f5f6",
