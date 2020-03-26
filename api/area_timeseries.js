@@ -1,6 +1,6 @@
 const axios = require("axios");
 const log = require("debug")("log");
-const chineseConv = require("chinese-conv");
+//const chineseConv = require("chinese-conv");
 
 const API_AREA =
   "https://raw.githubusercontent.com/BlankerL/DXY-COVID-19-Data/master/json/DXYArea-TimeSeries.json";
@@ -18,7 +18,8 @@ module.exports = app => {
       try {
         const results = await fetcher(API_AREA);
         let found = results.find(obj => obj.provinceEnglishName === area);
-        let areaName = chineseConv.tify(found.provinceName);
+        //let areaName = chineseConv.tify(found.provinceName);
+        let areaName = found.provinceEnglishName;
         const statistics_res = await fetcher(found.statisticsData);
         const statisticsData = statistics_res.data;
 

@@ -18,26 +18,33 @@
 }
 
 .App {
-  font-family: "Noto Sans Mono CJK TC Bold", monospace;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin: 0 10px 0 10px;
 }
 
 .app-title {
-  margin-top: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 1.6px;
   text-align: center;
-  font-size: 2.3em;
+  font-size: 2em;
 }
 
 .title-date {
   font-size: 0.7em;
+  font-weight: 400;
   margin-left: 1em;
 }
 
 .chart-title {
-  display: inline-block;
-  font-size: 1.8em;
-  font-weight: bold;
+  font-family: "HelveticaNeue-CondensedBold", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+  font-size: 1.6em;
+  font-weight: 700;
+  font-stretch: condensed;
   text-align: left;
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
 }
 
 .area-data-sets {
@@ -46,55 +53,44 @@
 }
 
 .data-set {
-  width: 108px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  width: 118px;
   margin: 3px;
   text-align: center;
-  line-height: 32px;
   border: 2px solid black;
   border-radius: 15px;
 }
 
 .country-name {
   background-color: black;
+  line-height: 32px;
   white-space: nowrap;
   color: white;
-  font-size: 1.2em;
-  font-weight: bold;
+  font-size: 1.1em;
+  font-weight: 700;
   writing-mode: vertical-rl;
   text-orientation: mixed;
   padding-top: 8px;
   text-align: left;
   float: left;
-  height: 142px;
+  height: 146px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }
 
 .set-title {
-  font-size: 0.8em;
-  font-weight: bold;
+  font-family: "HelveticaNeue-CondensedBold", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+  font-size: 0.9em;
+  font-weight: 400;
   line-height: 6px;
   margin-top: 0.8em;
   color: grey;
 }
 
 .numerical-data {
-  color: grey;
   font-family: "Noto Sans Mono Condensed Bold";
   font-size: 1.5em;
-}
-
-.confirmed-count {
-  color: black;
-}
-
-.dead-count {
-  color: black;
-}
-
-.current-dead-rate {
-  font-size: 1.5em;
-  color: black;
 }
 
 .data-table {
@@ -104,9 +100,9 @@
 }
 .small-table {
   display: inline-block;
-  float: right;
-  margin-right: 10px;
-  margin-bottom: 0;
+  /*float: right;*/
+  /*margin-right: 10px;*/
+  /*margin-bottom: 0;*/
   text-align: center;
 }
 
@@ -119,14 +115,18 @@ td {
   padding: 0 5px 0 5px;
 }
 
-td {
+td.numerical-data {
   font-size: 1.3em;
 }
+
 th {
   background-color: #282c34;
   border: 1px solid #282c34;
-  border-radius: 12px;
+  border-radius: 5px;
   color: white;
+  line-height: 1.5;
+  font-size: 0.9em;
+  font-weight: 600;
 }
 
 svg.pie {
@@ -134,14 +134,22 @@ svg.pie {
   margin: auto;
 }
 
+.pie > text {
+  font-family: "Noto Sans Mono Condensed Bold";
+  font-size: 30px;
+  font-weight: 600;
+  fill: #85b135;
+}
+
 p.footnote {
-  font-size: 0.9em;
+  font-size: 1em;
   text-align: left;
-  color: #c0c0c0;
+  color: gray;
   margin: 5px;
 }
+
 a {
-  color: #c0c0c0;
+  color: gray;
 }
 
 /* Loading Spinner*/
