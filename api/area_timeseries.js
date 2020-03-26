@@ -28,7 +28,8 @@ module.exports = app => {
           statisticsData[i].dateId = statisticsData[i].dateId
             .toString()
             // And shortens it for visibility
-            .replace(/^\d{4}/g, "");
+            .replace(/^\d{4}/g, "")
+            .replace(/(^\d{2})(\d{2}$)/, "$1/$2");
           // Calculates Death rate to 2 digits after dicimal point
           statisticsData[i].deathRate = Number(
             (
@@ -36,7 +37,6 @@ module.exports = app => {
               100
             ).toFixed(2)
           );
-
           // Calculates Growth Factor
           if (i > 0 && statisticsData[i].confirmedIncr !== 0) {
             statisticsData[i].growthFactor = Number(

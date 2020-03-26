@@ -1,21 +1,4 @@
-@font-face {
-  font-family: "Noto Sans Mono CJK TC Bold";
-  font-style: normal;
-  font-weight: 700;
-  src: url("./fonts/NotoSansMonoCJKtc-Bold.otf"); /* IE9 Compat Modes */
-  src: local("Noto Sans Mono CJK TC"), local("NotoSansMonoCJKtc-Bold"),
-    url("./fonts/NotoSansMonoCJKtc-Bold.otf") format("truetype"); /* Safari, Android, iOS */
-}
-
-@font-face {
-  font-family: "Noto Sans Mono Condensed Bold";
-  font-style: normal;
-  font-weight: 700;
-  src: url("./fonts/NotoSansMono-CondensedBold.ttf"); /* IE9 Compat Modes */
-  src: local("Noto Sans Mono Condensed Bold"),
-    local("NotoSansMonoCondensedBold"),
-    url("./fonts/NotoSansMono-CondensedBold.ttf") format("truetype"); /* Safari, Android, iOS */
-}
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@700&display=swap");
 
 .App {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -79,18 +62,17 @@
 }
 
 .set-title {
-  font-family: "HelveticaNeue-CondensedBold", "Helvetica Neue", Helvetica, Arial,
+  font-family: "helveticaneue-condensedbold", "helvetica neue", helvetica, arial,
     sans-serif;
-  font-size: 0.9em;
   font-weight: 400;
-  line-height: 6px;
-  margin-top: 0.8em;
+  line-height: 0.6;
+  margin-top: 10px;
   color: grey;
 }
 
 .numerical-data {
-  font-family: "Noto Sans Mono Condensed Bold";
-  font-size: 1.5em;
+  font-family: "Open Sans Condensed", sans-serif;
+  font-size: 1.4em;
 }
 
 .data-table {
@@ -98,6 +80,7 @@
   margin-bottom: 0;
   border-collapse: collapse;
 }
+
 .small-table {
   display: inline-block;
   /*float: right;*/
@@ -135,9 +118,8 @@ svg.pie {
 }
 
 .pie > text {
-  font-family: "Noto Sans Mono Condensed Bold";
-  font-size: 30px;
-  font-weight: 600;
+  font-family: "Open Sans Condensed", sans-serif;
+  font-size: 35px;
   fill: #85b135;
 }
 

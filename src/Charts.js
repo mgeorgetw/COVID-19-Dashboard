@@ -60,7 +60,7 @@ const SmallTable = ({ items }) => {
           <tr>
             {items.map((item, index) => (
               <td className="numerical-data" key={index}>
-                {item.datum}
+                {item.datum.toLocaleString()}
               </td>
             ))}
           </tr>
