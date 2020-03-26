@@ -22,22 +22,22 @@ const App = () => {
     { i: "a", x: 0, y: 0, w: 12, h: 7 },
     { i: "b", x: 0, y: 0, w: 6, h: 17 },
     { i: "b2", x: 6, y: 0, w: 6, h: 17 },
-    { i: "d", x: 0, y: 0, w: 4, h: 14 },
+    { i: "d", x: 0, y: 0, w: 6, h: 14 },
     { i: "e", x: 0, y: 0, w: 6, h: 17 },
     { i: "e2", x: 6, y: 0, w: 6, h: 17 },
-    { i: "f", x: 0, y: 0, w: 4, h: 14 },
-    { i: "f2", x: 4, y: 0, w: 4, h: 14 }
+    { i: "f", x: 0, y: 0, w: 6, h: 14 },
+    { i: "f2", x: 6, y: 0, w: 6, h: 14 }
   ];
   const layoutlg = [
     { i: "0", x: 0, y: 0, w: 12, h: 2, static: true },
     { i: "a", x: 0, y: 0, w: 12, h: 7 },
     { i: "b", x: 0, y: 0, w: 6, h: 14, maxH: 18 },
     { i: "b2", x: 6, y: 0, w: 6, h: 14, maxH: 18 },
-    { i: "d", x: 0, y: 0, w: 5, h: 14 },
+    { i: "d", x: 0, y: 0, w: 6, h: 14 },
     { i: "e", x: 0, y: 0, w: 6, h: 14, maxH: 18 },
     { i: "e2", x: 6, y: 0, w: 6, h: 14, maxH: 18 },
-    { i: "f", x: 0, y: 0, w: 5, h: 14 },
-    { i: "f2", x: 5, y: 0, w: 5, h: 14 }
+    { i: "f", x: 0, y: 0, w: 6, h: 14 },
+    { i: "f2", x: 6, y: 0, w: 6, h: 14 }
   ];
   const layoutmd = [
     { i: "0", x: 0, y: 0, w: 10, h: 2, static: true },
@@ -102,7 +102,8 @@ const App = () => {
       >
         <div key="0">
           <h1 className="app-title">
-            COVID-19 Dashboard<span className="title-date">{getToday()}</span>
+            Covid<span className="title-numerals">-19</span> Dashboard
+            <span className="title-date">{getToday()}</span>
           </h1>
         </div>
         <div key="a">

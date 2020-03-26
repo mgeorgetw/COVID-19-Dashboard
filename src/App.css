@@ -6,17 +6,22 @@
 }
 
 .app-title {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  font-variant: small-caps;
   font-weight: 700;
-  letter-spacing: 1.6px;
+  letter-spacing: 1.7px;
   text-align: center;
-  font-size: 2em;
+  font-size: 2.2em;
+}
+
+.title-numerals {
+  font-size: 0.73em;
 }
 
 .title-date {
-  font-size: 0.7em;
+  font-size: 0.73em;
   font-weight: 400;
-  margin-left: 1em;
+  margin-left: 0.7em;
 }
 
 .chart-title {
