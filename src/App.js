@@ -4,7 +4,7 @@ import * as Charts from "./Charts.js";
 import { Responsive, WidthProvider } from "react-grid-layout";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-// TODO: 整理API、重構Components
+// TODO: Make it mobile friendly
 
 // SMALL COMPONENTS / HELPER FUNCTIONS
 function getToday() {

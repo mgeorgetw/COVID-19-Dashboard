@@ -15,9 +15,9 @@ This is a personal project created to track the outbreak of COVID-19 pandemic in
 
 ### How to use the web app
 
-The app has NOT deployed to a web server yet. If you like, you can pull the project and run on your own machine.
+Currently deployed on [Heroku](https://heroku.com): [https://covid-19-dashboard-epublab.herokuapp.com/](https://covid-19-dashboard-epublab.herokuapp.com/) 
 
-After the pull, go to the project folder and use [Yarn](https://yarnpkg.com) to install dependencies by running:
+If you like, you can pull the project and run on your own machine. After the pull, go to the project folder and use [Yarn](https://yarnpkg.com) to install dependencies by running:
 
 #### `yarn install`
 
