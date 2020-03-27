@@ -27,63 +27,74 @@ const App = () => {
     { i: "d", x: 0, y: 0, w: 6, h: 18 },
     { i: "e", x: 0, y: 0, w: 6, h: 18 },
     { i: "e2", x: 6, y: 0, w: 6, h: 18 },
-    { i: "f", x: 0, y: 0, w: 6, h: 18 },
-    { i: "f2", x: 6, y: 0, w: 6, h: 18 }
+    { i: "f", x: 0, y: 0, w: 5, h: 14 },
+    { i: "f2", x: 6, y: 0, w: 3, h: 13 }
   ];
   const layoutlg = [
     { i: "0", x: 0, y: 0, w: 12, h: 2, static: true },
-    { i: "a", x: 0, y: 0, w: 12, h: 7 },
-    { i: "b", x: 0, y: 0, w: 6, h: 15 },
-    { i: "b2", x: 6, y: 0, w: 6, h: 15 },
-    { i: "d", x: 0, y: 0, w: 6, h: 15 },
-    { i: "e", x: 0, y: 0, w: 6, h: 15 },
-    { i: "e2", x: 6, y: 0, w: 6, h: 15 },
-    { i: "f", x: 0, y: 0, w: 6, h: 15 },
-    { i: "f2", x: 6, y: 0, w: 6, h: 15 }
+    { i: "a", x: 0, y: 0, w: 12, h: 11 },
+    { i: "b", x: 0, y: 0, w: 6, h: 14 },
+    { i: "b2", x: 6, y: 0, w: 6, h: 14 },
+    { i: "d", x: 0, y: 0, w: 6, h: 14 },
+    { i: "e", x: 0, y: 0, w: 6, h: 14 },
+    { i: "e2", x: 6, y: 0, w: 6, h: 14 },
+    { i: "f", x: 0, y: 0, w: 6, h: 14 },
+    { i: "f2", x: 6, y: 0, w: 6, h: 14 }
   ];
   const layoutmd = [
     { i: "0", x: 0, y: 0, w: 10, h: 2, static: true },
     { i: "a", x: 0, y: 0, w: 10, h: 11 },
-    { i: "b", x: 0, y: 0, w: 5, h: 12 },
-    { i: "b2", x: 5, y: 0, w: 5, h: 12 },
-    { i: "d", x: 0, y: 0, w: 5, h: 14 },
-    { i: "e", x: 0, y: 0, w: 5, h: 12 },
-    { i: "e2", x: 5, y: 0, w: 5, h: 12 },
-    { i: "f", x: 0, y: 0, w: 5, h: 12 },
-    { i: "f2", x: 5, y: 0, w: 5, h: 12 }
+    { i: "b", x: 0, y: 0, w: 5, h: 11 },
+    { i: "b2", x: 5, y: 0, w: 5, h: 11 },
+    { i: "d", x: 0, y: 0, w: 5, h: 11 },
+    { i: "e", x: 0, y: 0, w: 5, h: 11 },
+    { i: "e2", x: 5, y: 0, w: 5, h: 11 },
+    { i: "f", x: 0, y: 0, w: 5, h: 11 },
+    { i: "f2", x: 5, y: 0, w: 5, h: 13 }
   ];
   const layoutsm = [
-    { i: "0", x: 0, y: 0, w: 6, h: 2, static: true },
-    { i: "a", x: 0, y: 0, w: 6, h: 11 },
-    { i: "b", x: 0, y: 0, w: 6, h: 16 },
-    { i: "b2", x: 0, y: 0, w: 6, h: 14 },
-    { i: "d", x: 0, y: 0, w: 6, h: 15 },
-    { i: "e", x: 0, y: 0, w: 6, h: 15 },
-    { i: "e2", x: 0, y: 0, w: 6, h: 15 },
-    { i: "f", x: 0, y: 0, w: 6, h: 14 },
-    { i: "f2", x: 6, y: 0, w: 6, h: 14 }
+    { i: "0", x: 0, y: 0, w: 2, h: 2, static: true },
+    { i: "a", x: 0, y: 0, w: 2, h: 11 },
+    { i: "b", x: 0, y: 0, w: 2, h: 14 },
+    { i: "b2", x: 0, y: 0, w: 2, h: 13 },
+    { i: "d", x: 0, y: 0, w: 2, h: 14 },
+    { i: "e", x: 0, y: 0, w: 2, h: 14 },
+    { i: "e2", x: 0, y: 0, w: 2, h: 14 },
+    { i: "f", x: 0, y: 0, w: 2, h: 13 },
+    { i: "f2", x: 0, y: 0, w: 2, h: 13 }
   ];
   const layoutxs = [
-    { i: "0", x: 0, y: 0, w: 4, h: 3, static: true },
-    { i: "a", x: 0, y: 0, w: 4, h: 15 },
-    { i: "b", x: 0, y: 0, w: 4, h: 14 },
-    { i: "b2", x: 0, y: 0, w: 4, h: 14 },
-    { i: "d", x: 0, y: 0, w: 4, h: 14 },
-    { i: "e", x: 0, y: 0, w: 4, h: 14 },
-    { i: "e2", x: 0, y: 0, w: 4, h: 14 },
-    { i: "f", x: 0, y: 0, w: 4, h: 14 },
-    { i: "f2", x: 0, y: 0, w: 4, h: 14 }
+    { i: "0", x: 0, y: 0, w: 2, h: 3, static: true },
+    { i: "a", x: 0, y: 0, w: 2, h: 15 },
+    { i: "b", x: 0, y: 0, w: 2, h: 13 },
+    { i: "b2", x: 0, y: 0, w: 2, h: 12 },
+    { i: "d", x: 0, y: 0, w: 2, h: 13 },
+    { i: "e", x: 0, y: 0, w: 2, h: 13 },
+    { i: "e2", x: 0, y: 0, w: 2, h: 13 },
+    { i: "f", x: 0, y: 0, w: 2, h: 12 },
+    { i: "f2", x: 0, y: 0, w: 2, h: 13 }
   ];
   const layoutxxs = [
-    { i: "0", x: 0, y: 0, w: 2, h: 3, static: true },
-    { i: "a", x: 0, y: 0, w: 2, h: 19 },
-    { i: "b", x: 0, y: 0, w: 2, h: 12 },
-    { i: "b2", x: 0, y: 0, w: 2, h: 11 },
-    { i: "d", x: 0, y: 0, w: 2, h: 13 },
-    { i: "e", x: 0, y: 0, w: 2, h: 12 },
-    { i: "e2", x: 0, y: 0, w: 2, h: 12 },
-    { i: "f", x: 0, y: 0, w: 2, h: 12 },
-    { i: "f2", x: 0, y: 0, w: 2, h: 12 }
+    { i: "0", x: 0, y: 0, w: 1, h: 3, static: true },
+    { i: "a", x: 0, y: 0, w: 1, h: 19, isDraggable: false },
+    { i: "b", x: 0, y: 0, w: 1, h: 11, isDraggable: false },
+    { i: "b2", x: 0, y: 0, w: 1, h: 11, isDraggable: false },
+    { i: "d", x: 0, y: 0, w: 1, h: 11, isDraggable: false },
+    { i: "e", x: 0, y: 0, w: 1, h: 11, isDraggable: false },
+    { i: "e2", x: 0, y: 0, w: 1, h: 11, isDraggable: false },
+    { i: "f", x: 0, y: 0, w: 1, h: 11, isDraggable: false },
+    { i: "f2", x: 0, y: 0, w: 1, h: 13, isDraggable: false }
+  ];
+  const layoutmin = [
+    { i: "0", x: 0, y: 0, w: 1, h: 4, static: true },
+    { i: "a", x: 0, y: 0, w: 1, h: 24, isDraggable: false },
+    { i: "b", x: 0, y: 0, w: 1, h: 10, isDraggable: false },
+    { i: "b2", x: 0, y: 0, w: 1, h: 10, isDraggable: false },
+    { i: "d", x: 0, y: 0, w: 1, h: 10, isDraggable: false },
+    { i: "e", x: 0, y: 0, w: 1, h: 10, isDraggable: false },
+    { i: "e2", x: 0, y: 0, w: 1, h: 10, isDraggable: false },
+    { i: "f", x: 0, y: 0, w: 1, h: 10, isDraggable: false },
+    { i: "f2", x: 0, y: 0, w: 1, h: 14, isDraggable: false }
   ];
   const layouts = {
     xl: layoutxl,
@@ -91,7 +102,8 @@ const App = () => {
     md: layoutmd,
     sm: layoutsm,
     xs: layoutxs,
-    xxs: layoutxxs
+    xxs: layoutxxs,
+    min: layoutmin
   };
   return (
     <div className="App">
@@ -99,8 +111,17 @@ const App = () => {
         className="layout"
         layouts={layouts}
         rowHeight={30}
-        breakpoints={{ xl: 1420, lg: 1279, md: 707, sm: 639, xs: 511, xxs: 0 }}
-        cols={{ xl: 12, lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+        breakpoints={{
+          xl: 1160,
+          lg: 880,
+          md: 680,
+          sm: 590,
+          xs: 480,
+          xxs: 362,
+          min: 0
+        }}
+        cols={{ xl: 12, lg: 12, md: 10, sm: 2, xs: 2, xxs: 1, min: 1 }}
+        containerPadding={[10, 10]}
       >
         <div key="0">
           <h1 className="app-title">
@@ -117,9 +138,9 @@ const App = () => {
         <div key="b2">
           <Charts.ConfirmedCasesInSelectedCountriesLineChart />
         </div>
-        <div key="d">
-          <Charts.ConfirmedCasesChinaVsWorldLineChart />
-        </div>
+        {/* <div key="d"> */}
+        {/*   <Charts.ConfirmedCasesChinaVsWorldLineChart /> */}
+        {/* </div> */}
         <div key="e">
           <Charts.DailyNewCasesInAnAreaLineChart area="United States of America" />
         </div>

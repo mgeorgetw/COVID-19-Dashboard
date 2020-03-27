@@ -636,15 +636,15 @@ const WorldwideRecoveryProgressPieChart = () => {
             ]}
           />
           <div className="pie-chart">
-            <svg className="pie" width={350} height={350}>
-              <text x="50%" y="53%" textAnchor="middle">
+            <svg className="pie" width={310} height={310}>
+              <text x="50%" y="54%" textAnchor="middle">
                 {((data.recovered / data.confirmed) * 100).toFixed(2)}%
               </text>
               <V.VictoryPie
                 colorScale={["#85b135", "#fb6361", "#073f5c"]}
-                innerRadius={80}
-                width={350}
-                height={350}
+                innerRadius={70}
+                width={310}
+                height={310}
                 standalone={false}
                 data={pieData}
                 labels={({ datum }) => datum.x}

@@ -2,7 +2,7 @@
 
 .App {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  margin: 0 10px 0 10px;
+  /*margin: 0 10px 0 10px;*/
 }
 
 .app-title {
@@ -19,9 +19,10 @@
 }
 
 .title-date {
+  display: inline-block;
   font-size: 0.73em;
   font-weight: 400;
-  margin-left: 0.7em;
+  padding-left: 0.7em;
 }
 
 .chart-title {
@@ -41,9 +42,9 @@
 }
 
 .data-set {
+  margin: auto;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  width: 118px;
-  margin: 3px;
+  width: 110px;
   text-align: center;
   border: 2px solid black;
   border-radius: 15px;
@@ -51,7 +52,7 @@
 
 .country-name {
   background-color: black;
-  line-height: 32px;
+  line-height: 28px;
   white-space: nowrap;
   color: white;
   font-size: 1.1em;
@@ -124,15 +125,14 @@ svg.pie {
 
 .pie > text {
   font-family: "Open Sans Condensed", sans-serif;
-  font-size: 35px;
+  font-size: 32px;
   fill: #85b135;
 }
 
 p.footnote {
-  font-size: 1em;
+  font-size: 0.8em;
   text-align: left;
   color: gray;
-  margin: 5px;
 }
 
 a {
