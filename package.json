@@ -20,11 +20,12 @@
   },
   "scripts": {
     "server": "env DEBUG=log node server.js",
-    "start": "react-scripts start",
+    "start": "node server.js",
+    "client": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn start\""
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
   },
   "eslintConfig": {
     "extends": "react-app"
