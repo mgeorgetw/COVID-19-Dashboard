@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./App.css";
 import * as Charts from "./Charts.js";
 import { Responsive, WidthProvider } from "react-grid-layout";
@@ -20,33 +20,33 @@ const App = () => {
   const layoutxl = [
     { i: "0", x: 0, y: 0, w: 12, h: 2, static: true },
     { i: "a", x: 0, y: 0, w: 12, h: 7 },
-    { i: "b", x: 0, y: 0, w: 6, h: 17 },
-    { i: "b2", x: 6, y: 0, w: 6, h: 17 },
-    { i: "d", x: 0, y: 0, w: 6, h: 14 },
-    { i: "e", x: 0, y: 0, w: 6, h: 17 },
-    { i: "e2", x: 6, y: 0, w: 6, h: 17 },
-    { i: "f", x: 0, y: 0, w: 6, h: 14 },
-    { i: "f2", x: 6, y: 0, w: 6, h: 14 }
+    { i: "b", x: 0, y: 0, w: 6, h: 18 },
+    { i: "b2", x: 6, y: 0, w: 6, h: 18 },
+    { i: "d", x: 0, y: 0, w: 6, h: 18 },
+    { i: "e", x: 0, y: 0, w: 6, h: 18 },
+    { i: "e2", x: 6, y: 0, w: 6, h: 18 },
+    { i: "f", x: 0, y: 0, w: 6, h: 18 },
+    { i: "f2", x: 6, y: 0, w: 6, h: 18 }
   ];
   const layoutlg = [
     { i: "0", x: 0, y: 0, w: 12, h: 2, static: true },
     { i: "a", x: 0, y: 0, w: 12, h: 7 },
-    { i: "b", x: 0, y: 0, w: 6, h: 14, maxH: 18 },
-    { i: "b2", x: 6, y: 0, w: 6, h: 14, maxH: 18 },
-    { i: "d", x: 0, y: 0, w: 6, h: 14 },
-    { i: "e", x: 0, y: 0, w: 6, h: 14, maxH: 18 },
-    { i: "e2", x: 6, y: 0, w: 6, h: 14, maxH: 18 },
-    { i: "f", x: 0, y: 0, w: 6, h: 14 },
-    { i: "f2", x: 6, y: 0, w: 6, h: 14 }
+    { i: "b", x: 0, y: 0, w: 6, h: 15 },
+    { i: "b2", x: 6, y: 0, w: 6, h: 15 },
+    { i: "d", x: 0, y: 0, w: 6, h: 15 },
+    { i: "e", x: 0, y: 0, w: 6, h: 15 },
+    { i: "e2", x: 6, y: 0, w: 6, h: 15 },
+    { i: "f", x: 0, y: 0, w: 6, h: 15 },
+    { i: "f2", x: 6, y: 0, w: 6, h: 15 }
   ];
   const layoutmd = [
     { i: "0", x: 0, y: 0, w: 10, h: 2, static: true },
     { i: "a", x: 0, y: 0, w: 10, h: 11 },
-    { i: "b", x: 0, y: 0, w: 5, h: 12, maxH: 18 },
-    { i: "b2", x: 5, y: 0, w: 5, h: 12, maxH: 18 },
+    { i: "b", x: 0, y: 0, w: 5, h: 12 },
+    { i: "b2", x: 5, y: 0, w: 5, h: 12 },
     { i: "d", x: 0, y: 0, w: 5, h: 14 },
-    { i: "e", x: 0, y: 0, w: 5, h: 12, maxH: 18 },
-    { i: "e2", x: 5, y: 0, w: 5, h: 12, maxH: 18 },
+    { i: "e", x: 0, y: 0, w: 5, h: 12 },
+    { i: "e2", x: 5, y: 0, w: 5, h: 12 },
     { i: "f", x: 0, y: 0, w: 5, h: 12 },
     { i: "f2", x: 5, y: 0, w: 5, h: 12 }
   ];
@@ -55,7 +55,7 @@ const App = () => {
     { i: "a", x: 0, y: 0, w: 6, h: 11 },
     { i: "b", x: 0, y: 0, w: 6, h: 16 },
     { i: "b2", x: 0, y: 0, w: 6, h: 14 },
-    { i: "d", x: 0, y: 0, w: 6, h: 13 },
+    { i: "d", x: 0, y: 0, w: 6, h: 15 },
     { i: "e", x: 0, y: 0, w: 6, h: 15 },
     { i: "e2", x: 0, y: 0, w: 6, h: 15 },
     { i: "f", x: 0, y: 0, w: 6, h: 14 },
