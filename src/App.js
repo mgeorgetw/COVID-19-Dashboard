@@ -130,7 +130,7 @@ const App = () => {
           </h1>
         </div>
         <div key="a">
-          <Charts.AreasWithOutstandingCasesTable />
+          <Charts.AreasWithOutstandingCasesTable2 />
         </div>
         <div key="b">
           <Charts.DailyNewCasesWorldwideLineChart />
@@ -138,14 +138,14 @@ const App = () => {
         <div key="b2">
           <Charts.ConfirmedCasesInSelectedCountriesLineChart />
         </div>
-        {/* <div key="d"> */}
-        {/*   <Charts.ConfirmedCasesChinaVsWorldLineChart /> */}
-        {/* </div> */}
+        <div key="d">
+          <Charts.ConfirmedCasesChinaVsWorldLineChart />
+        </div>
         <div key="e">
-          <Charts.DailyNewCasesInAnAreaLineChart area="United States of America" />
+          <Charts.DailyNewCasesInAnAreaLineChart area="Japan" />
         </div>
         <div key="e2">
-          <Charts.FatalityRateInAnAreaLineChart area="Netherlands" />
+          <Charts.FatalityRateInAnAreaLineChart area="Italy" />
         </div>
         <div key="f">
           <Charts.FatalityRatioByAgeGroupInHubei />

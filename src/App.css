@@ -41,6 +41,19 @@
   flex-wrap: wrap;
 }
 
+.radio-btn-container {
+  display: flex;
+  margin-bottom: 5px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.radio-btn-container > label {
+  margin-right: 8px;
+}
+
+.radio-btn-container > input {
+  margin-right: 4px;
+}
+
 .data-set {
   margin: auto;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;

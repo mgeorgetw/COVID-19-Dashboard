@@ -26,6 +26,33 @@ const useDataApi = (initialUrl, initialData) => {
 };
 
 // SMALL COMPONENTS / HELPER FUNCTIONS
+const LineChart = ({ data, x, y }) => {
+  const axis_style = {
+    grid: {
+      stroke: "#f3f5f6",
+      strokeWidth: 2,
+      strokeDasharray: "15,15"
+    }
+  };
+  return (
+    <div className="line-chart">
+      <V.VictoryChart
+        containerComponent={
+          <V.VictoryVoronoiContainer
+            labels={({ datum }) => `${datum[x]}: ${datum._y}`}
+            labelComponent={<V.VictoryTooltip constrainToVisibleArea />}
+          />
+        }
+        padding={{ top: 20, bottom: 40, left: 50, right: 20 }}
+      >
+        <V.VictoryAxis fixLabelOverlap />
+        <V.VictoryAxis dependentAxis fixLabelOverlap style={axis_style} />
+        <V.VictoryLine data={data} x={x} y={y} />
+      </V.VictoryChart>
+    </div>
+  );
+};
+
 const LoadingSpinner = () => {
   return (
     <div className="lds-spinner">
@@ -41,6 +68,20 @@ const LoadingSpinner = () => {
       <div></div>
       <div></div>
       <div></div>
+    </div>
+  );
+};
+
+const RadioButton = props => {
+  return (
+    <div className="radio-btn-container">
+      <input
+        id={props.id}
+        type="radio"
+        onChange={props.changed}
+        checked={props.isSelected}
+      />
+      <label htmlFor={props.id}>{props.label}</label>
     </div>
   );
 };
@@ -66,33 +107,6 @@ const SmallTable = ({ items }) => {
           </tr>
         </tbody>
       </table>
-    </div>
-  );
-};
-
-const LineChart = ({ data, x, y }) => {
-  const axis_style = {
-    grid: {
-      stroke: "#f3f5f6",
-      strokeWidth: 2,
-      strokeDasharray: "15,15"
-    }
-  };
-  return (
-    <div className="line-chart">
-      <V.VictoryChart
-        containerComponent={
-          <V.VictoryVoronoiContainer
-            labels={({ datum }) => `${datum[x]}: ${datum._y}`}
-            labelComponent={<V.VictoryTooltip constrainToVisibleArea />}
-          />
-        }
-        padding={{ top: 20, bottom: 40, left: 50, right: 20 }}
-      >
-        <V.VictoryAxis fixLabelOverlap />
-        <V.VictoryAxis dependentAxis fixLabelOverlap style={axis_style} />
-        <V.VictoryLine data={data} x={x} y={y} />
-      </V.VictoryChart>
     </div>
   );
 };
@@ -290,7 +304,7 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
                 labelComponent={<V.VictoryTooltip constrainToVisibleArea />}
               />
             }
-            padding={{ top: 20, bottom: 40, left: 50, right: 20 }}
+            padding={{ top: 20, bottom: 40, left: 55, right: 20 }}
             scale={{ x: "time", y: "linear" }}
             minDomain={{ x: 30 }}
           >
@@ -318,7 +332,7 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
               colorScale={"qualitative"}
               orientation="horizontal"
               itemsPerRow={3}
-              x={50}
+              x={55}
               y={20}
               data={data.map(d => ({
                 name: d.province ? d.province : d.country
@@ -338,56 +352,127 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
     </>
   );
 };
+const AreasWithOutstandingCasesTable2 = () => {
+  const [{ data, isLoading, isError }] = useDataApi(
+    "https://corona.lmao.ninja/v2/jhucsse",
+    []
+  );
 
-const AreasWithOutstandingCasesTable = () => {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    const getData = async () => {
-      const response = await fetch("/daily_reports");
-      const data = await response.json();
-      let sorted_data = data.data.sort((a, b) => b.Confirmed - a.Confirmed);
-      setData(sorted_data);
-    };
-    getData();
-  }, []);
+  const [sortBy, setSortBy] = useState("confirmed");
   return (
     <>
       <div className="chart-title">Areas with Outstanding Cases</div>
-      <div className="area-data-sets">
-        {data.slice(0, 10).map(d => (
-          <div
-            className="data-set"
-            key={
-              d["Province_State"] ? d["Province_State"] : d["Country_Region"]
-            }
-          >
-            <div className="country-name">
-              {d["Province_State"] ? d["Province_State"] : d["Country_Region"]}
-            </div>
-            <div className="set-title">Confirmed</div>
-            <div className="confirmed-count numerical-data">
-              {d["Confirmed"]}
-            </div>
-            <div className="set-title">Deaths</div>
-            <div className="dead-count numerical-data">{d["Deaths"]}</div>
-            <div className="set-title">Death Rate</div>
-            <div className="current-dead-rate numerical-data">
-              {((d["Deaths"] / d["Confirmed"]) * 100).toFixed(2)}%
-            </div>
+      {isError && <div>Something went wrong</div>}
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <div className="radio-btn-container">
+            <RadioButton
+              id="1"
+              changed={() => setSortBy("confirmed")}
+              isSelected={sortBy === "confirmed" ? true : false}
+              label=" Most confirmed"
+            />
+            <RadioButton
+              id="2"
+              changed={() => setSortBy("deaths")}
+              isSelected={sortBy === "deaths" ? true : false}
+              label="Most deaths"
+            />
           </div>
-        ))}
-      </div>
-      <p className="footnote">
-        Source: Johns Hopkins University Center for Systems Science and
-        Engineering (
-        <a href="https://github.com/CSSEGISandData/COVID-19">
-          CSSEGISandData/COVID-19
-        </a>
-        )
-      </p>
+          <div className="area-data-sets">
+            {data
+              .sort((a, b) => b.stats[sortBy] - a.stats[sortBy])
+              .slice(0, 10)
+              .map(d => (
+                <div
+                  className="data-set"
+                  key={d.province ? d.province : d.country}
+                >
+                  <div className="country-name">
+                    {d.province ? d.province : d.country}
+                  </div>
+                  <div className="set-title">Confirmed</div>
+                  <div className="confirmed-count numerical-data">
+                    {d.stats.confirmed}
+                  </div>
+                  <div className="set-title">Deaths</div>
+                  <div className="dead-count numerical-data">
+                    {d.stats.deaths}
+                  </div>
+                  <div className="set-title">Death Rate</div>
+                  <div className="current-dead-rate numerical-data">
+                    {((d.stats.deaths / d.stats.confirmed) * 100).toFixed(2)}%
+                  </div>
+                </div>
+              ))}
+          </div>
+          <p className="footnote">
+            Source: Johns Hopkins University Center for Systems Science and
+            Engineering (
+            <a href="https://github.com/NovelCOVID/API">NovelCOVID / API</a>)
+          </p>
+        </>
+      )}
     </>
   );
 };
+
+//const AreasWithOutstandingCasesTable = () => {
+//const [data, setData] = useState([]);
+//useEffect(() => {
+//const getData = async () => {
+//const response = await fetch("/daily_reports");
+//const data = await response.json();
+//setData(data.data);
+//};
+//getData();
+//}, []);
+//return (
+//<>
+//<div className="chart-title">Areas with Outstanding Cases</div>
+//<div className="area-data-sets">
+//{data
+//.sort((a, b) => b.Confirmed - a.Confirmed)
+//.slice(0, 10)
+//.map(d => (
+//<div
+//className="data-set"
+//key={
+//d["Province_State"] ? d["Province_State"] : d["Country_Region"]
+//}
+//>
+//<div className="country-name">
+//{d["Combined_Key"]}
+//{[> {d["Province_State"] <]}
+//{[> 	? d["Province_State"] <]}
+//{[> 	: d["Country_Region"]} <]}
+//</div>
+//<div className="set-title">Confirmed</div>
+//<div className="confirmed-count numerical-data">
+//{d["Confirmed"]}
+//</div>
+//<div className="set-title">Deaths</div>
+//<div className="dead-count numerical-data">{d["Deaths"]}</div>
+//<div className="set-title">Death Rate</div>
+//<div className="current-dead-rate numerical-data">
+//{((d["Deaths"] / d["Confirmed"]) * 100).toFixed(2)}%
+//</div>
+//</div>
+//))}
+//</div>
+//<p className="footnote">
+//Source: Johns Hopkins University Center for Systems Science and
+//Engineering (
+//<a href="https://github.com/CSSEGISandData/COVID-19">
+//CSSEGISandData/COVID-19
+//</a>
+//)
+//</p>
+//</>
+//);
+//};
 
 const FatalityRatioByAgeGroupInHubei = () => {
   const pie_data = [
@@ -510,7 +595,6 @@ const DailyNewCasesWorldwideLineChart = () => {
     );
     setData(data);
   }, [data, setData]);
-  //const [{ data, isLoading, isError }] = useDataApi();
   const axis_style = {
     grid: {
       stroke: "#f3f5f6",
@@ -666,7 +750,8 @@ const WorldwideRecoveryProgressPieChart = () => {
 };
 
 export {
-  AreasWithOutstandingCasesTable,
+  //AreasWithOutstandingCasesTable,
+  AreasWithOutstandingCasesTable2,
   DailyNewCasesInAnAreaLineChart,
   ConfirmedCasesChinaVsWorldLineChart,
   ConfirmedCasesInSelectedCountriesLineChart,
