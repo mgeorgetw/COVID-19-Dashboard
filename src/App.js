@@ -21,7 +21,7 @@ function getToday() {
 const App = () => {
   const layoutxl = [
     { i: "0", x: 0, y: 0, w: 12, h: 2, static: true },
-    { i: "a", x: 0, y: 0, w: 12, h: 7 },
+    { i: "a", x: 0, y: 0, w: 12, h: 8 },
     { i: "b", x: 0, y: 0, w: 6, h: 18 },
     { i: "b2", x: 6, y: 0, w: 6, h: 18 },
     { i: "d", x: 0, y: 0, w: 6, h: 18 },
@@ -32,7 +32,7 @@ const App = () => {
   ];
   const layoutlg = [
     { i: "0", x: 0, y: 0, w: 12, h: 2, static: true },
-    { i: "a", x: 0, y: 0, w: 12, h: 11 },
+    { i: "a", x: 0, y: 0, w: 12, h: 12 },
     { i: "b", x: 0, y: 0, w: 6, h: 14 },
     { i: "b2", x: 6, y: 0, w: 6, h: 14 },
     { i: "d", x: 0, y: 0, w: 6, h: 14 },
@@ -43,7 +43,7 @@ const App = () => {
   ];
   const layoutmd = [
     { i: "0", x: 0, y: 0, w: 10, h: 2, static: true },
-    { i: "a", x: 0, y: 0, w: 10, h: 11 },
+    { i: "a", x: 0, y: 0, w: 10, h: 12 },
     { i: "b", x: 0, y: 0, w: 5, h: 11 },
     { i: "b2", x: 5, y: 0, w: 5, h: 11 },
     { i: "d", x: 0, y: 0, w: 5, h: 11 },
@@ -54,7 +54,7 @@ const App = () => {
   ];
   const layoutsm = [
     { i: "0", x: 0, y: 0, w: 2, h: 2, static: true },
-    { i: "a", x: 0, y: 0, w: 2, h: 11 },
+    { i: "a", x: 0, y: 0, w: 2, h: 13 },
     { i: "b", x: 0, y: 0, w: 2, h: 14 },
     { i: "b2", x: 0, y: 0, w: 2, h: 13 },
     { i: "d", x: 0, y: 0, w: 2, h: 14 },
@@ -65,7 +65,7 @@ const App = () => {
   ];
   const layoutxs = [
     { i: "0", x: 0, y: 0, w: 2, h: 3, static: true },
-    { i: "a", x: 0, y: 0, w: 2, h: 15 },
+    { i: "a", x: 0, y: 0, w: 2, h: 18 },
     { i: "b", x: 0, y: 0, w: 2, h: 13 },
     { i: "b2", x: 0, y: 0, w: 2, h: 12 },
     { i: "d", x: 0, y: 0, w: 2, h: 13 },
@@ -76,7 +76,7 @@ const App = () => {
   ];
   const layoutxxs = [
     { i: "0", x: 0, y: 0, w: 1, h: 3, static: true },
-    { i: "a", x: 0, y: 0, w: 1, h: 19, isDraggable: false },
+    { i: "a", x: 0, y: 0, w: 1, h: 23, isDraggable: false },
     { i: "b", x: 0, y: 0, w: 1, h: 11, isDraggable: false },
     { i: "b2", x: 0, y: 0, w: 1, h: 11, isDraggable: false },
     { i: "d", x: 0, y: 0, w: 1, h: 11, isDraggable: false },
@@ -87,7 +87,7 @@ const App = () => {
   ];
   const layoutmin = [
     { i: "0", x: 0, y: 0, w: 1, h: 4, static: true },
-    { i: "a", x: 0, y: 0, w: 1, h: 24, isDraggable: false },
+    { i: "a", x: 0, y: 0, w: 1, h: 29, isDraggable: false },
     { i: "b", x: 0, y: 0, w: 1, h: 10, isDraggable: false },
     { i: "b2", x: 0, y: 0, w: 1, h: 10, isDraggable: false },
     { i: "d", x: 0, y: 0, w: 1, h: 10, isDraggable: false },

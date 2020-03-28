@@ -272,7 +272,8 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
           "Germany",
           "Korea, South",
           "US",
-          "Japan"
+          "Japan",
+          "Hubei"
         ];
         let areas_data = [];
         for (let area of areas_to_find) {
@@ -354,11 +355,11 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
 };
 const AreasWithOutstandingCasesTable2 = () => {
   const [{ data, isLoading, isError }] = useDataApi(
-    "https://corona.lmao.ninja/v2/jhucsse",
+    "https://corona.lmao.ninja/countries",
     []
   );
 
-  const [sortBy, setSortBy] = useState("confirmed");
+  const [sortBy, setSortBy] = useState("cases");
   return (
     <>
       <div className="chart-title">Areas with Outstanding Cases</div>
@@ -370,40 +371,51 @@ const AreasWithOutstandingCasesTable2 = () => {
           <div className="radio-btn-container">
             <RadioButton
               id="1"
-              changed={() => setSortBy("confirmed")}
-              isSelected={sortBy === "confirmed" ? true : false}
-              label=" Most confirmed"
+              changed={() => setSortBy("cases")}
+              isSelected={sortBy === "cases" ? true : false}
+              label="Total cases"
             />
             <RadioButton
               id="2"
               changed={() => setSortBy("deaths")}
               isSelected={sortBy === "deaths" ? true : false}
-              label="Most deaths"
+              label="Total deaths"
+            />
+            <RadioButton
+              id="3"
+              changed={() => setSortBy("todayCases")}
+              isSelected={sortBy === "todayCases" ? true : false}
+              label="New cases"
+            />
+            <RadioButton
+              id="4"
+              changed={() => setSortBy("todayDeaths")}
+              isSelected={sortBy === "todayDeaths" ? true : false}
+              label="New deaths"
             />
           </div>
           <div className="area-data-sets">
             {data
-              .sort((a, b) => b.stats[sortBy] - a.stats[sortBy])
+              .sort((a, b) => b[sortBy] - a[sortBy])
               .slice(0, 10)
               .map(d => (
-                <div
-                  className="data-set"
-                  key={d.province ? d.province : d.country}
-                >
-                  <div className="country-name">
-                    {d.province ? d.province : d.country}
-                  </div>
+                <div className="data-set" key={d.country}>
+                  <div className="country-name">{d.country}</div>
                   <div className="set-title">Confirmed</div>
                   <div className="confirmed-count numerical-data">
-                    {d.stats.confirmed}
+                    {d.cases}
+                  </div>
+                  <div className="new-cases-count numerical-data">
+                    (+{d.todayCases})
                   </div>
                   <div className="set-title">Deaths</div>
-                  <div className="dead-count numerical-data">
-                    {d.stats.deaths}
+                  <div className="dead-count numerical-data">{d.deaths}</div>
+                  <div className="new-cases-count numerical-data">
+                    (+{d.todayDeaths})
                   </div>
                   <div className="set-title">Death Rate</div>
                   <div className="current-dead-rate numerical-data">
-                    {((d.stats.deaths / d.stats.confirmed) * 100).toFixed(2)}%
+                    {((d.deaths / d.cases) * 100).toFixed(2)}%
                   </div>
                 </div>
               ))}
