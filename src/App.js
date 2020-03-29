@@ -138,9 +138,9 @@ const App = () => {
         <div key="b2">
           <Charts.ConfirmedCasesInSelectedCountriesLineChart />
         </div>
-        <div key="d">
-          <Charts.ConfirmedCasesChinaVsWorldLineChart />
-        </div>
+        {/* <div key="d"> */}
+        {/*   <Charts.ConfirmedCasesChinaVsWorldLineChart /> */}
+        {/* </div> */}
         <div key="e">
           <Charts.DailyNewCasesInAnAreaLineChart area="Japan" />
         </div>

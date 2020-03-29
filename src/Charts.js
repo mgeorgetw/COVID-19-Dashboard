@@ -26,6 +26,18 @@ const useDataApi = (initialUrl, initialData) => {
 };
 
 // SMALL COMPONENTS / HELPER FUNCTIONS
+// const DropDownMenu = props => {
+//   return (
+//     <div className="dropdown-container">
+//       <select>
+//         <option key={props.id} value="{props.value}">
+//           {props.value}
+//         </option>
+//       </select>
+//     </div>
+//   );
+// };
+
 const LineChart = ({ data, x, y }) => {
   const axis_style = {
     grid: {
