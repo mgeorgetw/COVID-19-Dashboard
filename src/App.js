@@ -54,25 +54,25 @@ const App = () => {
   ];
   const layoutsm = [
     { i: "0", x: 0, y: 0, w: 2, h: 2, static: true },
-    { i: "a", x: 0, y: 0, w: 2, h: 13 },
-    { i: "b", x: 0, y: 0, w: 2, h: 14 },
-    { i: "b2", x: 0, y: 0, w: 2, h: 13 },
-    { i: "d", x: 0, y: 0, w: 2, h: 14 },
-    { i: "e", x: 0, y: 0, w: 2, h: 14 },
-    { i: "e2", x: 0, y: 0, w: 2, h: 14 },
-    { i: "f", x: 0, y: 0, w: 2, h: 13 },
-    { i: "f2", x: 0, y: 0, w: 2, h: 13 }
+    { i: "a", x: 0, y: 0, w: 2, h: 13, isDraggable: false },
+    { i: "b", x: 0, y: 0, w: 2, h: 14, isDraggable: false },
+    { i: "b2", x: 0, y: 0, w: 2, h: 13, isDraggable: false },
+    { i: "d", x: 0, y: 0, w: 2, h: 14, isDraggable: false },
+    { i: "e", x: 0, y: 0, w: 2, h: 14, isDraggable: false },
+    { i: "e2", x: 0, y: 0, w: 2, h: 14, isDraggable: false },
+    { i: "f", x: 0, y: 0, w: 2, h: 13, isDraggable: false },
+    { i: "f2", x: 0, y: 0, w: 2, h: 13, isDraggable: false }
   ];
   const layoutxs = [
     { i: "0", x: 0, y: 0, w: 2, h: 3, static: true },
-    { i: "a", x: 0, y: 0, w: 2, h: 18 },
-    { i: "b", x: 0, y: 0, w: 2, h: 13 },
-    { i: "b2", x: 0, y: 0, w: 2, h: 12 },
-    { i: "d", x: 0, y: 0, w: 2, h: 13 },
-    { i: "e", x: 0, y: 0, w: 2, h: 13 },
-    { i: "e2", x: 0, y: 0, w: 2, h: 13 },
-    { i: "f", x: 0, y: 0, w: 2, h: 12 },
-    { i: "f2", x: 0, y: 0, w: 2, h: 13 }
+    { i: "a", x: 0, y: 0, w: 2, h: 18, isDraggable: false },
+    { i: "b", x: 0, y: 0, w: 2, h: 13, isDraggable: false },
+    { i: "b2", x: 0, y: 0, w: 2, h: 12, isDraggable: false },
+    { i: "d", x: 0, y: 0, w: 2, h: 13, isDraggable: false },
+    { i: "e", x: 0, y: 0, w: 2, h: 13, isDraggable: false },
+    { i: "e2", x: 0, y: 0, w: 2, h: 13, isDraggable: false },
+    { i: "f", x: 0, y: 0, w: 2, h: 12, isDraggable: false },
+    { i: "f2", x: 0, y: 0, w: 2, h: 13, isDraggable: false }
   ];
   const layoutxxs = [
     { i: "0", x: 0, y: 0, w: 1, h: 3, static: true },

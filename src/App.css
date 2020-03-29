@@ -5,6 +5,11 @@
   /*margin: 0 10px 0 10px;*/
 }
 
+/*fix dragging on mobile*/
+.react-grid-item {
+  touch-action: auto !important;
+}
+
 .app-title {
   font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
   font-variant: small-caps;
