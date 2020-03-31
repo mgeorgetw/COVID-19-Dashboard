@@ -26,17 +26,29 @@ const useDataApi = (initialUrl, initialData) => {
 };
 
 // SMALL COMPONENTS / HELPER FUNCTIONS
-// const DropDownMenu = props => {
-//   return (
-//     <div className="dropdown-container">
-//       <select>
-//         <option key={props.id} value="{props.value}">
-//           {props.value}
-//         </option>
-//       </select>
-//     </div>
-//   );
-// };
+const CountriesDropDownMenu = ({ data, chosen, setChosen }) => {
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    setItems(
+      data.map(d => ({
+        label: d.province ? d.province + ", " + d.country : d.country,
+        value: d.province ? d.province : d.country
+      }))
+    );
+  }, [data]);
+  return (
+    <div className="dropdown-container">
+      Select:{" "}
+      <select value={chosen} onChange={e => setChosen(e.currentTarget.value)}>
+        {items.map(({ label, value }) => (
+          <option className="region-name" key={label} value={value}>
+            {label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
 
 const LineChart = ({ data, x, y }) => {
   const axis_style = {
@@ -51,7 +63,9 @@ const LineChart = ({ data, x, y }) => {
       <V.VictoryChart
         containerComponent={
           <V.VictoryVoronoiContainer
-            labels={({ datum }) => `${datum[x]}: ${datum._y}`}
+            labels={({ datum }) =>
+              datum.x ? `${datum.x}: ${datum._y}` : `${datum[x]}: ${datum._y}`
+            }
             labelComponent={<V.VictoryTooltip constrainToVisibleArea />}
           />
         }
@@ -123,6 +137,10 @@ const SmallTable = ({ items }) => {
   );
 };
 
+function toPercentage(numerator, denominator) {
+  return Number(((numerator / denominator) * 100).toFixed(2));
+}
+
 // Charts
 const DailyNewCasesInAnAreaLineChart = ({ area }) => {
   const [data, setData] = useState({ areaName: "", statisticsData: [] });
@@ -171,6 +189,125 @@ const DailyNewCasesInAnAreaLineChart = ({ area }) => {
               DXY-COVID-19-Crawler
             </a>
             ）
+          </p>
+        </>
+      )}
+    </>
+  );
+};
+
+const DailyLineChartInAnArea = ({ chart_type }) => {
+  const [{ data, isLoading, isError }] = useDataApi(
+    "https://corona.lmao.ninja/v2/historical",
+    null
+  );
+  const [chosen, setChosen] = useState("USA");
+  const [lineData, setLineData] = useState({});
+  const CHART_TYPES = {
+    newCases: "Daily New Cases in ",
+    deathRate: "Fatality Rate in "
+  };
+  const ChartTitle = ({ chart_type, area_name }) => {
+    return (
+      <div className="chart-title">
+        {CHART_TYPES[chart_type]}
+        {area_name}
+      </div>
+    );
+  };
+  const getSTItems = (chart_type, data) =>
+    ({
+      newCases: [
+        {
+          heading: "2 days ago",
+          datum: data.newCases.slice(-2)[0].y
+        },
+        {
+          heading: "Yesterday",
+          datum: data.newCases.slice(-1)[0].y
+        },
+        {
+          heading: "Growth Factor",
+          datum: (
+            data.newCases.slice(-1)[0].y / data.newCases.slice(-2)[0].y
+          ).toFixed(2)
+        }
+      ],
+      deathRate: [
+        {
+          heading: "Confirmed",
+          datum: data.cases.slice(-1)[0].y
+        },
+        {
+          heading: "Deaths",
+          datum: data.deaths.slice(-1)[0].y
+        },
+        {
+          heading: "Fatality Rate",
+          datum: data.deathRate.slice(-1)[0].y
+        }
+      ]
+    }[chart_type]);
+  useEffect(() => {
+    if (data !== null) {
+      let found = data.find(
+        obj =>
+          obj.province === chosen || (!obj.province && obj.country === chosen)
+      );
+      let cases = [],
+        deaths = [],
+        new_cases = [],
+        death_rate = [];
+      for (const [key, value] of Object.entries(found.timeline.cases)) {
+        cases.push({ x: key, y: value });
+      }
+      for (const [key, value] of Object.entries(found.timeline.deaths)) {
+        deaths.push({ x: key, y: value });
+      }
+      for (let i = 0; i < cases.length; i++) {
+        i === 0
+          ? new_cases.push({ x: cases[i].x, y: 0 })
+          : new_cases.push({ x: cases[i].x, y: cases[i].y - cases[i - 1].y });
+        death_rate.push({
+          x: cases[i].x,
+          y: toPercentage(deaths[i].y, cases[i].y) || 0
+        });
+      }
+      setLineData({
+        country: found.country,
+        province: found.province,
+        cases: cases,
+        deaths: deaths,
+        newCases: new_cases,
+        deathRate: death_rate
+      });
+    }
+  }, [data, chosen]);
+  return (
+    <>
+      {isError && <div>Something went wrong</div>}
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <ChartTitle
+            chart_type={chart_type}
+            area_name={
+              lineData.province
+                ? lineData.province + ", " + lineData.country
+                : lineData.country
+            }
+          />
+          <CountriesDropDownMenu
+            data={data}
+            chosen={chosen}
+            setChosen={setChosen}
+          />
+          <SmallTable items={getSTItems(chart_type, lineData)} />
+          <LineChart data={lineData[chart_type]} />
+          <p className="footnote">
+            Source: John Hopkins University CSSE (
+            <a href="https://github.com/NovelCOVID/API">NovelCOVID/API</a>)
           </p>
         </>
       )}
@@ -365,6 +502,7 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
     </>
   );
 };
+
 const AreasWithOutstandingCasesTable2 = () => {
   const [{ data, isLoading, isError }] = useDataApi(
     "https://corona.lmao.ninja/countries",
@@ -412,22 +550,24 @@ const AreasWithOutstandingCasesTable2 = () => {
               .slice(0, 10)
               .map(d => (
                 <div className="data-set" key={d.country}>
-                  <div className="country-name">{d.country}</div>
+                  <div className="country-name vertical-inverted-title">
+                    {d.country}
+                  </div>
                   <div className="set-title">Confirmed</div>
                   <div className="confirmed-count numerical-data">
                     {d.cases}
                   </div>
-                  <div className="new-cases-count numerical-data">
+                  <div className="smaller-numbers numerical-data">
                     (+{d.todayCases})
                   </div>
                   <div className="set-title">Deaths</div>
                   <div className="dead-count numerical-data">{d.deaths}</div>
-                  <div className="new-cases-count numerical-data">
+                  <div className="smaller-numbers numerical-data">
                     (+{d.todayDeaths})
                   </div>
                   <div className="set-title">Death Rate</div>
                   <div className="current-dead-rate numerical-data">
-                    {((d.deaths / d.cases) * 100).toFixed(2)}%
+                    {toPercentage(d.deaths, d.cases)}%
                   </div>
                 </div>
               ))}
@@ -443,60 +583,55 @@ const AreasWithOutstandingCasesTable2 = () => {
   );
 };
 
-//const AreasWithOutstandingCasesTable = () => {
-//const [data, setData] = useState([]);
-//useEffect(() => {
-//const getData = async () => {
-//const response = await fetch("/daily_reports");
-//const data = await response.json();
-//setData(data.data);
-//};
-//getData();
-//}, []);
-//return (
-//<>
-//<div className="chart-title">Areas with Outstanding Cases</div>
-//<div className="area-data-sets">
-//{data
-//.sort((a, b) => b.Confirmed - a.Confirmed)
-//.slice(0, 10)
-//.map(d => (
-//<div
-//className="data-set"
-//key={
-//d["Province_State"] ? d["Province_State"] : d["Country_Region"]
-//}
-//>
-//<div className="country-name">
-//{d["Combined_Key"]}
-//{[> {d["Province_State"] <]}
-//{[> 	? d["Province_State"] <]}
-//{[> 	: d["Country_Region"]} <]}
-//</div>
-//<div className="set-title">Confirmed</div>
-//<div className="confirmed-count numerical-data">
-//{d["Confirmed"]}
-//</div>
-//<div className="set-title">Deaths</div>
-//<div className="dead-count numerical-data">{d["Deaths"]}</div>
-//<div className="set-title">Death Rate</div>
-//<div className="current-dead-rate numerical-data">
-//{((d["Deaths"] / d["Confirmed"]) * 100).toFixed(2)}%
-//</div>
-//</div>
-//))}
-//</div>
-//<p className="footnote">
-//Source: Johns Hopkins University Center for Systems Science and
-//Engineering (
-//<a href="https://github.com/CSSEGISandData/COVID-19">
-//CSSEGISandData/COVID-19
-//</a>
-//)
-//</p>
-//</>
-//);
-//};
+const AreasWithOutstandingCasesTable = () => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const getData = async () => {
+      const response = await fetch("/daily_reports");
+      const data = await response.json();
+      setData(data.data);
+    };
+    getData();
+  }, []);
+  return (
+    <>
+      <div className="chart-title">Areas with Outstanding Cases</div>
+      <div className="area-data-sets">
+        {data
+          .sort((a, b) => b.Confirmed - a.Confirmed)
+          .slice(0, 10)
+          .map(d => (
+            <div
+              className="data-set"
+              key={
+                d["Province_State"] ? d["Province_State"] : d["Country_Region"]
+              }
+            >
+              <div className="country-name">{d["Combined_Key"]}</div>
+              <div className="set-title">Confirmed</div>
+              <div className="confirmed-count numerical-data">
+                {d["Confirmed"]}
+              </div>
+              <div className="set-title">Deaths</div>
+              <div className="dead-count numerical-data">{d["Deaths"]}</div>
+              <div className="set-title">Death Rate</div>
+              <div className="current-dead-rate numerical-data">
+                {toPercentage(d["Deaths"], d["Confirmed"])}%
+              </div>
+            </div>
+          ))}
+      </div>
+      <p className="footnote">
+        Source: Johns Hopkins University Center for Systems Science and
+        Engineering (
+        <a href="https://github.com/CSSEGISandData/COVID-19">
+          CSSEGISandData/COVID-19
+        </a>
+        )
+      </p>
+    </>
+  );
+};
 
 const FatalityRatioByAgeGroupInHubei = () => {
   const pie_data = [
@@ -638,17 +773,17 @@ const DailyNewCasesWorldwideLineChart = () => {
             items={[
               {
                 heading: "2 days ago",
-                datum: data[data.length - 2].deltaConfirmed
+                datum: data.slice(-2)[0].deltaConfirmed
               },
               {
                 heading: "Yesterday",
-                datum: data[data.length - 1].deltaConfirmed
+                datum: data.slice(-1)[0].deltaConfirmed
               },
               {
                 heading: "Growth Factor",
                 datum: (
-                  data[data.length - 1].deltaConfirmed /
-                  data[data.length - 2].deltaConfirmed
+                  data.slice(-1)[0].deltaConfirmed /
+                  data.slice(-2)[0].deltaConfirmed
                 ).toFixed(2)
               }
             ]}
@@ -665,13 +800,7 @@ const DailyNewCasesWorldwideLineChart = () => {
             >
               <V.VictoryAxis fixLabelOverlap />
               <V.VictoryAxis dependentAxis fixLabelOverlap style={axis_style} />
-              <V.VictoryLine data={data} x="reportDate" y="deltaConfirmed" />
-              {/* <V.VictoryLabel */}
-              {/*   text="中國加入臨床確診" */}
-              {/*   datum={{ x: 23, y: 16500 }} */}
-              {/*   textAnchor="end" */}
-              {/*   style={{ fontSize: 11 }} */}
-              {/* /> */}
+              <V.VictoryArea data={data} x="reportDate" y="deltaConfirmed" />
             </V.VictoryChart>
           </div>
           <p className="footnote">
@@ -715,7 +844,7 @@ const WorldwideRecoveryProgressPieChart = () => {
           (parseInt(prev) || 0) + (parseInt(cur["Recovered"]) || 0),
         0
       );
-      let deathRate = ((deaths / confirmed) * 100).toFixed(2);
+      let deathRate = toPercentage(deaths, confirmed);
       setData({
         confirmed: confirmed,
         deaths: deaths,
@@ -746,7 +875,7 @@ const WorldwideRecoveryProgressPieChart = () => {
           <div className="pie-chart">
             <svg className="pie" width={310} height={310}>
               <text x="50%" y="54%" textAnchor="middle">
-                {((data.recovered / data.confirmed) * 100).toFixed(2)}%
+                {toPercentage(data.recovered, data.confirmed)}%
               </text>
               <V.VictoryPie
                 colorScale={["#85b135", "#fb6361", "#073f5c"]}
@@ -774,9 +903,10 @@ const WorldwideRecoveryProgressPieChart = () => {
 };
 
 export {
-  //AreasWithOutstandingCasesTable,
+  AreasWithOutstandingCasesTable,
   AreasWithOutstandingCasesTable2,
   DailyNewCasesInAnAreaLineChart,
+  DailyLineChartInAnArea,
   ConfirmedCasesChinaVsWorldLineChart,
   ConfirmedCasesInSelectedCountriesLineChart,
   FatalityRatioByAgeGroupInHubei,

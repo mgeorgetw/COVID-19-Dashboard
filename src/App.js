@@ -6,8 +6,6 @@ import * as Charts from "./Charts.js";
 import { Responsive, WidthProvider } from "react-grid-layout";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-// TODO: Make it mobile friendly
-
 // SMALL COMPONENTS / HELPER FUNCTIONS
 function getToday() {
   var time = new Date();
@@ -36,8 +34,8 @@ const App = () => {
     { i: "b", x: 0, y: 0, w: 6, h: 14 },
     { i: "b2", x: 6, y: 0, w: 6, h: 14 },
     { i: "d", x: 0, y: 0, w: 6, h: 14 },
-    { i: "e", x: 0, y: 0, w: 6, h: 14 },
-    { i: "e2", x: 6, y: 0, w: 6, h: 14 },
+    { i: "e", x: 0, y: 0, w: 6, h: 15 },
+    { i: "e2", x: 6, y: 0, w: 6, h: 15 },
     { i: "f", x: 0, y: 0, w: 6, h: 14 },
     { i: "f2", x: 6, y: 0, w: 6, h: 14 }
   ];
@@ -47,8 +45,8 @@ const App = () => {
     { i: "b", x: 0, y: 0, w: 5, h: 11 },
     { i: "b2", x: 5, y: 0, w: 5, h: 11 },
     { i: "d", x: 0, y: 0, w: 5, h: 11 },
-    { i: "e", x: 0, y: 0, w: 5, h: 11 },
-    { i: "e2", x: 5, y: 0, w: 5, h: 11 },
+    { i: "e", x: 0, y: 0, w: 5, h: 12 },
+    { i: "e2", x: 5, y: 0, w: 5, h: 12 },
     { i: "f", x: 0, y: 0, w: 5, h: 11 },
     { i: "f2", x: 5, y: 0, w: 5, h: 13 }
   ];
@@ -58,8 +56,8 @@ const App = () => {
     { i: "b", x: 0, y: 0, w: 2, h: 14, isDraggable: false },
     { i: "b2", x: 0, y: 0, w: 2, h: 13, isDraggable: false },
     { i: "d", x: 0, y: 0, w: 2, h: 14, isDraggable: false },
-    { i: "e", x: 0, y: 0, w: 2, h: 14, isDraggable: false },
-    { i: "e2", x: 0, y: 0, w: 2, h: 14, isDraggable: false },
+    { i: "e", x: 0, y: 0, w: 2, h: 15, isDraggable: false },
+    { i: "e2", x: 0, y: 0, w: 2, h: 15, isDraggable: false },
     { i: "f", x: 0, y: 0, w: 2, h: 13, isDraggable: false },
     { i: "f2", x: 0, y: 0, w: 2, h: 13, isDraggable: false }
   ];
@@ -69,8 +67,8 @@ const App = () => {
     { i: "b", x: 0, y: 0, w: 2, h: 13, isDraggable: false },
     { i: "b2", x: 0, y: 0, w: 2, h: 12, isDraggable: false },
     { i: "d", x: 0, y: 0, w: 2, h: 13, isDraggable: false },
-    { i: "e", x: 0, y: 0, w: 2, h: 13, isDraggable: false },
-    { i: "e2", x: 0, y: 0, w: 2, h: 13, isDraggable: false },
+    { i: "e", x: 0, y: 0, w: 2, h: 14, isDraggable: false },
+    { i: "e2", x: 0, y: 0, w: 2, h: 14, isDraggable: false },
     { i: "f", x: 0, y: 0, w: 2, h: 12, isDraggable: false },
     { i: "f2", x: 0, y: 0, w: 2, h: 13, isDraggable: false }
   ];
@@ -80,8 +78,8 @@ const App = () => {
     { i: "b", x: 0, y: 0, w: 1, h: 11, isDraggable: false },
     { i: "b2", x: 0, y: 0, w: 1, h: 11, isDraggable: false },
     { i: "d", x: 0, y: 0, w: 1, h: 11, isDraggable: false },
-    { i: "e", x: 0, y: 0, w: 1, h: 11, isDraggable: false },
-    { i: "e2", x: 0, y: 0, w: 1, h: 11, isDraggable: false },
+    { i: "e", x: 0, y: 0, w: 1, h: 12, isDraggable: false },
+    { i: "e2", x: 0, y: 0, w: 1, h: 12, isDraggable: false },
     { i: "f", x: 0, y: 0, w: 1, h: 11, isDraggable: false },
     { i: "f2", x: 0, y: 0, w: 1, h: 13, isDraggable: false }
   ];
@@ -142,10 +140,10 @@ const App = () => {
         {/*   <Charts.ConfirmedCasesChinaVsWorldLineChart /> */}
         {/* </div> */}
         <div key="e">
-          <Charts.DailyNewCasesInAnAreaLineChart area="Japan" />
+          <Charts.DailyLineChartInAnArea chart_type="newCases" />
         </div>
         <div key="e2">
-          <Charts.FatalityRateInAnAreaLineChart area="Italy" />
+          <Charts.DailyLineChartInAnArea chart_type="deathRate" />
         </div>
         <div key="f">
           <Charts.FatalityRatioByAgeGroupInHubei />

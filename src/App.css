@@ -2,7 +2,6 @@
 
 .App {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  /*margin: 0 10px 0 10px;*/
 }
 
 /*fix dragging on mobile*/
@@ -36,15 +35,13 @@
   font-size: 1.6em;
   font-weight: 700;
   font-stretch: condensed;
+  text-transform: capitalize;
   text-align: left;
   margin-top: 0.3em;
   margin-bottom: 0.3em;
 }
 
-.area-data-sets {
-  display: flex;
-  flex-wrap: wrap;
-}
+/* Radio buttons */
 
 .radio-btn-container {
   display: flex;
@@ -60,6 +57,13 @@
   margin-right: 4px;
 }
 
+/* Tables */
+
+.area-data-sets {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .data-set {
   margin: auto;
   margin-bottom: 5px;
@@ -70,7 +74,7 @@
   border-radius: 15px;
 }
 
-.country-name {
+div.vertical-inverted-title {
   background-color: black;
   line-height: 28px;
   white-space: nowrap;
@@ -87,7 +91,7 @@
   border-bottom-left-radius: 10px;
 }
 
-.set-title {
+div.set-title {
   font-family: "helveticaneue-condensedbold", "helvetica neue", helvetica, arial,
     sans-serif;
   font-weight: 400;
@@ -101,32 +105,22 @@
   font-size: 1.4em;
 }
 
-.new-cases-count {
+.smaller-numbers {
   margin-top: -5px;
   font-size: 0.9em;
 }
 
-.data-table {
-  margin-right: 1.5em;
-  margin-bottom: 0;
-  border-collapse: collapse;
-}
-
 .small-table {
   display: inline-block;
-  /*float: right;*/
-  /*margin-right: 10px;*/
-  /*margin-bottom: 0;*/
+  float: right;
+  margin-right: 10px;
+  margin-bottom: 0;
   text-align: center;
-}
-
-tr:nth-child(even) {
-  background-color: #f2f2f2;
 }
 
 th,
 td {
-  padding: 0 5px 0 5px;
+  padding: 0 3px 0 3px;
 }
 
 td.numerical-data {
@@ -140,9 +134,19 @@ th {
   color: white;
   line-height: 1.5;
   font-size: 0.9em;
-  font-weight: 600;
+  font-weight: 700;
 }
 
+/* Default dropdown menu */
+.dropdown-container {
+  margin: 8px 0 8px 0;
+}
+
+select {
+  font-size: 16px;
+}
+
+/* Pie charts */
 svg.pie {
   display: block;
   margin: auto;
