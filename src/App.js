@@ -89,8 +89,8 @@ const App = () => {
     { i: "b", x: 0, y: 0, w: 1, h: 10, isDraggable: false },
     { i: "b2", x: 0, y: 0, w: 1, h: 10, isDraggable: false },
     { i: "d", x: 0, y: 0, w: 1, h: 10, isDraggable: false },
-    { i: "e", x: 0, y: 0, w: 1, h: 10, isDraggable: false },
-    { i: "e2", x: 0, y: 0, w: 1, h: 10, isDraggable: false },
+    { i: "e", x: 0, y: 0, w: 1, h: 11, isDraggable: false },
+    { i: "e2", x: 0, y: 0, w: 1, h: 11, isDraggable: false },
     { i: "f", x: 0, y: 0, w: 1, h: 10, isDraggable: false },
     { i: "f2", x: 0, y: 0, w: 1, h: 14, isDraggable: false }
   ];
@@ -107,6 +107,7 @@ const App = () => {
     <div className="App">
       <ResponsiveGridLayout
         className="layout"
+        autoSize={true}
         layouts={layouts}
         rowHeight={30}
         breakpoints={{

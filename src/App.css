@@ -78,6 +78,7 @@ h2.title-date {
   margin-bottom: 5px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   width: 110px;
+  height: 180px;
   text-align: center;
   border: 2px solid black;
   border-radius: 15px;
@@ -153,6 +154,12 @@ th {
 
 select {
   font-size: 16px;
+}
+
+/* Charts */
+
+.chart-container {
+  height: 100%;
 }
 
 /* Pie charts */

@@ -289,7 +289,7 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        <>
+        <div className="chart-container">
           <ChartTitle
             chart_type={chart_type}
             area_name={
@@ -309,7 +309,7 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
             Source: John Hopkins University CSSE (
             <a href="https://github.com/NovelCOVID/API">NovelCOVID/API</a>)
           </p>
-        </>
+        </div>
       )}
     </>
   );
