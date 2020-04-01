@@ -122,10 +122,12 @@ const App = () => {
         containerPadding={[10, 10]}
       >
         <div key="0">
-          <h1 className="app-title">
-            Covid<span className="title-numerals">-19</span> Dashboard
-            <span className="title-date">{getToday()}</span>
-          </h1>
+          <div className="app-title">
+            <h1>
+              Covid<span className="title-numerals">-19</span> Dashboard
+            </h1>
+            <h2 className="title-date">{getToday()}</h2>
+          </div>
         </div>
         <div key="a">
           <Charts.AreasWithOutstandingCasesTable2 />
