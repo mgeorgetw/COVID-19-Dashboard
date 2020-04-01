@@ -13,9 +13,12 @@ function turnTwoDigit(n) {
 
 function getFileDate() {
   var time = new Date();
+  console.log(time);
+  time.setDate(time.getDate() - 1);
+  console.log(time);
   var year = time.getFullYear();
   var month = turnTwoDigit(time.getMonth() + 1);
-  var date = turnTwoDigit(time.getUTCDate() - 1);
+  var date = turnTwoDigit(time.getUTCDate());
   var formattedDate = `${month}-${date}-${year}`;
   return formattedDate;
 }
