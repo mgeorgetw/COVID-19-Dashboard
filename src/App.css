@@ -54,15 +54,14 @@ h2.title-date {
 
 .radio-btn-container {
   display: flex;
-  margin-bottom: 5px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin-bottom: 10px;
 }
 
-.radio-btn-container > label {
+.radio-btn > label {
   margin-right: 8px;
 }
 
-.radio-btn-container > input {
+.radio-btn > input {
   margin-right: 4px;
 }
 
@@ -76,7 +75,6 @@ h2.title-date {
 .data-set {
   margin: auto;
   margin-bottom: 5px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   width: 110px;
   height: 180px;
   text-align: center;
@@ -154,6 +152,7 @@ th {
 
 select {
   font-size: 16px;
+  text-transform: capitalize;
 }
 
 /* Charts */
