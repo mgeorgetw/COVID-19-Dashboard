@@ -39,13 +39,9 @@ const CountriesDropDownMenu = ({ data, chosen, setChosen }) => {
   return (
     <div className="dropdown-container">
       Select:{" "}
-      <select value={chosen} onChange={e => setChosen(e.currentTarget.value)} >
+      <select value={chosen} onChange={e => setChosen(e.currentTarget.value)}>
         {items.map(({ label, value }) => (
-          <option
-            className="region-name"
-            key={label}
-            value={value}
-          >
+          <option className="region-name" key={label} value={value}>
             {label}
           </option>
         ))}
@@ -861,9 +857,7 @@ const WorldwideRecoveryProgressPieChart = () => {
   }, []);
   return (
     <>
-      <div className="chart-title">
-        Worldwide Recovery Progress from COVID-19
-      </div>
+      <div className="chart-title">Worldwide Recovery Progress</div>
       {isLoading ? (
         <LoadingSpinner />
       ) : (
