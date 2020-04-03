@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
+import ReactDOMServer from "react-dom/server";
 import "./App.css";
+import * as Charts from "./Charts.js";
+
+// React-grid-layout
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-import * as Charts from "./Charts.js";
 import { Responsive, WidthProvider } from "react-grid-layout";
+
+// Pull to refresh
+import PullToRefresh from "pulltorefreshjs";
+import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 // SMALL COMPONENTS / HELPER FUNCTIONS
@@ -17,6 +26,23 @@ function getToday() {
 }
 
 const App = () => {
+  useEffect(() => {
+    PullToRefresh.init({
+      mainElement: "body",
+      onRefresh() {
+        window.location.reload();
+      },
+      iconArrow: ReactDOMServer.renderToString(
+        <FontAwesomeIcon icon={faSyncAlt} />
+      ),
+      iconRefreshing: ReactDOMServer.renderToString(
+        <FontAwesomeIcon icon={faSyncAlt} spin={true} />
+      )
+    });
+    return () => {
+      PullToRefresh.destroyAll();
+    };
+  }, []);
   const layoutxl = [
     { i: "0", x: 0, y: 0, w: 12, h: 2, static: true },
     { i: "a", x: 0, y: 0, w: 12, h: 8 },
