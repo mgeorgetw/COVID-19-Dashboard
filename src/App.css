@@ -153,6 +153,7 @@ th {
 select {
   font-size: 16px;
   text-transform: capitalize;
+  max-width: 200px;
 }
 
 /* Charts */
