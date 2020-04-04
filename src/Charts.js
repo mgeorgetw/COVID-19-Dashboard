@@ -879,9 +879,6 @@ const WorldwideRecoveryProgressPieChart = () => {
                 style={{ fontSize: 30, fill: "#85b135" }}
                 text={toPercentage(data.recovered, data.confirmed) + "%"}
               />
-              {/* <text x="50%" y="54%" textAnchor="middle"> */}
-              {/*   {toPercentage(data.recovered, data.confirmed)}% */}
-              {/* </text> */}
               <V.VictoryPie
                 colorScale={["#85b135", "#fb6361", "#073f5c"]}
                 innerRadius={70}
