@@ -4,6 +4,9 @@
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+.container {
+}
+
 /*fix dragging on mobile*/
 .react-grid-item {
   touch-action: auto !important;

@@ -56,7 +56,7 @@ const App = () => {
   ];
   const layoutlg = [
     { i: "0", x: 0, y: 0, w: 12, h: 2, static: true },
-    { i: "a", x: 0, y: 0, w: 12, h: 12 },
+    { i: "a", x: 0, y: 0, w: 12, h: 13 },
     { i: "b", x: 0, y: 0, w: 6, h: 14 },
     { i: "b2", x: 6, y: 0, w: 6, h: 14 },
     { i: "d", x: 0, y: 0, w: 6, h: 14 },
@@ -67,7 +67,7 @@ const App = () => {
   ];
   const layoutmd = [
     { i: "0", x: 0, y: 0, w: 10, h: 2, static: true },
-    { i: "a", x: 0, y: 0, w: 10, h: 12 },
+    { i: "a", x: 0, y: 0, w: 10, h: 13 },
     { i: "b", x: 0, y: 0, w: 5, h: 11 },
     { i: "b2", x: 5, y: 0, w: 5, h: 11 },
     { i: "d", x: 0, y: 0, w: 5, h: 11 },
@@ -146,9 +146,10 @@ const App = () => {
           min: 0
         }}
         cols={{ xl: 12, lg: 12, md: 10, sm: 2, xs: 2, xxs: 1, min: 1 }}
+        margin={[10, 10]}
         containerPadding={[10, 10]}
       >
-        <div key="0">
+        <div className="container" key="0">
           <div className="app-title">
             <h1>
               Covid<span className="title-numerals">-19</span> Dashboard
@@ -156,28 +157,28 @@ const App = () => {
             <h2 className="title-date">{getToday()}</h2>
           </div>
         </div>
-        <div key="a">
+        <div className="container" key="a">
           <Charts.AreasWithOutstandingCasesTable2 />
         </div>
-        <div key="b">
+        <div className="container" key="b">
           <Charts.DailyNewCasesWorldwideLineChart />
         </div>
-        <div key="b2">
+        <div className="container" key="b2">
           <Charts.ConfirmedCasesInSelectedCountriesLineChart />
         </div>
-        {/* <div key="d"> */}
+        {/* <div className='container' key="d"> */}
         {/*   <Charts.ConfirmedCasesChinaVsWorldLineChart /> */}
         {/* </div> */}
-        <div key="e">
+        <div className="container" key="e">
           <Charts.DailyLineChartInAnArea chart_type="newCases" />
         </div>
-        <div key="e2">
+        <div className="container" key="e2">
           <Charts.DailyLineChartInAnArea chart_type="deathRate" />
         </div>
-        <div key="f">
+        <div className="container" key="f">
           <Charts.FatalityRatioByAgeGroupInHubei />
         </div>
-        <div key="f2">
+        <div className="container" key="f2">
           <Charts.WorldwideRecoveryProgressPieChart />
         </div>
       </ResponsiveGridLayout>
