@@ -634,7 +634,7 @@ const AreasWithOutstandingCasesTable = () => {
 };
 
 const FatalityRatioByAgeGroupInHubei = () => {
-  const pie_data = [
+  const data = [
     { x: "0-9", y: 0.000094 },
     { x: "10-19", y: 0.022 },
     { x: "20-29", y: 0.091 },
@@ -668,7 +668,7 @@ const FatalityRatioByAgeGroupInHubei = () => {
           <V.VictoryBar
             horizontal
             barRatio={0.8}
-            data={pie_data}
+            data={data}
             labels={({ datum }) => datum.y + "%"}
           />
           <V.VictoryAxis />
@@ -872,9 +872,16 @@ const WorldwideRecoveryProgressPieChart = () => {
           />
           <div className="pie-chart">
             <svg className="pie" width={310} height={310}>
-              <text x="50%" y="54%" textAnchor="middle">
-                {toPercentage(data.recovered, data.confirmed)}%
-              </text>
+              <V.VictoryLabel
+                textAnchor="middle"
+                x={155}
+                y={155}
+                style={{ fontSize: 30, fill: "#85b135" }}
+                text={toPercentage(data.recovered, data.confirmed) + "%"}
+              />
+              {/* <text x="50%" y="54%" textAnchor="middle"> */}
+              {/*   {toPercentage(data.recovered, data.confirmed)}% */}
+              {/* </text> */}
               <V.VictoryPie
                 colorScale={["#85b135", "#fb6361", "#073f5c"]}
                 innerRadius={70}
