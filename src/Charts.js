@@ -50,7 +50,7 @@ const CountriesDropDownMenu = ({ data, chosen, setChosen }) => {
   );
 };
 
-const LineChart = ({ data, x, y }) => {
+const BarChart = ({ data, x, y }) => {
   const axis_style = {
     grid: {
       stroke: "#f3f5f6",
@@ -59,7 +59,7 @@ const LineChart = ({ data, x, y }) => {
     }
   };
   return (
-    <div className="line-chart">
+    <div className="bar-chart">
       <V.VictoryChart
         containerComponent={
           <V.VictoryVoronoiContainer
@@ -73,7 +73,7 @@ const LineChart = ({ data, x, y }) => {
       >
         <V.VictoryAxis fixLabelOverlap />
         <V.VictoryAxis dependentAxis fixLabelOverlap style={axis_style} />
-        <V.VictoryLine data={data} x={x} y={y} />
+        <V.VictoryBar data={data} x={x} y={y} />
       </V.VictoryChart>
     </div>
   );
@@ -182,7 +182,7 @@ const DailyNewCasesInAnAreaLineChart = ({ area }) => {
               }
             ]}
           />
-          <LineChart data={data.statisticsData} x="dateId" y="confirmedIncr" />
+          <BarChart data={data.statisticsData} x="dateId" y="confirmedIncr" />
           <p className="footnote">
             Source: 丁香園（
             <a href="https://github.com/BlankerL/DXY-COVID-19-Crawler">
@@ -205,6 +205,7 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
   const [lineData, setLineData] = useState({});
   const CHART_TYPES = {
     newCases: "Daily New Cases in ",
+    newDeaths: "Daily Deaths in ",
     deathRate: "Fatality Rate in "
   };
   const ChartTitle = ({ chart_type, area_name }) => {
@@ -233,6 +234,20 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
           ).toFixed(2)
         }
       ],
+      newDeaths: [
+        {
+          heading: "Total deaths",
+          datum: data.deaths.slice(-1)[0].y
+        },
+        {
+          heading: "New deaths",
+          datum: data.newDeaths.slice(-1)[0].y
+        },
+        {
+          heading: "Fatality Rate",
+          datum: data.deathRate.slice(-1)[0].y + "%"
+        }
+      ],
       deathRate: [
         {
           heading: "Confirmed",
@@ -244,7 +259,7 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
         },
         {
           heading: "Fatality Rate",
-          datum: data.deathRate.slice(-1)[0].y
+          datum: data.deathRate.slice(-1)[0].y + "%"
         }
       ]
     }[chart_type]);
@@ -257,6 +272,7 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
       let cases = [],
         deaths = [],
         new_cases = [],
+        new_deaths = [],
         death_rate = [];
       for (const [key, value] of Object.entries(found.timeline.cases)) {
         cases.push({ x: key, y: value });
@@ -265,9 +281,13 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
         deaths.push({ x: key, y: value });
       }
       for (let i = 0; i < cases.length; i++) {
-        i === 0
-          ? new_cases.push({ x: cases[i].x, y: 0 })
-          : new_cases.push({ x: cases[i].x, y: cases[i].y - cases[i - 1].y });
+        if (i === 0) {
+          new_cases.push({ x: cases[i].x, y: 0 });
+          new_deaths.push({ x: deaths[i].x, y: 0 });
+        } else {
+          new_cases.push({ x: cases[i].x, y: cases[i].y - cases[i - 1].y });
+          new_deaths.push({ x: deaths[i].x, y: deaths[i].y - deaths[i - 1].y });
+        }
         death_rate.push({
           x: cases[i].x,
           y: toPercentage(deaths[i].y, cases[i].y) || 0
@@ -279,6 +299,7 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
         cases: cases,
         deaths: deaths,
         newCases: new_cases,
+        newDeaths: new_deaths,
         deathRate: death_rate
       });
     }
@@ -304,7 +325,7 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
             setChosen={setChosen}
           />
           <SmallTable items={getSTItems(chart_type, lineData)} />
-          <LineChart data={lineData[chart_type]} />
+          <BarChart data={lineData[chart_type]} />
           <p className="footnote">
             Source: John Hopkins University CSSE (
             <a href="https://github.com/NovelCOVID/API">NovelCOVID/API</a>)
@@ -725,7 +746,7 @@ const FatalityRateInAnAreaLineChart = ({ area }) => {
               }
             ]}
           />
-          <LineChart data={data.statisticsData} x="dateId" y="deathRate" />
+          <BarChart data={data.statisticsData} x="dateId" y="deathRate" />
           <p className="footnote">
             Source: 丁香園（
             <a href="https://github.com/BlankerL/DXY-COVID-19-Crawler">

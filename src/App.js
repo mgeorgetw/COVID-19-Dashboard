@@ -173,7 +173,7 @@ const App = () => {
           <Charts.DailyLineChartInAnArea chart_type="newCases" />
         </div>
         <div className="container" key="e2">
-          <Charts.DailyLineChartInAnArea chart_type="deathRate" />
+          <Charts.DailyLineChartInAnArea chart_type="newDeaths" />
         </div>
         <div className="container" key="f">
           <Charts.FatalityRatioByAgeGroupInHubei />
