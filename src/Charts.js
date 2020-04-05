@@ -422,7 +422,7 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
           "Korea, South",
           "US",
           "Japan",
-          "Hubei"
+          "France"
         ];
         let areas_data = [];
         for (let area of areas_to_find) {
