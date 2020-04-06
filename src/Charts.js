@@ -817,7 +817,7 @@ const DailyNewCasesWorldwideLineChart = () => {
                   labelComponent={<V.VictoryTooltip constrainToVisibleArea />}
                 />
               }
-              padding={{ top: 20, bottom: 40, left: 50, right: 20 }}
+              padding={{ top: 20, bottom: 40, left: 55, right: 20 }}
             >
               <V.VictoryAxis fixLabelOverlap />
               <V.VictoryAxis dependentAxis fixLabelOverlap style={axis_style} />
