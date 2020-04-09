@@ -43,6 +43,28 @@ const App = () => {
       PullToRefresh.destroyAll();
     };
   }, []);
+  const layoutuhd = [
+    { i: "0", x: 0, y: 0, w: 12, h: 2, static: true },
+    { i: "a", x: 0, y: 0, w: 12, h: 8 },
+    { i: "b", x: 0, y: 0, w: 3, h: 16 },
+    { i: "b2", x: 3, y: 0, w: 3, h: 16 },
+    { i: "d", x: 0, y: 0, w: 3, h: 16 },
+    { i: "e", x: 6, y: 0, w: 3, h: 16 },
+    { i: "e2", x: 9, y: 0, w: 3, h: 16 },
+    { i: "f", x: 0, y: 0, w: 3, h: 14 },
+    { i: "f2", x: 3, y: 0, w: 2, h: 13 }
+  ];
+  const layoutxxl = [
+    { i: "0", x: 0, y: 0, w: 12, h: 2, static: true },
+    { i: "a", x: 0, y: 0, w: 12, h: 8 },
+    { i: "b", x: 0, y: 0, w: 3, h: 12 },
+    { i: "b2", x: 3, y: 0, w: 3, h: 12 },
+    { i: "d", x: 0, y: 0, w: 3, h: 12 },
+    { i: "e", x: 6, y: 0, w: 3, h: 12 },
+    { i: "e2", x: 9, y: 0, w: 3, h: 12 },
+    { i: "f", x: 0, y: 0, w: 3, h: 12 },
+    { i: "f2", x: 3, y: 0, w: 3, h: 13 }
+  ];
   const layoutxl = [
     { i: "0", x: 0, y: 0, w: 12, h: 2, static: true },
     { i: "a", x: 0, y: 0, w: 12, h: 8 },
@@ -121,6 +143,8 @@ const App = () => {
     { i: "f2", x: 0, y: 0, w: 1, h: 14, isDraggable: false }
   ];
   const layouts = {
+    uhd: layoutuhd,
+    xxl: layoutxxl,
     xl: layoutxl,
     lg: layoutlg,
     md: layoutmd,
@@ -137,6 +161,8 @@ const App = () => {
         layouts={layouts}
         rowHeight={30}
         breakpoints={{
+          uhd: 2550,
+          xxl: 1650,
           xl: 1160,
           lg: 880,
           md: 680,
@@ -145,7 +171,17 @@ const App = () => {
           xxs: 362,
           min: 0
         }}
-        cols={{ xl: 12, lg: 12, md: 10, sm: 2, xs: 2, xxs: 1, min: 1 }}
+        cols={{
+          uhd: 12,
+          xxl: 12,
+          xl: 12,
+          lg: 12,
+          md: 10,
+          sm: 2,
+          xs: 2,
+          xxs: 1,
+          min: 1
+        }}
         margin={[10, 10]}
         containerPadding={[10, 10]}
       >
