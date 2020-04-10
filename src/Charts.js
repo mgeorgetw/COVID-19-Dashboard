@@ -190,16 +190,15 @@ const SmallTable = ({ items }) => {
   );
 };
 
-function calPercentage(numerator, denominator) {
-  return Number(((numerator / denominator) * 100).toFixed(2));
-}
+const calPercentage = (numerator, denominator) =>
+  Number(((numerator / denominator) * 100).toFixed(2));
 
-function sumValuesInObject(data, key) {
-  return data.reduce(
+const sumValuesInObject = (data, key) =>
+  data.reduce(
     (prev, cur) => (parseInt(prev) || 0) + (parseInt(cur[key]) || 0),
     0
   );
-}
+
 // Charts
 const DailyNewCasesInAnAreaLineChart = ({ area }) => {
   const [data, setData] = useState({ areaName: "", statisticsData: [] });
@@ -279,11 +278,11 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
     ({
       newCases: [
         {
-          heading: "2 days ago",
-          datum: data.newCases.slice(-2)[0].y
+          heading: "Total cases",
+          datum: data.cases.slice(-1)[0].y
         },
         {
-          heading: "Yesterday",
+          heading: "New cases",
           datum: data.newCases.slice(-1)[0].y
         },
         {
@@ -323,35 +322,35 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
       ]
     }[chart_type]);
   useEffect(() => {
+    // Helper functions
+    // Transposes {'Key': 'Value'} to {x: key, y:value}
+    const transposeKeyValue = data =>
+      Object.entries(data).map(([key, value]) => ({
+        // Shortens date string
+        x: key.replace(/\/\d{2}$/g, ""),
+        y: value
+      }));
+
+    // Calculates daily new cases & deaths
+    const calDailyDifference = data =>
+      data.map((cur, index, array) => ({
+        ...cur,
+        y: index > 0 ? cur.y - array[index - 1].y : 0
+      }));
+
     if (data) {
       let found = data.find(
         obj =>
           obj.province === chosen || (!obj.province && obj.country === chosen)
       );
-      let cases = [],
-        deaths = [],
-        new_cases = [],
-        new_deaths = [],
-        death_rate = [];
-      for (const [key, value] of Object.entries(found.timeline.cases)) {
-        cases.push({ x: key, y: value });
-      }
-      for (const [key, value] of Object.entries(found.timeline.deaths)) {
-        deaths.push({ x: key, y: value });
-      }
-      for (let i = 0; i < cases.length; i++) {
-        if (i === 0) {
-          new_cases.push({ x: cases[i].x, y: 0 });
-          new_deaths.push({ x: deaths[i].x, y: 0 });
-        } else {
-          new_cases.push({ x: cases[i].x, y: cases[i].y - cases[i - 1].y });
-          new_deaths.push({ x: deaths[i].x, y: deaths[i].y - deaths[i - 1].y });
-        }
-        death_rate.push({
-          x: cases[i].x,
-          y: calPercentage(deaths[i].y, cases[i].y) || 0
-        });
-      }
+      let cases = transposeKeyValue(found.timeline.cases);
+      let deaths = transposeKeyValue(found.timeline.deaths);
+      let new_cases = calDailyDifference(cases);
+      let new_deaths = calDailyDifference(deaths);
+      let death_rate = cases.map((cur, index) => ({
+        x: cur.x,
+        y: calPercentage(deaths[index].y, cur.y) || 0
+      }));
       setLineData({
         country: found.country,
         province: found.province,
