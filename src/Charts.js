@@ -580,7 +580,7 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
 
 const AreasWithOutstandingCasesTable2 = () => {
   const [{ data, isLoading, isError }] = useDataApiReducer(
-    "https://corona.lmao.ninja/countries",
+    "https://corona.lmao.ninja/v2/countries",
     []
   );
   const [sortBy, setSortBy] = useState("cases");
