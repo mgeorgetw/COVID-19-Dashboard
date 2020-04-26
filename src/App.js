@@ -215,7 +215,7 @@ const App = () => {
           <Charts.FatalityRatioByAgeGroupInHubei />
         </div>
         <div className="container" key="f2">
-          <Charts.WorldwideRecoveryProgressPieChart />
+          <Charts.WorldwideRecoveryProgressPieChart2 />
         </div>
       </ResponsiveGridLayout>
     </div>

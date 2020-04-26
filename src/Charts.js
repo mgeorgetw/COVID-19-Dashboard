@@ -964,6 +964,66 @@ const WorldwideRecoveryProgressPieChart = () => {
   );
 };
 
+const WorldwideRecoveryProgressPieChart2 = () => {
+  const [{ data, isLoading, isError }] = useDataApiReducer(
+    "https://corona.lmao.ninja/v2/all",
+    []
+  );
+  const pieData = [
+    { x: "Recovered", y: data.recovered },
+    { x: "Sick", y: data.active },
+    { x: "Deaths", y: data.deaths }
+  ];
+  return (
+    <>
+      <div className="chart-title">Worldwide Recovery Progress</div>
+      {isError && <div>Something went wrong</div>}
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <SmallTable
+            items={[
+              { heading: "Confirmed", datum: data.cases },
+              { heading: "Recovered", datum: data.recovered },
+              { heading: "Deaths", datum: data.deaths },
+              {
+                heading: "Death Rate",
+                datum: calPercentage(data.deaths, data.cases) + "%"
+              }
+            ]}
+          />
+          <div className="pie-chart">
+            <svg className="pie" width={310} height={310}>
+              <V.VictoryLabel
+                textAnchor="middle"
+                x={155}
+                y={155}
+                style={{ fontSize: 30, fill: "#85b135" }}
+                text={calPercentage(data.recovered, data.cases) + "%"}
+              />
+              <V.VictoryPie
+                colorScale={["#85b135", "#fb6361", "#073f5c"]}
+                innerRadius={70}
+                width={310}
+                height={310}
+                standalone={false}
+                data={pieData}
+                labels={({ datum }) => datum.x}
+              />
+            </svg>
+            <p className="footnote">
+              Source: Johns Hopkins University Center for Systems Science and
+              Engineering (
+              <a href="https://corona.lmao.ninja/">Novel COVID API</a>)
+            </p>
+          </div>
+        </>
+      )}
+    </>
+  );
+};
+
 export {
   AreasWithOutstandingCasesTable,
   AreasWithOutstandingCasesTable2,
@@ -974,5 +1034,6 @@ export {
   FatalityRatioByAgeGroupInHubei,
   FatalityRateInAnAreaLineChart,
   DailyNewCasesWorldwideLineChart,
-  WorldwideRecoveryProgressPieChart
+  WorldwideRecoveryProgressPieChart,
+  WorldwideRecoveryProgressPieChart2
 };

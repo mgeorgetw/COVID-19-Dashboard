@@ -34,6 +34,7 @@ module.exports = app => {
         res.send({ data: results_json.data });
       } catch (e) {
         console.error(e);
+        res.send(e);
       }
     }
     fetchData();
