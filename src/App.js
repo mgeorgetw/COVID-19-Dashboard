@@ -52,7 +52,7 @@ const App = () => {
     { i: "e", x: 6, y: 0, w: 3, h: 16 },
     { i: "e2", x: 9, y: 0, w: 3, h: 16 },
     { i: "f", x: 0, y: 0, w: 3, h: 14 },
-    { i: "f2", x: 3, y: 0, w: 2, h: 13 }
+    { i: "f2", x: 3, y: 0, w: 3, h: 13 }
   ];
   const layoutxxl = [
     { i: "0", x: 0, y: 0, w: 12, h: 2, static: true },
@@ -74,7 +74,7 @@ const App = () => {
     { i: "e", x: 0, y: 0, w: 6, h: 18 },
     { i: "e2", x: 6, y: 0, w: 6, h: 18 },
     { i: "f", x: 0, y: 0, w: 5, h: 14 },
-    { i: "f2", x: 6, y: 0, w: 3, h: 13 }
+    { i: "f2", x: 6, y: 0, w: 5, h: 13 }
   ];
   const layoutlg = [
     { i: "0", x: 0, y: 0, w: 12, h: 2, static: true },
