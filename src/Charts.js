@@ -256,7 +256,7 @@ const DailyNewCasesInAnAreaLineChart = ({ area }) => {
 
 const DailyLineChartInAnArea = ({ chart_type }) => {
   const [{ data, isLoading, isError }] = useDataApi(
-    "https://corona.lmao.ninja/v2/historical",
+    "https://disease.sh/v2/historical",
     null
   );
   const [chosen, setChosen] = useState("USA");
@@ -581,7 +581,7 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
 
 const AreasWithOutstandingCasesTable2 = () => {
   const [{ data, isLoading, isError }] = useDataApiReducer(
-    "https://corona.lmao.ninja/v2/countries",
+    "https://disease.sh/v2/countries",
     []
   );
   const [sortBy, setSortBy] = useState("cases");
@@ -967,7 +967,7 @@ const WorldwideRecoveryProgressPieChart = () => {
 
 const WorldwideRecoveryProgressPieChart2 = () => {
   const [{ data, isLoading, isError }] = useDataApiReducer(
-    "https://corona.lmao.ninja/v2/all",
+    "https://disease.sh/v2/all",
     []
   );
   const pieData = [
@@ -1015,8 +1015,7 @@ const WorldwideRecoveryProgressPieChart2 = () => {
             </svg>
             <p className="footnote">
               Source: Johns Hopkins University Center for Systems Science and
-              Engineering (
-              <a href="https://corona.lmao.ninja/">Novel COVID API</a>)
+              Engineering (<a href="https://disease.sh/">Novel COVID API</a>)
             </p>
           </div>
         </>
