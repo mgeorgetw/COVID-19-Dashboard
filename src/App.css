@@ -2,9 +2,49 @@
 
 .App {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  max-width: 80em;
+  margin: 0 auto;
+  width: 100%;
 }
 
-.container {
+.flex-card-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+ul.flex-card-list {
+  padding-left: 0;
+  box-sizing: border-box;
+}
+
+.flex-card-listitem {
+  display: flex;
+}
+
+.full-width {
+  flex: 1 0 100%;
+}
+
+/* Code to adjust the layout to 2 cards per row */
+@media all and (min-width: 40em) {
+  /* Float layout */
+  .flex-card-list li {
+    width: 50%;
+    /*padding-left: 1em;*/
+  }
+}
+
+/* Code to adjust the layout to 3 cards per row */
+.flex-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+}
+
+.flex-card-content {
+  display: flex;
+  flex: 1 0 auto; /* We have to add a basis for IE10/11 */
+  flex-direction: column;
 }
 
 /*fix dragging on mobile*/
@@ -124,7 +164,7 @@ div.set-title {
 .small-table {
   display: inline-block;
   float: right;
-  margin-right: 10px;
+  /*margin-right: 10px;*/
   margin-bottom: 0;
   text-align: center;
 }

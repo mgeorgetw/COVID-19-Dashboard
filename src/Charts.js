@@ -530,7 +530,7 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
                 labelComponent={<V.VictoryTooltip constrainToVisibleArea />}
               />
             }
-            padding={{ top: 20, bottom: 40, left: 60, right: 20 }}
+            padding={{ top: 20, bottom: 40, left: 70, right: 20 }}
             scale={{ x: "time", y: "linear" }}
             minDomain={{ x: 30 }}
           >
@@ -558,7 +558,7 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
               colorScale={"qualitative"}
               orientation="horizontal"
               itemsPerRow={3}
-              x={60}
+              x={70}
               y={20}
               data={data.map(d => ({
                 name: d.province ? d.province : d.country
@@ -995,10 +995,10 @@ const WorldwideRecoveryProgressPieChart2 = () => {
             ]}
           />
           <div className="pie-chart">
-            <svg className="pie" width={330} height={300}>
+            <svg className="pie" width={310} height={300}>
               <V.VictoryLabel
                 textAnchor="middle"
-                x={165}
+                x={147}
                 y={150}
                 style={{ fontSize: 30, fill: "#85b135" }}
                 text={calPercentage(data.recovered, data.cases) + "%"}
@@ -1006,7 +1006,7 @@ const WorldwideRecoveryProgressPieChart2 = () => {
               <V.VictoryPie
                 colorScale={["#85b135", "#fb6361", "#073f5c"]}
                 innerRadius={70}
-                width={330}
+                width={294}
                 height={300}
                 standalone={false}
                 data={pieData}
