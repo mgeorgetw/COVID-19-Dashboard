@@ -490,13 +490,11 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
         // Areas selected arbitrarily
         // TODO: An UI for user to choose which areas to be shown
         const areas_to_find = [
-          "Italy",
-          "Iran",
-          "Spain",
-          "Germany",
-          "Turkey",
           "US",
-          "Japan",
+          "Brazil",
+          "Spain",
+          "Mexico",
+          "Turkey",
           "Russia",
           "Singapore"
         ];
