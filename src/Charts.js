@@ -493,10 +493,11 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
           "US",
           "Brazil",
           "Spain",
-          "Mexico",
           "Turkey",
           "Russia",
-          "Singapore"
+          "Singapore",
+          "India",
+          "Peru"
         ];
         let areas_data = [];
         for (let area of areas_to_find) {
