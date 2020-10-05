@@ -1,30 +1,63 @@
 import React, { useState, useEffect, useReducer, useCallback } from "react";
 import * as V from "victory";
 
+// Helper function
+const CheckError = response => {
+  if (response.ok) {
+    return response.json();
+  } else {
+    throw Error(response.statusText);
+  }
+};
+
+// Transposes {'Key': 'Value'} to {x: key, y:value}
+const transposeKeyValue = data =>
+  Object.entries(data).map(([key, value]) => ({
+    // Shortens date string
+    x: key.replace(/\/\d{2}$/g, ""),
+    y: value
+  }));
+
+// Calculates daily new cases & deaths
+const calDailyDifference = data =>
+  data.map((cur, index, array) => ({
+    ...cur,
+    y: index > 0 ? cur.y - array[index - 1].y : 0
+  }));
+
+const calPercentage = (numerator, denominator) =>
+  Number(((numerator / denominator) * 100).toFixed(2));
+
+//const sumValuesInObject = (data, key) =>
+//data.reduce(
+//(prev, cur) => (parseInt(prev) || 0) + (parseInt(cur[key]) || 0),
+//0
+//);
+
 // API Users
 // Generic hook to fetch data v1
-const useDataApi = (initialUrl, initialData, transformFn) => {
-  const [data, setData] = useState(initialData);
-  const [url, setUrl] = useState(initialUrl);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsError(false);
-      setIsLoading(true);
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-        setData((transformFn && transformFn(data)) || data);
-      } catch (error) {
-        setIsError(true);
-      }
-      setIsLoading(false);
-    };
-    fetchData();
-  }, [url, transformFn]);
-  return [{ data, isLoading, isError }, setUrl];
-};
+//const useDataApi = (initialUrl, initialData, transformFn) => {
+//const [data, setData] = useState(initialData);
+//const [url, setUrl] = useState(initialUrl);
+//const [isLoading, setIsLoading] = useState(true);
+//const [isError, setIsError] = useState(false);
+//useEffect(() => {
+//const fetchData = async () => {
+//setIsError(false);
+//setIsLoading(true);
+//try {
+//const data = await fetch(url).then(CheckError);
+//setData((transformFn && transformFn(data)) || data);
+//} catch (error) {
+//setIsError(true);
+//console.error(error);
+//}
+//setIsLoading(false);
+//};
+//fetchData();
+//}, [url, transformFn]);
+//return [{ data, isLoading, isError }, setUrl];
+//};
 
 const dataFetchReducer = (state, action) => {
   switch (action.type) {
@@ -63,8 +96,7 @@ const useDataApiReducer = (initialUrl, initialData, transformFn) => {
     const fetchData = async () => {
       dispatch({ type: "FETCH_INIT" });
       try {
-        const response = await fetch(url);
-        const data = await response.json();
+        const data = await fetch(url).then(CheckError);
         dispatch({
           type: "FETCH_SUCCESS",
           payload: (transformFn && transformFn(data)) || data
@@ -190,15 +222,6 @@ const SmallTable = ({ items }) => {
   );
 };
 
-const calPercentage = (numerator, denominator) =>
-  Number(((numerator / denominator) * 100).toFixed(2));
-
-const sumValuesInObject = (data, key) =>
-  data.reduce(
-    (prev, cur) => (parseInt(prev) || 0) + (parseInt(cur[key]) || 0),
-    0
-  );
-
 // Charts
 const DailyNewCasesInAnAreaLineChart = ({ area }) => {
   const [data, setData] = useState({ areaName: "", statisticsData: [] });
@@ -255,7 +278,7 @@ const DailyNewCasesInAnAreaLineChart = ({ area }) => {
 };
 
 const DailyLineChartInAnArea = ({ chart_type }) => {
-  const [{ data, isLoading, isError }] = useDataApi(
+  const [{ data, isLoading, isError }] = useDataApiReducer(
     "https://disease.sh/v2/historical",
     null
   );
@@ -279,65 +302,55 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
       newCases: [
         {
           heading: "Total cases",
-          datum: data.cases.slice(-1)[0].y
+          datum: data.cases ? data.cases.slice(-1)[0].y : "loading"
         },
         {
           heading: "New cases",
-          datum: data.newCases.slice(-1)[0].y
+          datum: data.newCases ? data.newCases.slice(-1)[0].y : "loading"
         },
         {
           heading: "Growth Factor",
-          datum: (
-            data.newCases.slice(-1)[0].y / data.newCases.slice(-2)[0].y
-          ).toFixed(2)
+          datum: data.newCases
+            ? (
+                data.newCases.slice(-1)[0].y / data.newCases.slice(-2)[0].y
+              ).toFixed(2)
+            : "loading"
         }
       ],
       newDeaths: [
         {
           heading: "Total deaths",
-          datum: data.deaths.slice(-1)[0].y
+          datum: data.deaths ? data.deaths.slice(-1)[0].y : "loading"
         },
         {
           heading: "New deaths",
-          datum: data.newDeaths.slice(-1)[0].y
+          datum: data.newDeaths ? data.newDeaths.slice(-1)[0].y : "loading"
         },
         {
           heading: "Fatality Rate",
-          datum: data.deathRate.slice(-1)[0].y + "%"
+          datum: data.deathRate
+            ? data.deathRate.slice(-1)[0].y + "%"
+            : "loading"
         }
       ],
       deathRate: [
         {
           heading: "Confirmed",
-          datum: data.cases.slice(-1)[0].y
+          datum: data.cases ? data.cases.slice(-1)[0].y : "loading"
         },
         {
           heading: "Deaths",
-          datum: data.deaths.slice(-1)[0].y
+          datum: data.deaths ? data.deaths.slice(-1)[0].y : "loading"
         },
         {
           heading: "Fatality Rate",
-          datum: data.deathRate.slice(-1)[0].y + "%"
+          datum: data.deathRate
+            ? data.deathRate.slice(-1)[0].y + "%"
+            : "loading"
         }
       ]
     }[chart_type]);
   useEffect(() => {
-    // Helper functions
-    // Transposes {'Key': 'Value'} to {x: key, y:value}
-    const transposeKeyValue = data =>
-      Object.entries(data).map(([key, value]) => ({
-        // Shortens date string
-        x: key.replace(/\/\d{2}$/g, ""),
-        y: value
-      }));
-
-    // Calculates daily new cases & deaths
-    const calDailyDifference = data =>
-      data.map((cur, index, array) => ({
-        ...cur,
-        y: index > 0 ? cur.y - array[index - 1].y : 0
-      }));
-
     if (data) {
       let found = data.find(
         obj =>
@@ -493,9 +506,9 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
           "US",
           "Brazil",
           "Spain",
-          "Turkey",
+          "Colombia",
           "Russia",
-          "Singapore",
+          "South Africa",
           "India",
           "Peru"
         ];
@@ -578,7 +591,7 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
   );
 };
 
-const AreasWithOutstandingCasesTable2 = () => {
+const AreasWithOutstandingCasesTable = () => {
   const [{ data, isLoading, isError }] = useDataApiReducer(
     "https://disease.sh/v2/countries",
     []
@@ -657,60 +670,6 @@ const AreasWithOutstandingCasesTable2 = () => {
   );
 };
 
-const AreasWithOutstandingCasesTable = () => {
-  const [{ data, isLoading, isError }] = useDataApiReducer(
-    "/daily_reports",
-    []
-  );
-  return (
-    <>
-      <div className="chart-title">Areas with Outstanding Cases</div>
-      {isError && <div>Something went wrong</div>}
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        <>
-          <div className="area-data-sets">
-            {data
-              .sort((a, b) => b.Confirmed - a.Confirmed)
-              .slice(0, 10)
-              .map(d => (
-                <div
-                  className="data-set"
-                  key={
-                    d["Province_State"]
-                      ? d["Province_State"]
-                      : d["Country_Region"]
-                  }
-                >
-                  <div className="country-name">{d["Combined_Key"]}</div>
-                  <div className="set-title">Confirmed</div>
-                  <div className="confirmed-count numerical-data">
-                    {d["Confirmed"]}
-                  </div>
-                  <div className="set-title">Deaths</div>
-                  <div className="dead-count numerical-data">{d["Deaths"]}</div>
-                  <div className="set-title">Death Rate</div>
-                  <div className="current-dead-rate numerical-data">
-                    {calPercentage(d["Deaths"], d["Confirmed"])}%
-                  </div>
-                </div>
-              ))}
-          </div>
-          <p className="footnote">
-            Source: Johns Hopkins University Center for Systems Science and
-            Engineering (
-            <a href="https://github.com/CSSEGISandData/COVID-19">
-              CSSEGISandData/COVID-19
-            </a>
-            )
-          </p>
-        </>
-      )}
-    </>
-  );
-};
-
 const FatalityRatioByAgeGroupInHubei = () => {
   const data = [
     { x: "0-9", y: 0.000094 },
@@ -763,68 +722,72 @@ const FatalityRatioByAgeGroupInHubei = () => {
   );
 };
 
-const FatalityRateInAnAreaLineChart = ({ area }) => {
-  const [data, setData] = useState({ areaName: "", statisticsData: [] });
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    async function getData() {
-      try {
-        setIsLoading(true);
-        const response = await fetch(`area_timeseries?area=${area}`);
-        const data = await response.json();
-        setData(data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getData();
-  }, [area]);
-  return (
-    <>
-      <div className="chart-title">Fatality Rate in {data.areaName}</div>
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        <>
-          <SmallTable
-            items={[
-              {
-                heading: "Confirmed",
-                datum: data.statisticsData.slice(-1)[0].confirmedCount
-              },
-              {
-                heading: "Deaths",
-                datum: data.statisticsData.slice(-1)[0].deadCount
-              },
-              {
-                heading: "Fatality Rate",
-                datum: data.statisticsData.slice(-1)[0].deathRate + "%"
-              }
-            ]}
-          />
-          <BarChart data={data.statisticsData} x="dateId" y="deathRate" />
-          <p className="footnote">
-            Source: 丁香園（
-            <a href="https://github.com/BlankerL/DXY-COVID-19-Crawler">
-              DXY-COVID-19-Crawler
-            </a>
-            ）
-          </p>
-        </>
-      )}
-    </>
-  );
-};
+//const FatalityRateInAnAreaLineChart = ({ area }) => {
+//const [data, setData] = useState({ areaName: "", statisticsData: [] });
+//const [isLoading, setIsLoading] = useState(true);
+//useEffect(() => {
+//async function getData() {
+//try {
+//setIsLoading(true);
+//const response = await fetch(`area_timeseries?area=${area}`);
+//const data = await response.json();
+//setData(data);
+//setIsLoading(false);
+//} catch (error) {
+//console.error(error);
+//}
+//}
+//getData();
+//}, [area]);
+//return (
+//<>
+//<div className="chart-title">Fatality Rate in {data.areaName}</div>
+//{isLoading ? (
+//<LoadingSpinner />
+//) : (
+//<>
+//<SmallTable
+//items={[
+//{
+//heading: "Confirmed",
+//datum: data.statisticsData.slice(-1)[0].confirmedCount
+//},
+//{
+//heading: "Deaths",
+//datum: data.statisticsData.slice(-1)[0].deadCount
+//},
+//{
+//heading: "Fatality Rate",
+//datum: data.statisticsData.slice(-1)[0].deathRate + "%"
+//}
+//]}
+///>
+//<BarChart data={data.statisticsData} x="dateId" y="deathRate" />
+//<p className="footnote">
+//Source: 丁香園（
+//<a href="https://github.com/BlankerL/DXY-COVID-19-Crawler">
+//DXY-COVID-19-Crawler
+//</a>
+//）
+//</p>
+//</>
+//)}
+//</>
+//);
+//};
 
 const DailyNewCasesWorldwideLineChart = () => {
-  const replaceDate = dataItem => ({
-    ...dataItem,
-    reportDate: dataItem.reportDate.replace(/-/g, "/").replace(/^\d{4}\//g, "")
-  });
-  const transformFn = useCallback(data => data.map(replaceDate), []);
+  const transformFn = useCallback(data => {
+    if (data) {
+      let cases = transposeKeyValue(data.cases);
+      let deaths = transposeKeyValue(data.deaths);
+      let new_cases = calDailyDifference(cases);
+      let new_deaths = calDailyDifference(deaths);
+      return { cases, deaths, new_cases, new_deaths };
+    }
+  }, []);
   const [{ data, isLoading, isError }] = useDataApiReducer(
-    "https://covid.mathdro.id/api/daily",
+    "https://disease.sh/v3/covid-19/historical/all?lastdays=all",
     [],
     transformFn
   );
@@ -847,18 +810,20 @@ const DailyNewCasesWorldwideLineChart = () => {
             items={[
               {
                 heading: "2 days ago",
-                datum: data.slice(-2)[0].deltaConfirmed
+                datum: data ? data.new_cases.slice(-2)[0].y : "loading"
               },
               {
                 heading: "Yesterday",
-                datum: data.slice(-1)[0].deltaConfirmed
+                datum: data ? data.new_cases.slice(-1)[0].y : "loading"
               },
               {
                 heading: "Growth Factor",
-                datum: (
-                  data.slice(-1)[0].deltaConfirmed /
-                  data.slice(-2)[0].deltaConfirmed
-                ).toFixed(2)
+                datum: data
+                  ? (
+                      data.new_cases.slice(-1)[0].y /
+                      data.new_cases.slice(-2)[0].y
+                    ).toFixed(2)
+                  : "loading"
               }
             ]}
           />
@@ -866,7 +831,7 @@ const DailyNewCasesWorldwideLineChart = () => {
             <V.VictoryChart
               containerComponent={
                 <V.VictoryVoronoiContainer
-                  labels={({ datum }) => `${datum["reportDate"]}: ${datum._y}`}
+                  labels={({ datum }) => `${datum.x}: ${datum._y}`}
                   labelComponent={<V.VictoryTooltip constrainToVisibleArea />}
                 />
               }
@@ -874,16 +839,12 @@ const DailyNewCasesWorldwideLineChart = () => {
             >
               <V.VictoryAxis fixLabelOverlap />
               <V.VictoryAxis dependentAxis fixLabelOverlap style={axis_style} />
-              <V.VictoryArea data={data} x="reportDate" y="deltaConfirmed" />
+              <V.VictoryArea data={data.new_cases} />
             </V.VictoryChart>
           </div>
           <p className="footnote">
             Source: Johns Hopkins University Center for Systems Science and
-            Engineering (
-            <a href="https://github.com/mathdroid/covid-19-api">
-              mathdroid/covid-19-api
-            </a>
-            )
+            Engineering (<a href="https://disease.sh/">Novel COVID API</a>)
           </p>
         </>
       )}
@@ -892,79 +853,6 @@ const DailyNewCasesWorldwideLineChart = () => {
 };
 
 const WorldwideRecoveryProgressPieChart = () => {
-  const transformFn = useCallback(data => {
-    let confirmed = sumValuesInObject(data.data, "Confirmed");
-    let deaths = sumValuesInObject(data.data, "Deaths");
-    let recovered = sumValuesInObject(data.data, "Recovered");
-    let deathRate = calPercentage(deaths, confirmed);
-    return {
-      confirmed: confirmed,
-      deaths: deaths,
-      recovered: recovered,
-      deathRate: deathRate
-    };
-  }, []);
-  const [{ data, isLoading, isError }] = useDataApiReducer(
-    "/daily_reports",
-    [],
-    transformFn
-  );
-  const pieData = [
-    { x: "Recovered", y: data.recovered },
-    { x: "Sick", y: data.confirmed - data.deaths - data.recovered },
-    { x: "Deaths", y: data.deaths }
-  ];
-  return (
-    <>
-      <div className="chart-title">Worldwide Recovery Progress</div>
-      {isError && <div>Something went wrong</div>}
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        <>
-          <SmallTable
-            items={[
-              { heading: "Confirmed", datum: data.confirmed },
-              { heading: "Recovered", datum: data.recovered },
-              { heading: "Deaths", datum: data.deaths },
-              { heading: "Death Rate", datum: data.deathRate + "%" }
-            ]}
-          />
-          <div className="pie-chart">
-            <svg className="pie" width={310} height={310}>
-              <V.VictoryLabel
-                textAnchor="middle"
-                x={155}
-                y={155}
-                style={{ fontSize: 30, fill: "#85b135" }}
-                text={calPercentage(data.recovered, data.confirmed) + "%"}
-              />
-              <V.VictoryPie
-                colorScale={["#85b135", "#fb6361", "#073f5c"]}
-                innerRadius={70}
-                width={310}
-                height={310}
-                standalone={false}
-                data={pieData}
-                labels={({ datum }) => datum.x}
-              />
-            </svg>
-            <p className="footnote">
-              Source: Johns Hopkins University Center for Systems Science and
-              Engineering (
-              <a href="https://github.com/CSSEGISandData/COVID-19">
-                CSSEGISandData/COVID-19
-              </a>
-              )
-            </p>
-          </div>
-        </>
-      )}
-    </>
-  );
-};
-
-const WorldwideRecoveryProgressPieChart2 = () => {
   const [{ data, isLoading, isError }] = useDataApiReducer(
     "https://disease.sh/v2/all",
     []
@@ -1025,14 +913,11 @@ const WorldwideRecoveryProgressPieChart2 = () => {
 
 export {
   AreasWithOutstandingCasesTable,
-  AreasWithOutstandingCasesTable2,
   DailyNewCasesInAnAreaLineChart,
   DailyLineChartInAnArea,
   ConfirmedCasesChinaVsWorldLineChart,
   ConfirmedCasesInSelectedCountriesLineChart,
   FatalityRatioByAgeGroupInHubei,
-  FatalityRateInAnAreaLineChart,
   DailyNewCasesWorldwideLineChart,
-  WorldwideRecoveryProgressPieChart,
-  WorldwideRecoveryProgressPieChart2
+  WorldwideRecoveryProgressPieChart
 };
