@@ -52,9 +52,9 @@ const App = () => {
         <h2 className="title-date">{getToday()}</h2>
       </div>
       <ul className="flex-card-list">
-        <li className="flex-card-listitem full-width">
+        <li className="flex-card-listitem">
           <div className="flex-card">
-            <Charts.AreasWithOutstandingCasesTable />
+            <Charts.WorldwideRecoveryProgressPieChart />
           </div>
         </li>
         <li className="flex-card-listitem">
@@ -62,9 +62,9 @@ const App = () => {
             <Charts.DailyNewCasesWorldwideLineChart />
           </div>
         </li>
-        <li className="flex-card-listitem">
+        <li className="flex-card-listitem full-width">
           <div className="flex-card">
-            <Charts.ConfirmedCasesInSelectedCountriesLineChart />
+            <Charts.AreasWithOutstandingCasesTable />
           </div>
         </li>
         <li className="flex-card-listitem">
@@ -79,16 +79,15 @@ const App = () => {
         </li>
         <li className="flex-card-listitem">
           <div className="flex-card">
-            <Charts.FatalityRatioByAgeGroupInHubei />
+            <Charts.ConfirmedCasesInSelectedCountriesLineChart />
           </div>
         </li>
         <li className="flex-card-listitem">
           <div className="flex-card">
-            <Charts.WorldwideRecoveryProgressPieChart />
+            <Charts.FatalityRatioByAgeGroupInHubei />
           </div>
         </li>
       </ul>
-      {/*   <Charts.ConfirmedCasesChinaVsWorldLineChart /> */}
     </div>
   );
 };

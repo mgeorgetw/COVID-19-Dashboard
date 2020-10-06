@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import * as V from "victory";
 
 // Helper function
@@ -36,79 +36,81 @@ const calPercentage = (numerator, denominator) =>
 
 // API Users
 // Generic hook to fetch data v1
-//const useDataApi = (initialUrl, initialData, transformFn) => {
-//const [data, setData] = useState(initialData);
-//const [url, setUrl] = useState(initialUrl);
-//const [isLoading, setIsLoading] = useState(true);
-//const [isError, setIsError] = useState(false);
-//useEffect(() => {
-//const fetchData = async () => {
-//setIsError(false);
-//setIsLoading(true);
-//try {
-//const data = await fetch(url).then(CheckError);
-//setData((transformFn && transformFn(data)) || data);
-//} catch (error) {
-//setIsError(true);
-//console.error(error);
-//}
-//setIsLoading(false);
-//};
-//fetchData();
-//}, [url, transformFn]);
-//return [{ data, isLoading, isError }, setUrl];
-//};
-
-const dataFetchReducer = (state, action) => {
-  switch (action.type) {
-    case "FETCH_INIT":
-      return {
-        ...state,
-        isLoading: true,
-        isError: false
-      };
-    case "FETCH_SUCCESS":
-      return {
-        ...state,
-        isLoading: false,
-        isError: false,
-        data: action.payload
-      };
-    case "FETCH_FAILURE":
-      return {
-        ...state,
-        isLoading: false,
-        isError: true
-      };
-    default:
-      throw new Error();
-  }
-};
-
-const useDataApiReducer = (initialUrl, initialData, transformFn) => {
+const useDataApi = (initialUrl, initialData, transformFn) => {
+  const [data, setData] = useState(initialData);
   const [url, setUrl] = useState(initialUrl);
-  const [state, dispatch] = useReducer(dataFetchReducer, {
-    isLoading: true,
-    isError: false,
-    data: initialData
-  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
-      dispatch({ type: "FETCH_INIT" });
       try {
         const data = await fetch(url).then(CheckError);
-        dispatch({
-          type: "FETCH_SUCCESS",
-          payload: (transformFn && transformFn(data)) || data
-        });
+        setData((transformFn && transformFn(data)) || data);
       } catch (error) {
-        dispatch({ type: "FETCH_FAILURE" });
+        setIsError(true);
+        console.error(error);
       }
+      setIsLoading(false);
     };
     fetchData();
   }, [transformFn, url]);
-  return [state, setUrl];
+  return [{ data, isLoading, isError }, setUrl];
 };
+
+//const dataFetchReducer = (state, action) => {
+//switch (action.type) {
+//case "FETCH_INIT":
+//return {
+//...state,
+//isLoading: true,
+//isError: false
+//};
+//case "FETCH_SUCCESS":
+//return {
+//...state,
+//isLoading: false,
+//isError: false,
+//data: action.payload
+//};
+//case "FETCH_FAILURE":
+//return {
+//...state,
+//isLoading: false,
+//isError: true
+//};
+//default:
+//throw new Error();
+//}
+//};
+
+//const useDataApiReducer = (initialUrl, initialData, transformFn) => {
+//console.log("API reducer called!");
+//const [url, setUrl] = useState(initialUrl);
+//const [state, dispatch] = useReducer(dataFetchReducer, {
+//isLoading: true,
+//isError: false,
+//data: initialData
+//});
+//useEffect(() => {
+//const fetchData = async () => {
+//dispatch({ type: "FETCH_INIT" });
+//console.log("reducer init!");
+//try {
+//const data = await fetch(url).then(CheckError);
+//dispatch({
+//type: "FETCH_SUCCESS",
+//payload: (transformFn && transformFn(data)) || data
+//});
+//console.log("reducer fetched!");
+//} catch (error) {
+//dispatch({ type: "FETCH_FAILURE" });
+//}
+//};
+//fetchData();
+//}, [transformFn, url]);
+//console.log("reducer state:", state);
+//return [state, setUrl];
+//};
 
 // SMALL COMPONENTS / HELPER FUNCTIONS
 const CountriesDropDownMenu = ({ data, chosen, setChosen }) => {
@@ -223,62 +225,8 @@ const SmallTable = ({ items }) => {
 };
 
 // Charts
-const DailyNewCasesInAnAreaLineChart = ({ area }) => {
-  const [data, setData] = useState({ areaName: "", statisticsData: [] });
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    async function getData() {
-      try {
-        setIsLoading(true);
-        const response = await fetch(`area_timeseries?area=${area}`);
-        const data = await response.json();
-        setData(data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getData();
-  }, [area]);
-  return (
-    <>
-      <div className="chart-title">Daily New Cases in {data.areaName}</div>
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        <>
-          <SmallTable
-            items={[
-              {
-                heading: "2 days ago",
-                datum: data.statisticsData.slice(-2)[0].confirmedIncr
-              },
-              {
-                heading: "Yesterday",
-                datum: data.statisticsData.slice(-1)[0].confirmedIncr
-              },
-              {
-                heading: "Growth Factor",
-                datum: data.statisticsData.slice(-1)[0].growthFactor
-              }
-            ]}
-          />
-          <BarChart data={data.statisticsData} x="dateId" y="confirmedIncr" />
-          <p className="footnote">
-            Source: 丁香園（
-            <a href="https://github.com/BlankerL/DXY-COVID-19-Crawler">
-              DXY-COVID-19-Crawler
-            </a>
-            ）
-          </p>
-        </>
-      )}
-    </>
-  );
-};
-
 const DailyLineChartInAnArea = ({ chart_type }) => {
-  const [{ data, isLoading, isError }] = useDataApiReducer(
+  const [{ data, isLoading, isError }] = useDataApi(
     "https://disease.sh/v2/historical",
     null
   );
@@ -377,111 +325,113 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
   }, [data, chosen]);
   return (
     <>
-      {isError && <div>Something went wrong</div>}
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        <div className="chart-container">
-          <ChartTitle
-            chart_type={chart_type}
-            area_name={
-              lineData.province
-                ? lineData.province + ", " + lineData.country
-                : lineData.country
-            }
-          />
-          <CountriesDropDownMenu
-            data={data}
-            chosen={chosen}
-            setChosen={setChosen}
-          />
-          <SmallTable items={getSTItems(chart_type, lineData)} />
-          <BarChart data={lineData[chart_type]} />
-          <p className="footnote">
-            Source: John Hopkins University CSSE (
-            <a href="https://github.com/NovelCOVID/API">NovelCOVID/API</a>)
-          </p>
-        </div>
-      )}
+      <div className="chart-container">
+        <ChartTitle
+          chart_type={chart_type}
+          area_name={
+            lineData.province
+              ? lineData.province + ", " + lineData.country
+              : lineData.country
+          }
+        />
+        {isError && <div>Something went wrong</div>}
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : (
+          <>
+            <CountriesDropDownMenu
+              data={data}
+              chosen={chosen}
+              setChosen={setChosen}
+            />
+            <SmallTable items={getSTItems(chart_type, lineData)} />
+            <BarChart data={lineData[chart_type]} />
+            <p className="footnote">
+              Source: John Hopkins University CSSE (
+              <a href="https://github.com/NovelCOVID/API">NovelCOVID/API</a>)
+            </p>
+          </>
+        )}
+      </div>
     </>
   );
 };
 
-const ConfirmedCasesChinaVsWorldLineChart = () => {
-  const replaceDate = dataItem => ({
-    ...dataItem,
-    reportDate: dataItem.reportDate.replace(/-/g, "/").replace(/^\d{4}\//g, "")
-  });
-  const transformFn = useCallback(data => data.map(replaceDate), []);
-  const [{ data, isLoading, isError }] = useDataApiReducer(
-    "https://covid.mathdro.id/api/daily",
-    [],
-    transformFn
-  );
-  return (
-    <>
-      {isError && <div>Something went wrong</div>}
-      <div className="chart-title">Confirmed Cases</div>
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        <>
-          <SmallTable
-            items={[
-              { heading: "China", datum: data.slice(-1)[0].mainlandChina },
-              {
-                heading: "Other",
-                datum: data.slice(-1)[0].otherLocations
-              }
-            ]}
-          />
-          <div className="line-chart">
-            <V.VictoryChart
-              containerComponent={
-                <V.VictoryVoronoiContainer
-                  labels={({ datum }) => `${datum["reportDate"]}: ${datum._y}`}
-                  labelComponent={<V.VictoryTooltip constrainToVisibleArea />}
-                />
-              }
-              padding={{ top: 20, bottom: 40, left: 60, right: 20 }}
-            >
-              <V.VictoryAxis fixLabelOverlap />
-              <V.VictoryAxis
-                dependentAxis
-                fixLabelOverlap
-                style={{
-                  grid: {
-                    stroke: "#f3f5f6",
-                    strokeWidth: 2,
-                    strokeDasharray: "15,15"
-                  }
-                }}
-              />
-              <V.VictoryGroup colorScale={["#fb6361", "black"]}>
-                <V.VictoryLine data={data} x="reportDate" y="mainlandChina" />
-                <V.VictoryLine data={data} x="reportDate" y="otherLocations" />
-              </V.VictoryGroup>
-              <V.VictoryLegend
-                colorScale={["#fb6361", "black"]}
-                x={60}
-                y={20}
-                data={[{ name: "China" }, { name: "Other Countries" }]}
-              />
-            </V.VictoryChart>
-          </div>
-          <p className="footnote">
-            Source: Johns Hopkins University Center for Systems Science and
-            Engineering (
-            <a href="https://github.com/mathdroid/covid-19-api">
-              mathdroid/covid-19-api
-            </a>
-            )
-          </p>
-        </>
-      )}
-    </>
-  );
-};
+//const ConfirmedCasesChinaVsWorldLineChart = () => {
+//const replaceDate = dataItem => ({
+//...dataItem,
+//reportDate: dataItem.reportDate.replace(/-/g, "/").replace(/^\d{4}\//g, "")
+//});
+//const transformFn = useCallback(data => data.map(replaceDate), []);
+//const [{ data, isLoading, isError }] = useDataApi(
+//"https://covid.mathdro.id/api/daily",
+//[],
+//transformFn
+//);
+//return (
+//<>
+//{isError && <div>Something went wrong</div>}
+//<div className="chart-title">Confirmed Cases</div>
+//{isLoading ? (
+//<LoadingSpinner />
+//) : (
+//<>
+//<SmallTable
+//items={[
+//{ heading: "China", datum: data.slice(-1)[0].mainlandChina },
+//{
+//heading: "Other",
+//datum: data.slice(-1)[0].otherLocations
+//}
+//]}
+///>
+//<div className="line-chart">
+//<V.VictoryChart
+//containerComponent={
+//<V.VictoryVoronoiContainer
+//labels={({ datum }) => `${datum["reportDate"]}: ${datum._y}`}
+//labelComponent={<V.VictoryTooltip constrainToVisibleArea />}
+///>
+//}
+//padding={{ top: 20, bottom: 40, left: 60, right: 20 }}
+//>
+//<V.VictoryAxis fixLabelOverlap />
+//<V.VictoryAxis
+//dependentAxis
+//fixLabelOverlap
+//style={{
+//grid: {
+//stroke: "#f3f5f6",
+//strokeWidth: 2,
+//strokeDasharray: "15,15"
+//}
+//}}
+///>
+//<V.VictoryGroup colorScale={["#fb6361", "black"]}>
+//<V.VictoryLine data={data} x="reportDate" y="mainlandChina" />
+//<V.VictoryLine data={data} x="reportDate" y="otherLocations" />
+//</V.VictoryGroup>
+//<V.VictoryLegend
+//colorScale={["#fb6361", "black"]}
+//x={60}
+//y={20}
+//data={[{ name: "China" }, { name: "Other Countries" }]}
+///>
+//</V.VictoryChart>
+//</div>
+//<p className="footnote">
+//Source: Johns Hopkins University Center for Systems Science and
+//Engineering (
+//<a href="https://github.com/mathdroid/covid-19-api">
+//mathdroid/covid-19-api
+//</a>
+//)
+//</p>
+//</>
+//)}
+//</>
+//);
+//};
 
 const ConfirmedCasesInSelectedCountriesLineChart = () => {
   const [data, setData] = useState([
@@ -592,7 +542,7 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
 };
 
 const AreasWithOutstandingCasesTable = () => {
-  const [{ data, isLoading, isError }] = useDataApiReducer(
+  const [{ data, isLoading, isError }] = useDataApi(
     "https://disease.sh/v2/countries",
     []
   );
@@ -634,7 +584,7 @@ const AreasWithOutstandingCasesTable = () => {
           <div className="area-data-sets">
             {data
               .sort((a, b) => b[sortBy] - a[sortBy])
-              .slice(0, 10)
+              .slice(0, 12)
               .map(d => (
                 <div className="data-set" key={d.country}>
                   <div className="country-name vertical-inverted-title">
@@ -786,7 +736,7 @@ const DailyNewCasesWorldwideLineChart = () => {
       return { cases, deaths, new_cases, new_deaths };
     }
   }, []);
-  const [{ data, isLoading, isError }] = useDataApiReducer(
+  const [{ data, isLoading, isError }] = useDataApi(
     "https://disease.sh/v3/covid-19/historical/all?lastdays=all",
     [],
     transformFn
@@ -835,6 +785,7 @@ const DailyNewCasesWorldwideLineChart = () => {
                   labelComponent={<V.VictoryTooltip constrainToVisibleArea />}
                 />
               }
+              height={420}
               padding={{ top: 20, bottom: 40, left: 55, right: 20 }}
             >
               <V.VictoryAxis fixLabelOverlap />
@@ -853,7 +804,7 @@ const DailyNewCasesWorldwideLineChart = () => {
 };
 
 const WorldwideRecoveryProgressPieChart = () => {
-  const [{ data, isLoading, isError }] = useDataApiReducer(
+  const [{ data, isLoading, isError }] = useDataApi(
     "https://disease.sh/v2/all",
     []
   );
@@ -870,34 +821,29 @@ const WorldwideRecoveryProgressPieChart = () => {
         <LoadingSpinner />
       ) : (
         <>
-          <SmallTable
-            items={[
-              { heading: "Confirmed", datum: data.cases },
-              { heading: "Recovered", datum: data.recovered },
-              { heading: "Deaths", datum: data.deaths },
-              {
-                heading: "Death Rate",
-                datum: calPercentage(data.deaths, data.cases) + "%"
-              }
-            ]}
-          />
+          <SmallTable items={[{ heading: "All cases", datum: data.cases }]} />
           <div className="pie-chart">
-            <svg className="pie" width={310} height={300}>
+            <svg className="pie" width={272} height={320}>
               <V.VictoryLabel
                 textAnchor="middle"
-                x={147}
-                y={150}
+                x={136}
+                y={160}
                 style={{ fontSize: 30, fill: "#85b135" }}
                 text={calPercentage(data.recovered, data.cases) + "%"}
               />
               <V.VictoryPie
                 colorScale={["#85b135", "#fb6361", "#073f5c"]}
-                innerRadius={70}
-                width={294}
-                height={300}
+                innerRadius={62}
+                width={272}
+                height={320}
                 standalone={false}
                 data={pieData}
-                labels={({ datum }) => datum.x}
+                labels={({ datum }) =>
+                  `${datum.x}:\n${datum.y}\n` +
+                  "(" +
+                  calPercentage(datum.y, data.cases) +
+                  "%)"
+                }
               />
             </svg>
             <p className="footnote">
@@ -913,9 +859,8 @@ const WorldwideRecoveryProgressPieChart = () => {
 
 export {
   AreasWithOutstandingCasesTable,
-  DailyNewCasesInAnAreaLineChart,
   DailyLineChartInAnArea,
-  ConfirmedCasesChinaVsWorldLineChart,
+  //ConfirmedCasesChinaVsWorldLineChart,
   ConfirmedCasesInSelectedCountriesLineChart,
   FatalityRatioByAgeGroupInHubei,
   DailyNewCasesWorldwideLineChart,
