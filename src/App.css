@@ -121,8 +121,8 @@ h2.title-date {
 .data-set {
   margin: auto;
   margin-bottom: 5px;
-  width: 110px;
-  height: 180px;
+  width: 100px;
+  height: 150px;
   text-align: center;
   border: 2px solid black;
   border-radius: 15px;
@@ -133,14 +133,14 @@ div.vertical-inverted-title {
   line-height: 28px;
   white-space: nowrap;
   color: white;
-  font-size: 1.1em;
+  font-size: 1em;
   font-weight: 700;
   writing-mode: vertical-rl;
   text-orientation: mixed;
-  padding-top: 8px;
+  padding-top: 7px;
   text-align: left;
   float: left;
-  height: 172px;
+  height: 143px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }
@@ -148,20 +148,21 @@ div.vertical-inverted-title {
 div.set-title {
   font-family: "helveticaneue-condensedbold", "helvetica neue", helvetica, arial,
     sans-serif;
+  font-size: 0.8em;
   font-weight: 400;
-  line-height: 0.6;
+  line-height: 0.4;
   margin-top: 10px;
   color: grey;
 }
 
 .numerical-data {
   font-family: "Open Sans Condensed", sans-serif;
-  font-size: 1.4em;
+  font-size: 1.1em;
 }
 
 .smaller-numbers {
   margin-top: -5px;
-  font-size: 0.9em;
+  font-size: 0.8em;
 }
 
 .small-table {

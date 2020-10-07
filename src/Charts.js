@@ -839,7 +839,7 @@ const WorldwideRecoveryProgressPieChart = () => {
                 standalone={false}
                 data={pieData}
                 labels={({ datum }) =>
-                  `${datum.x}:\n${datum.y}\n` +
+                  `${datum.x}:\n${datum.y.toLocaleString()}\n` +
                   "(" +
                   calPercentage(datum.y, data.cases) +
                   "%)"
