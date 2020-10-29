@@ -455,7 +455,7 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
         const areas_to_find = [
           "US",
           "Brazil",
-          "Spain",
+          "France",
           "Colombia",
           "Russia",
           "South Africa",
@@ -727,6 +727,7 @@ const FatalityRatioByAgeGroupInHubei = () => {
 //};
 
 const DailyNewCasesWorldwideLineChart = () => {
+  const VictoryZoomVoronoiContainer = V.createContainer("zoom", "voronoi");
   const transformFn = useCallback(data => {
     if (data) {
       let cases = transposeKeyValue(data.cases);
@@ -780,17 +781,29 @@ const DailyNewCasesWorldwideLineChart = () => {
           <div className="line-chart">
             <V.VictoryChart
               containerComponent={
-                <V.VictoryVoronoiContainer
+                //<V.VictoryVoronoiContainer
+                //labels={({ datum }) => `${datum.x}: ${datum._y}`}
+                //labelComponent={<V.VictoryTooltip constrainToVisibleArea />}
+                ///>
+                //<V.VictoryZoomContainer
+                //allowZoom={false}
+                //zoomDomain={{ x: [10, 200] }}
+                ///>
+                <VictoryZoomVoronoiContainer
                   labels={({ datum }) => `${datum.x}: ${datum._y}`}
                   labelComponent={<V.VictoryTooltip constrainToVisibleArea />}
+                  zoomDomain={{
+                    x: [data.new_cases.length - 120, data.new_cases.length]
+                  }}
+                  zoomDimension="x"
                 />
               }
-              height={420}
-              padding={{ top: 20, bottom: 40, left: 55, right: 20 }}
+              height={400}
+              padding={{ top: 30, bottom: 40, left: 57, right: 0 }}
             >
-              <V.VictoryAxis fixLabelOverlap />
               <V.VictoryAxis dependentAxis fixLabelOverlap style={axis_style} />
               <V.VictoryArea data={data.new_cases} />
+              <V.VictoryAxis fixLabelOverlap />
             </V.VictoryChart>
           </div>
           <p className="footnote">
@@ -828,12 +841,13 @@ const WorldwideRecoveryProgressPieChart = () => {
                 textAnchor="middle"
                 x={136}
                 y={160}
-                style={{ fontSize: 30, fill: "#85b135" }}
+                style={{ fontSize: 28, fill: "#85b135" }}
                 text={calPercentage(data.recovered, data.cases) + "%"}
               />
               <V.VictoryPie
                 colorScale={["#85b135", "#fb6361", "#073f5c"]}
-                innerRadius={62}
+                padding={{ left: 60, right: 60 }}
+                innerRadius={57}
                 width={272}
                 height={320}
                 standalone={false}
