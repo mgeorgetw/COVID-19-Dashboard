@@ -846,8 +846,8 @@ const WorldwideRecoveryProgressPieChart = () => {
               />
               <V.VictoryPie
                 colorScale={["#85b135", "#fb6361", "#073f5c"]}
-                padding={{ left: 60, right: 60 }}
-                innerRadius={57}
+                padding={{ left: 65, right: 65 }}
+                innerRadius={52}
                 width={272}
                 height={320}
                 standalone={false}
