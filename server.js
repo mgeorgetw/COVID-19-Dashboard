@@ -1,6 +1,5 @@
 const express = require("express");
 const port = process.env.PORT || 5000;
-const log = require("debug")("log");
 const path = require("path");
 
 const app = express();
@@ -19,9 +18,9 @@ if (process.env.NODE_ENV === "production") {
   // Serve any static files
   app.use(express.static(path.join(__dirname, "build")));
   // Handle React routing, return all requests to React app
-  app.get("*", function(req, res) {
+  app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "build", "index.html"));
   });
 }
 
-app.listen(port, () => log(`Listening on port ${port}`));
+app.listen(port, () => console.log(`Listening on port ${port}`));
