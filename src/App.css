@@ -85,6 +85,7 @@ h2.title-date {
 }
 
 .chart-title {
+  display: inline;
   font-family: "HelveticaNeue-CondensedBold", "Helvetica Neue", Helvetica, Arial,
     sans-serif;
   font-size: 1.6em;
@@ -94,6 +95,12 @@ h2.title-date {
   text-align: left;
   margin-top: 0.3em;
   margin-bottom: 0.3em;
+}
+
+.footer {
+  font-size: 0.8em;
+  width: 100%;
+  text-align: center;
 }
 
 /* Radio buttons */
@@ -224,11 +231,11 @@ svg.pie {
 p.footnote {
   font-size: 0.8em;
   text-align: left;
-  color: gray;
+  color: #8e8e93;
 }
 
 a {
-  color: gray;
+  color: #8e8e93;
 }
 
 /* Loading Spinner*/
@@ -311,4 +318,49 @@ a {
   100% {
     opacity: 0;
   }
+}
+
+/* TODO: Still working on this */
+/* Tooltip container */
+.tooltip {
+  /* position: absolute; */
+  /* right: 10px; */
+  display: inline;
+  padding: 10px;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  min-width: 200px;
+  top: 100%;
+  right: 40%;
+  color: #1c1c1e;
+  text-align: left;
+  padding: 10px;
+  border: 2px solid #1c1c1e;
+  border-radius: 5px;
+
+  /* Position the tooltip text - see examples below! */
+  position: block;
+  z-index: 1;
+}
+
+.tooltiptext::after {
+  /* [THESE WILL CREATE THE TRIANGLE] */
+  content: "";
+  border-left: 6px solid transparent;
+  border-right: 6px solid #1c1c1e;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid #1c1c1e;
+
+  /* [THESE WILL POSITION THE TRIANGLE] */
+  position: absolute;
+  top: -12px;
+  right: 8px;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }

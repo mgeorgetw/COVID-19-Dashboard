@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import * as V from "victory";
 
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 // Helper function
 const CheckError = response => {
   if (response.ok) {
@@ -14,7 +17,8 @@ const CheckError = response => {
 const transposeKeyValue = data =>
   Object.entries(data).map(([key, value]) => ({
     // Shortens date string
-    x: key.replace(/\/\d{2}$/g, ""),
+    // x: key.replace(/\/\d{2}$/g, ""),
+    x: key,
     y: value
   }));
 
@@ -224,6 +228,17 @@ const SmallTable = ({ items }) => {
   );
 };
 
+// Tooltip
+// TODO: still working on this.
+const Tooltip = ({ text }) => {
+  return (
+    <div class="tooltip">
+      <FontAwesomeIcon icon={faInfoCircle} size="lg" />
+      <span class="tooltiptext">{text}</span>
+    </div>
+  );
+};
+
 // Charts
 const DailyLineChartInAnArea = ({ chart_type }) => {
   const [{ data, isLoading, isError }] = useDataApi(
@@ -334,6 +349,8 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
               : lineData.country
           }
         />
+        {/* TODO: still working on this */}
+        <Tooltip text="Text goes here." />
         {isError && <div>Something went wrong</div>}
         {isLoading ? (
           <LoadingSpinner />
