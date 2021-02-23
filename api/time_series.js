@@ -24,7 +24,8 @@ module.exports = app => {
           // Data series starts at the 5th place
           let series = keys.slice(4).map(key => {
             // Removes year in the date string for visibility
-            return { x: key.replace(/\/\d{2}$/g, ""), y: parseInt(d[key]) };
+            // return { x: key.replace(/\/\d{2}$/g, ""), y: parseInt(d[key]) };
+            return { x: key, y: parseInt(d[key]) };
           });
           return {
             province: d[keys[0]],

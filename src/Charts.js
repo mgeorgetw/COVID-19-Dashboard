@@ -160,7 +160,7 @@ const BarChart = ({ data, x, y }) => {
             labelComponent={<V.VictoryTooltip constrainToVisibleArea />}
           />
         }
-        padding={{ top: 20, bottom: 40, left: 50, right: 20 }}
+        padding={{ top: 20, bottom: 40, left: 60, right: 20 }}
       >
         <V.VictoryAxis fixLabelOverlap />
         <V.VictoryAxis dependentAxis fixLabelOverlap style={axis_style} />
@@ -230,7 +230,7 @@ const SmallTable = ({ items }) => {
 
 // Tooltip
 // TODO: still working on this.
-const Tooltip = ({ text }) => {
+const Info = ({ text }) => {
   return (
     <div class="tooltip">
       <FontAwesomeIcon icon={faInfoCircle} size="lg" />
@@ -349,8 +349,6 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
               : lineData.country
           }
         />
-        {/* TODO: still working on this */}
-        <Tooltip text="Text goes here." />
         {isError && <div>Something went wrong</div>}
         {isLoading ? (
           <LoadingSpinner />
@@ -509,7 +507,7 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
                 labelComponent={<V.VictoryTooltip constrainToVisibleArea />}
               />
             }
-            padding={{ top: 20, bottom: 40, left: 70, right: 20 }}
+            padding={{ top: 20, bottom: 40, left: 80, right: 20 }}
             scale={{ x: "time", y: "linear" }}
             minDomain={{ x: 30 }}
           >
@@ -537,7 +535,7 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
               colorScale={"qualitative"}
               orientation="horizontal"
               itemsPerRow={3}
-              x={70}
+              x={80}
               y={20}
               data={data.map(d => ({
                 name: d.province ? d.province : d.country
@@ -816,7 +814,7 @@ const DailyNewCasesWorldwideLineChart = () => {
                 />
               }
               height={400}
-              padding={{ top: 30, bottom: 40, left: 57, right: 0 }}
+              padding={{ top: 30, bottom: 40, left: 70, right: 0 }}
             >
               <V.VictoryAxis dependentAxis fixLabelOverlap style={axis_style} />
               <V.VictoryArea data={data.new_cases} />
