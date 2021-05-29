@@ -2,7 +2,7 @@
 
 .App {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  max-width: 80em;
+  max-width: 1000px;
   margin: 0 auto;
   width: 100%;
 }
@@ -10,15 +10,13 @@
 .flex-card-list {
   display: flex;
   flex-wrap: wrap;
-}
-
-ul.flex-card-list {
   padding-left: 0;
   box-sizing: border-box;
 }
 
 .flex-card-listitem {
   display: flex;
+  width: 100%;
 }
 
 .full-width {
@@ -29,7 +27,8 @@ ul.flex-card-list {
 @media all and (min-width: 40em) {
   /* Float layout */
   .flex-card-list li {
-    width: 50%;
+    flex: 1 0 100%;
+    /* width: 50%; */
     /*padding-left: 1em;*/
   }
 }
@@ -40,6 +39,7 @@ ul.flex-card-list {
   flex-direction: column;
   padding: 1rem;
   margin: 0.5rem;
+  width: 100%; /* For responsive svg */
   border-radius: 5px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
@@ -88,7 +88,7 @@ h2.title-date {
   display: inline;
   font-family: "HelveticaNeue-CondensedBold", "Helvetica Neue", Helvetica, Arial,
     sans-serif;
-  font-size: 1.6em;
+  font-size: 1.5rem;
   font-weight: 700;
   font-stretch: condensed;
   text-transform: capitalize;
@@ -128,8 +128,8 @@ h2.title-date {
 .data-set {
   margin: auto;
   margin-bottom: 5px;
-  width: 100px;
-  height: 150px;
+  width: 130px;
+  height: 170px;
   text-align: center;
   border: 2px solid black;
   border-radius: 15px;
@@ -147,7 +147,7 @@ div.vertical-inverted-title {
   padding-top: 7px;
   text-align: left;
   float: left;
-  height: 143px;
+  height: 163px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }
@@ -173,11 +173,12 @@ div.set-title {
 }
 
 .small-table {
-  display: inline-block;
+  display: block;
   float: right;
   /*margin-right: 10px;*/
   margin-bottom: 0;
   text-align: center;
+  font-size: 1rem;
 }
 
 th,
@@ -186,7 +187,7 @@ td {
 }
 
 td.numerical-data {
-  font-size: 1em;
+  font-size: 1rem;
 }
 
 th {
@@ -363,4 +364,90 @@ a {
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
   visibility: visible;
+}
+
+/* Collapsible */
+.wrap-collapsible {
+  margin: 1rem 0 0 0;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+.lbl-toggle {
+  display: block;
+
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 1rem;
+  text-transform: uppercase;
+  text-align: center;
+
+  padding: 0.5rem;
+
+  color: #c0c0bb;
+  background: black;
+
+  cursor: pointer;
+
+  border-radius: 7px;
+  transition: all 0.25s ease-out;
+}
+
+.lbl-toggle:hover {
+  color: white;
+}
+
+.lbl-toggle::before {
+  content: " ";
+  display: inline-block;
+
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 6px solid currentColor;
+
+  vertical-align: middle;
+  margin-right: 0.7rem;
+  transform: translateY(-2px);
+
+  transition: transform 0.2s ease-out;
+}
+
+.collapsible-content .content-inner {
+  background: white;
+  color: black;
+  border: 1px solid black;
+  /* border-bottom: 1px solid black; */
+  /* border-right: 1px solid black; */
+
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  padding: 0.5rem 1rem;
+}
+
+.content-inner {
+  font-family: serif;
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+
+.collapsible-content {
+  max-height: 0px;
+  overflow: hidden;
+
+  transition: max-height 0.25s ease-in-out;
+}
+
+.toggle:checked + .lbl-toggle + .collapsible-content {
+  max-height: 100vh;
+}
+
+.toggle:checked + .lbl-toggle::before {
+  transform: rotate(90deg) translateX(-3px);
+}
+
+.toggle:checked + .lbl-toggle {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }

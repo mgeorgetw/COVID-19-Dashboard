@@ -5,7 +5,7 @@ import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Helper function
-const CheckError = response => {
+const CheckError = (response) => {
   if (response.ok) {
     return response.json();
   } else {
@@ -14,19 +14,19 @@ const CheckError = response => {
 };
 
 // Transposes {'Key': 'Value'} to {x: key, y:value}
-const transposeKeyValue = data =>
+const transposeKeyValue = (data) =>
   Object.entries(data).map(([key, value]) => ({
     // Shortens date string
     // x: key.replace(/\/\d{2}$/g, ""),
     x: key,
-    y: value
+    y: value,
   }));
 
 // Calculates daily new cases & deaths
-const calDailyDifference = data =>
+const calDailyDifference = (data) =>
   data.map((cur, index, array) => ({
     ...cur,
-    y: index > 0 ? cur.y - array[index - 1].y : 0
+    y: index > 0 ? cur.y - array[index - 1].y : 0,
   }));
 
 const calPercentage = (numerator, denominator) =>
@@ -121,16 +121,16 @@ const CountriesDropDownMenu = ({ data, chosen, setChosen }) => {
   const [items, setItems] = useState([]);
   useEffect(() => {
     setItems(
-      data.map(d => ({
+      data.map((d) => ({
         label: d.province ? d.province + ", " + d.country : d.country,
-        value: d.province ? d.province : d.country
+        value: d.province ? d.province : d.country,
       }))
     );
   }, [data]);
   return (
     <div className="dropdown-container">
       Select:{" "}
-      <select value={chosen} onChange={e => setChosen(e.currentTarget.value)}>
+      <select value={chosen} onChange={(e) => setChosen(e.currentTarget.value)}>
         {items.map(({ label, value }) => (
           <option className="region-name" key={label} value={value}>
             {label}
@@ -146,8 +146,8 @@ const BarChart = ({ data, x, y }) => {
     grid: {
       stroke: "#f3f5f6",
       strokeWidth: 2,
-      strokeDasharray: "15,15"
-    }
+      strokeDasharray: "15,15",
+    },
   };
   return (
     <div className="bar-chart">
@@ -189,7 +189,7 @@ const LoadingSpinner = () => {
   );
 };
 
-const RadioButton = props => {
+const RadioButton = (props) => {
   return (
     <div className="radio-btn">
       <input
@@ -209,7 +209,7 @@ const SmallTable = ({ items }) => {
       <table>
         <thead>
           <tr>
-            {items.map(item => (
+            {items.map((item) => (
               <th key={item.heading}>{item.heading}</th>
             ))}
           </tr>
@@ -245,12 +245,12 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
     "https://disease.sh/v2/historical",
     null
   );
-  const [chosen, setChosen] = useState("USA");
+  const [chosen, setChosen] = useState("Taiwan");
   const [lineData, setLineData] = useState({});
   const CHART_TYPES = {
     newCases: "Daily New Cases in ",
     newDeaths: "Daily Deaths in ",
-    deathRate: "Fatality Rate in "
+    deathRate: "Fatality Rate in ",
   };
   const ChartTitle = ({ chart_type, area_name }) => {
     return (
@@ -265,11 +265,11 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
       newCases: [
         {
           heading: "Total cases",
-          datum: data.cases ? data.cases.slice(-1)[0].y : "loading"
+          datum: data.cases ? data.cases.slice(-1)[0].y : "loading",
         },
         {
           heading: "New cases",
-          datum: data.newCases ? data.newCases.slice(-1)[0].y : "loading"
+          datum: data.newCases ? data.newCases.slice(-1)[0].y : "loading",
         },
         {
           heading: "Growth Factor",
@@ -277,46 +277,46 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
             ? (
                 data.newCases.slice(-1)[0].y / data.newCases.slice(-2)[0].y
               ).toFixed(2)
-            : "loading"
-        }
+            : "loading",
+        },
       ],
       newDeaths: [
         {
           heading: "Total deaths",
-          datum: data.deaths ? data.deaths.slice(-1)[0].y : "loading"
+          datum: data.deaths ? data.deaths.slice(-1)[0].y : "loading",
         },
         {
           heading: "New deaths",
-          datum: data.newDeaths ? data.newDeaths.slice(-1)[0].y : "loading"
+          datum: data.newDeaths ? data.newDeaths.slice(-1)[0].y : "loading",
         },
         {
           heading: "Fatality Rate",
           datum: data.deathRate
             ? data.deathRate.slice(-1)[0].y + "%"
-            : "loading"
-        }
+            : "loading",
+        },
       ],
       deathRate: [
         {
           heading: "Confirmed",
-          datum: data.cases ? data.cases.slice(-1)[0].y : "loading"
+          datum: data.cases ? data.cases.slice(-1)[0].y : "loading",
         },
         {
           heading: "Deaths",
-          datum: data.deaths ? data.deaths.slice(-1)[0].y : "loading"
+          datum: data.deaths ? data.deaths.slice(-1)[0].y : "loading",
         },
         {
           heading: "Fatality Rate",
           datum: data.deathRate
             ? data.deathRate.slice(-1)[0].y + "%"
-            : "loading"
-        }
-      ]
+            : "loading",
+        },
+      ],
     }[chart_type]);
   useEffect(() => {
     if (data) {
       let found = data.find(
-        obj =>
+        (obj) =>
           obj.province === chosen || (!obj.province && obj.country === chosen)
       );
       let cases = transposeKeyValue(found.timeline.cases);
@@ -325,7 +325,7 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
       let new_deaths = calDailyDifference(deaths);
       let death_rate = cases.map((cur, index) => ({
         x: cur.x,
-        y: calPercentage(deaths[index].y, cur.y) || 0
+        y: calPercentage(deaths[index].y, cur.y) || 0,
       }));
       setLineData({
         country: found.country,
@@ -334,7 +334,7 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
         deaths: deaths,
         newCases: new_cases,
         newDeaths: new_deaths,
-        deathRate: death_rate
+        deathRate: death_rate,
       });
     }
   }, [data, chosen]);
@@ -455,8 +455,8 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
       country: "",
       Lat: 0,
       Long: 0,
-      confirmed: []
-    }
+      confirmed: [],
+    },
   ]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -475,12 +475,12 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
           "Russia",
           "South Africa",
           "India",
-          "Peru"
+          "Peru",
         ];
         let areas_data = [];
         for (let area of areas_to_find) {
           let found = data.data.find(
-            obj =>
+            (obj) =>
               obj.province === area || (!obj.province && obj.country === area)
           );
           areas_data.push(found);
@@ -519,12 +519,12 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
                 grid: {
                   stroke: "#f3f5f6",
                   strokeWidth: 2,
-                  strokeDasharray: "15,15"
-                }
+                  strokeDasharray: "15,15",
+                },
               }}
             />
             <V.VictoryGroup colorScale={"qualitative"}>
-              {data.map(d => (
+              {data.map((d) => (
                 <V.VictoryLine
                   key={d.province ? d.province : d.country}
                   data={d.confirmed}
@@ -537,8 +537,8 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
               itemsPerRow={3}
               x={80}
               y={20}
-              data={data.map(d => ({
-                name: d.province ? d.province : d.country
+              data={data.map((d) => ({
+                name: d.province ? d.province : d.country,
               }))}
             />
           </V.VictoryChart>
@@ -600,17 +600,17 @@ const AreasWithOutstandingCasesTable = () => {
             {data
               .sort((a, b) => b[sortBy] - a[sortBy])
               .slice(0, 12)
-              .map(d => (
+              .map((d) => (
                 <div className="data-set" key={d.country}>
                   <div className="country-name vertical-inverted-title">
                     {d.country}
                   </div>
                   <div className="set-title">Confirmed</div>
                   <div className="confirmed-count numerical-data">
-                    {d.cases}
+                    {d.cases.toLocaleString()}
                   </div>
                   <div className="smaller-numbers numerical-data">
-                    (+{d.todayCases})
+                    (+{d.todayCases.toLocaleString()})
                   </div>
                   <div className="set-title">Deaths</div>
                   <div className="dead-count numerical-data">{d.deaths}</div>
@@ -645,7 +645,7 @@ const FatalityRatioByAgeGroupInHubei = () => {
     { x: "50-59", y: 1.3 },
     { x: "60-69", y: 4.6 },
     { x: "70-79", y: 9.8 },
-    { x: "80+", y: 18 }
+    { x: "80+", y: 18 },
   ];
   return (
     <>
@@ -663,8 +663,8 @@ const FatalityRatioByAgeGroupInHubei = () => {
               grid: {
                 stroke: "#f3f5f6",
                 strokeWidth: 2,
-                strokeDasharray: "15,15"
-              }
+                strokeDasharray: "15,15",
+              },
             }}
           />
           <V.VictoryBar
@@ -743,7 +743,7 @@ const FatalityRatioByAgeGroupInHubei = () => {
 
 const DailyNewCasesWorldwideLineChart = () => {
   const VictoryZoomVoronoiContainer = V.createContainer("zoom", "voronoi");
-  const transformFn = useCallback(data => {
+  const transformFn = useCallback((data) => {
     if (data) {
       let cases = transposeKeyValue(data.cases);
       let deaths = transposeKeyValue(data.deaths);
@@ -761,8 +761,8 @@ const DailyNewCasesWorldwideLineChart = () => {
     grid: {
       stroke: "#f3f5f6",
       strokeWidth: 2,
-      strokeDasharray: "15,15"
-    }
+      strokeDasharray: "15,15",
+    },
   };
   return (
     <>
@@ -776,11 +776,11 @@ const DailyNewCasesWorldwideLineChart = () => {
             items={[
               {
                 heading: "2 days ago",
-                datum: data ? data.new_cases.slice(-2)[0].y : "loading"
+                datum: data ? data.new_cases.slice(-2)[0].y : "loading",
               },
               {
                 heading: "Yesterday",
-                datum: data ? data.new_cases.slice(-1)[0].y : "loading"
+                datum: data ? data.new_cases.slice(-1)[0].y : "loading",
               },
               {
                 heading: "Growth Factor",
@@ -789,8 +789,8 @@ const DailyNewCasesWorldwideLineChart = () => {
                       data.new_cases.slice(-1)[0].y /
                       data.new_cases.slice(-2)[0].y
                     ).toFixed(2)
-                  : "loading"
-              }
+                  : "loading",
+              },
             ]}
           />
           <div className="line-chart">
@@ -808,7 +808,7 @@ const DailyNewCasesWorldwideLineChart = () => {
                   labels={({ datum }) => `${datum.x}: ${datum._y}`}
                   labelComponent={<V.VictoryTooltip constrainToVisibleArea />}
                   zoomDomain={{
-                    x: [data.new_cases.length - 120, data.new_cases.length]
+                    x: [data.new_cases.length - 120, data.new_cases.length],
                   }}
                   zoomDimension="x"
                 />
@@ -839,7 +839,7 @@ const WorldwideRecoveryProgressPieChart = () => {
   const pieData = [
     { x: "Recovered", y: data.recovered },
     { x: "Sick", y: data.active },
-    { x: "Deaths", y: data.deaths }
+    { x: "Deaths", y: data.deaths },
   ];
   return (
     <>
@@ -893,5 +893,5 @@ export {
   ConfirmedCasesInSelectedCountriesLineChart,
   FatalityRatioByAgeGroupInHubei,
   DailyNewCasesWorldwideLineChart,
-  WorldwideRecoveryProgressPieChart
+  WorldwideRecoveryProgressPieChart,
 };

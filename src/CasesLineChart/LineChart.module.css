@@ -1,0 +1,51 @@
+.axisLabel {
+  font-size: 1.3em;
+  fill: #635f5d;
+  color: #635f5d;
+}
+
+.marks {
+  /* fill: none; */
+  fill: black;
+  stroke: black;
+}
+
+.tick text {
+  fill: #635f5d;
+  cursor: default;
+  font-size: 14px;
+}
+
+.tick line {
+  fill: none;
+  stroke: #ccc;
+}
+
+.markerLine {
+  /* stroke: #bd2d28; */
+  stroke: #42a5b3;
+  stroke-width: 2px;
+}
+
+.voronoi path {
+  fill: none;
+  /* stroke="pink"; */
+  pointer-events: all;
+}
+
+.dataPoint {
+  fill: none;
+  stroke: #42a5b3;
+  stroke-width: 2px;
+}
+
+.tooltip,
+.tooltipStroke {
+  fill: black;
+  font-size: 1.2em;
+}
+
+.tooltipStroke {
+  stroke: white;
+  stroke-width: 4px;
+}

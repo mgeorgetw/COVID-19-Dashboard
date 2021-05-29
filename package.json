@@ -2,7 +2,7 @@
   "name": "covid_19_dashboard",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": "http://localhost:5001",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
@@ -13,6 +13,8 @@
     "axios": "^0.21.1",
     "chinese-conv": "^1.0.1",
     "concurrently": "^5.1.0",
+    "d3": "^6.7.0",
+    "d3-delaunay": "^5.3.0",
     "express": "^4.17.1",
     "papaparse": "^5.1.1",
     "react": "^16.13.0",
