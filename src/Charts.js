@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import * as V from "victory";
 
-import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 // Helper function
 const CheckError = (response) => {
   if (response.ok) {
@@ -228,25 +225,15 @@ const SmallTable = ({ items }) => {
   );
 };
 
-// Tooltip
-// TODO: still working on this.
-const Info = ({ text }) => {
-  return (
-    <div class="tooltip">
-      <FontAwesomeIcon icon={faInfoCircle} size="lg" />
-      <span class="tooltiptext">{text}</span>
-    </div>
-  );
-};
-
 // Charts
 const DailyLineChartInAnArea = ({ chart_type }) => {
   const [{ data, isLoading, isError }] = useDataApi(
-    "https://disease.sh/v2/historical",
+    "https://disease.sh/v3/covid-19/historical?lastdays=90",
     null
   );
   const [chosen, setChosen] = useState("Taiwan");
   const [lineData, setLineData] = useState({});
+  if (data) console.log(data[0]);
   const CHART_TYPES = {
     newCases: "Daily New Cases in ",
     newDeaths: "Daily Deaths in ",

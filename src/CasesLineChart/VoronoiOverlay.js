@@ -27,8 +27,7 @@ export const VoronoiOverlay = ({
         {points.map((point, i) => (
           <path
             key={i}
-            onMouseEnter={() => onHover(data[i])}
-            onClick={() => onHover(data[i])}
+            onPointerEnter={() => onHover(data[i])}
             d={voronoi.renderCell(i)}
           />
         ))}
