@@ -1,6 +1,6 @@
 import React from "react";
 // import PropTypes from "prop-types";
-// import { setCookie } from "../utils/useCookies";
+import { setCookie } from "../utils/useCookies";
 
 export const NavBar = ({ view, setView }) => {
   // A series of buttons to switch between views of charts.
@@ -30,7 +30,7 @@ const ViewButton = ({ name, view_name, className, setView }) => {
   // A series of buttons to switch between views of charts.
   const handleClick = (e) => {
     e.preventDefault();
-    // setCookie("view", view_name);
+    setCookie("view", view_name);
     setView(view_name);
   };
   // Changes the button label according to current view.

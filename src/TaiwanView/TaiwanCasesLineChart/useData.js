@@ -9,7 +9,7 @@ const parseDay = timeParse("%Y-%m-%d");
 const transform = (rawData) => {
   return rawData.map((d) => ({
     date: parseDay(d.date),
-    newCases: +d.World,
+    newCases: +d.Taiwan,
   }));
 };
 

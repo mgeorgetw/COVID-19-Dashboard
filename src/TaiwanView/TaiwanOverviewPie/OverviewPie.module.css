@@ -1,0 +1,40 @@
+.pieChart path {
+  stroke: white;
+}
+
+.pieChart text {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.pieLabel {
+  stroke: none;
+}
+.pieLabelStroke {
+  stroke: white;
+  stroke-width: 2.4px;
+}
+
+.legendLabel {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.legend text {
+  font-size: 1.1rem;
+}
+
+@keyframes hideshow {
+  0% {
+    opacity: 1;
+  }
+  10% {
+    opacity: 1;
+  }
+  15% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}

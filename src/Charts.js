@@ -43,17 +43,21 @@ const useDataApi = (initialUrl, initialData, transformFn) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   useEffect(() => {
+    let isMounted = true;
     const fetchData = async () => {
       try {
         const data = await fetch(url).then(CheckError);
-        setData((transformFn && transformFn(data)) || data);
+        if (isMounted) setData((transformFn && transformFn(data)) || data);
       } catch (error) {
-        setIsError(true);
+        if (isMounted) setIsError(true);
         console.error(error);
       }
-      setIsLoading(false);
+      if (isMounted) setIsLoading(false);
     };
     fetchData();
+    return () => {
+      isMounted = false;
+    };
   }, [transformFn, url]);
   return [{ data, isLoading, isError }, setUrl];
 };
@@ -447,9 +451,11 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
   ]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
+    let isMounted = true;
+
     async function getData() {
       try {
-        setIsLoading(true);
+        if (isMounted) setIsLoading(true);
         const response = await fetch(`/confirmed_timeseries`);
         const data = await response.json();
         // Areas selected arbitrarily
@@ -472,13 +478,16 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
           );
           areas_data.push(found);
         }
-        setData(areas_data);
-        setIsLoading(false);
+        if (isMounted) setData(areas_data);
+        if (isMounted) setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
     }
     getData();
+    return () => {
+      isMounted = false;
+    };
   }, []);
   return (
     <>

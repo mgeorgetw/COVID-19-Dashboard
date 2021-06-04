@@ -124,11 +124,11 @@ h2.title-date {
   border-radius: 5px;
   box-shadow: 0px 6px 0px #888, 0px 3px 9px rgba(0, 0, 0, 0.4);
 
-  background-image: linear-gradient(bottom, #eee 0%, white 100%);
-  background-image: -o-linear-gradient(bottom, #eee 0%, white 100%);
-  background-image: -moz-linear-gradient(bottom, #eee 0%, white 100%);
-  background-image: -webkit-linear-gradient(bottom, #eee 0%, white 100%);
-  background-image: -ms-linear-gradient(bottom, #eee 0%, white 100%);
+  background-image: linear-gradient (#eee, white);
+  background-image: -o-linear-gradient (#eee, white);
+  background-image: -moz-linear-gradient (#eee, white);
+  background-image: -webkit-linear-gradient (#eee, white);
+  background-image: -ms-linear-gradient (#eee, white);
 
   background-image: -webkit-gradient(
     linear,
@@ -140,11 +140,11 @@ h2.title-date {
 }
 
 .view-button:hover {
-  background-image: linear-gradient(bottom, #ddd 0%, #f2f2f7 100%);
-  background-image: -o-linear-gradient(bottom, #ddd 0%, #f2f2f7 100%);
-  background-image: -moz-linear-gradient(bottom, #ddd 0%, #f2f2f7 100%);
-  background-image: -webkit-linear-gradient(bottom, #ddd 0%, #f2f2f7 100%);
-  background-image: -ms-linear-gradient(bottom, #ddd 0%, #f2f2f7 100%);
+  background-image: linear-gradient (#ddd, #f2f2f7);
+  background-image: -o-linear-gradient (#ddd, #f2f2f7);
+  background-image: -moz-linear-gradient (#ddd, #f2f2f7);
+  background-image: -webkit-linear-gradient (#ddd, #f2f2f7);
+  background-image: -ms-linear-gradient (#ddd, #f2f2f7);
 
   background-image: -webkit-gradient(
     linear,

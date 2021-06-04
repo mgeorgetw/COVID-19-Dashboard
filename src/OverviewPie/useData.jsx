@@ -9,8 +9,13 @@ export const useData = () => {
   // console.log(data);
 
   useEffect(() => {
-    // I only want the top 10 countries
-    json(jsonUrl).then(setData);
+    let isMounted = true;
+    json(jsonUrl).then((d) => {
+      if (isMounted) setData(d);
+    });
+    return () => {
+      isMounted = false;
+    };
   }, []);
   return data;
 };
