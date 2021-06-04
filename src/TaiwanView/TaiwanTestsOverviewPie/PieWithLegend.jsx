@@ -41,15 +41,6 @@ export const PieWithLegend = ({ data, testsData }) => {
       case: "累計通報件數",
       value: data.tests,
     },
-    {
-      case: "通報待確認",
-      value: data.tests - data.excluded - data.confirmed,
-    },
-    {
-      case: "昨日消化件數",
-      value:
-        data.excludedYesterday + data.confirmedYesterday - data.testsYesterday,
-    },
   ];
 
   const pieData = [
