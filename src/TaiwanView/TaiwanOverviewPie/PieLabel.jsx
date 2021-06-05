@@ -25,7 +25,7 @@ export const PieLabel = ({
         textAnchor="middle"
         dominantBaseline="middle"
       >
-        <tspan className="num" x="0" dy={-labelOffsetY} fill="black">
+        <tspan className="num" x="0" dy={-labelOffsetY / 2} fill="black">
           {percentage}%
         </tspan>
         <tspan x="0" dy={labelOffsetY} fill="#635F5D">

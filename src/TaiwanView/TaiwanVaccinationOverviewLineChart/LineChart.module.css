@@ -1,0 +1,67 @@
+.axisLabel {
+  font-size: 1.3em;
+  fill: #635f5d;
+  color: #635f5d;
+}
+
+.primary {
+  /* fill: none; */
+  fill: #7098a5;
+  stroke: #635f5d;
+}
+
+.secondary {
+  /* fill: none; */
+  fill: #b1c1be;
+  stroke: #635f5d;
+}
+
+.tick text {
+  fill: #635f5d;
+  cursor: default;
+  font-size: 14px;
+}
+
+.tick line {
+  fill: none;
+  stroke: #ccc;
+}
+
+.markerLine {
+  /* stroke: #bd2d28; */
+  stroke: #42a5b3;
+  stroke-width: 2px;
+}
+
+.voronoi path {
+  fill: none;
+  /* stroke="pink"; */
+  pointer-events: all;
+}
+
+.dataPoint {
+  fill: none;
+  stroke: #42a5b3;
+  stroke-width: 2px;
+}
+
+.tooltip,
+.tooltipStroke {
+  fill: black;
+  font-size: 1.2em;
+}
+
+.tooltipStroke {
+  stroke: white;
+  stroke-width: 4px;
+}
+
+.legend,
+.legendStroke {
+  fill: black;
+  font-size: 1em;
+}
+.legendStroke {
+  stroke: white;
+  stroke-width: 4px;
+}
