@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/COVID-19-Dashboard/static/css/main.30a4fed3.chunk.css",
+    "main.js": "/COVID-19-Dashboard/static/js/main.4fad3887.chunk.js",
+    "main.js.map": "/COVID-19-Dashboard/static/js/main.4fad3887.chunk.js.map",
+    "runtime-main.js": "/COVID-19-Dashboard/static/js/runtime-main.50fe05e4.js",
+    "runtime-main.js.map": "/COVID-19-Dashboard/static/js/runtime-main.50fe05e4.js.map",
+    "static/js/2.31b43808.chunk.js": "/COVID-19-Dashboard/static/js/2.31b43808.chunk.js",
+    "static/js/2.31b43808.chunk.js.map": "/COVID-19-Dashboard/static/js/2.31b43808.chunk.js.map",
+    "index.html": "/COVID-19-Dashboard/index.html",
+    "precache-manifest.dfbfbe3dcf6952ff5c8de2cde163f7d5.js": "/COVID-19-Dashboard/precache-manifest.dfbfbe3dcf6952ff5c8de2cde163f7d5.js",
+    "service-worker.js": "/COVID-19-Dashboard/service-worker.js",
+    "static/css/main.30a4fed3.chunk.css.map": "/COVID-19-Dashboard/static/css/main.30a4fed3.chunk.css.map",
+    "static/js/2.31b43808.chunk.js.LICENSE.txt": "/COVID-19-Dashboard/static/js/2.31b43808.chunk.js.LICENSE.txt",
+    "static/media/NotoSansMono-CondensedBold.ttf": "/COVID-19-Dashboard/static/media/NotoSansMono-CondensedBold.ad9e48a0.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.50fe05e4.js",
+    "static/js/2.31b43808.chunk.js",
+    "static/css/main.30a4fed3.chunk.css",
+    "static/js/main.4fad3887.chunk.js"
+  ]
+}
