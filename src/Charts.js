@@ -237,7 +237,7 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
   );
   const [chosen, setChosen] = useState("Taiwan");
   const [lineData, setLineData] = useState({});
-  if (data) console.log(data[0]);
+  // if (data) console.log(data[0]);
   const CHART_TYPES = {
     newCases: "Daily New Cases in ",
     newDeaths: "Daily Deaths in ",

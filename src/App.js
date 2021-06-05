@@ -42,9 +42,9 @@ const GlobalView = () => (
     <Card>
       <Charts.DailyLineChartInAnArea area={area} chart_type="newDeaths" />
     </Card>
-    <Card>
-      <Charts.ConfirmedCasesInSelectedCountriesLineChart />
-    </Card>
+    {/* <Card> */}
+    {/*   <Charts.ConfirmedCasesInSelectedCountriesLineChart /> */}
+    {/* </Card> */}
     <Card>
       <CaseFatalityRatesByAgeBarChart />
     </Card>
