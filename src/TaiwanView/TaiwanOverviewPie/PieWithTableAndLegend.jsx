@@ -4,6 +4,7 @@ import styles from "./OverviewPie.module.css";
 import { ColorLegend } from "./ColorLegend";
 import { DataTable } from "./DataTable";
 import { PieChart } from "./PieChart";
+import { PieLabels } from "./PieLabels";
 
 const width = window.innerWidth < 1000 ? window.innerWidth : 1000;
 const height = width * 0.6;
@@ -32,8 +33,6 @@ const ColorLegendLabel = "案例別";
 export const PieWithTableAndLegend = ({ data }) => {
   const [hoveredValue, setHoveredValue] = useState(null);
 
-  // {/* const data = useData(); */} // {/* if (!data) return <LoadSpinner />; */}
-  // console.log(data);
   const pieData = [
     {
       case: "解除隔離",
@@ -70,6 +69,15 @@ export const PieWithTableAndLegend = ({ data }) => {
             pieData={pieData}
             colorPie={colorPie}
             colorValue={colorValue}
+            pieArc={pieArc}
+            dataType={dataType}
+            onHover={setHoveredValue}
+            hoveredValue={hoveredValue}
+            fadeOpacity={fadeOpacity}
+          />
+          <PieLabels
+            pieData={pieData}
+            colorPie={colorPie}
             pieArc={pieArc}
             dataType={dataType}
             dataValue={dataValue}
