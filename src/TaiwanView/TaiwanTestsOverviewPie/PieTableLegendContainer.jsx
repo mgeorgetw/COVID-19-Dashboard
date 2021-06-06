@@ -41,28 +41,31 @@ export const PieTableLegendContainer = ({ data, testsData }) => {
     },
   ];
 
-  const pieData = [
-    {
-      case: "檢驗未通報",
-      value: testsData.tests - data.tests,
-      color: "#E5E2E0",
-    },
-    {
-      case: "通報確診",
-      value: data.confirmed,
-      color: "#005D6E",
-    },
-    {
-      case: "通報排除",
-      value: data.excluded,
-      color: "#42A5B3",
-    },
-    {
-      case: "通報待確認",
-      value: data.tests - data.excluded - data.confirmed,
-      color: "#BD2D28",
-    },
-  ];
+  const pieData = useMemo(
+    () => [
+      {
+        case: "檢驗未通報",
+        value: testsData.tests - data.tests,
+        color: "#E5E2E0",
+      },
+      {
+        case: "通報確診",
+        value: data.confirmed,
+        color: "#005D6E",
+      },
+      {
+        case: "通報排除",
+        value: data.excluded,
+        color: "#42A5B3",
+      },
+      {
+        case: "通報待確認",
+        value: data.tests - data.excluded - data.confirmed,
+        color: "#BD2D28",
+      },
+    ],
+    [data, testsData]
+  );
 
   const colorPie = useMemo(() => pie().sort(null).value(dataValue), []);
 

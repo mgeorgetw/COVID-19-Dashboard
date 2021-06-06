@@ -30,23 +30,26 @@ const ColorLegendLabel = "案例別";
 export const PieTableLegendContainer = ({ data }) => {
   const [hoveredValue, setHoveredValue] = useState(null);
 
-  const pieData = [
-    {
-      case: "解除隔離",
-      value: data.recovered,
-      color: "#6BBBA1",
-    },
-    {
-      case: "病中",
-      value: data.confirmed - data.recovered - data.deaths,
-      color: "#E25A42",
-    },
-    {
-      case: "死亡",
-      value: data.deaths,
-      color: "#BD2D28",
-    },
-  ];
+  const pieData = useMemo(
+    () => [
+      {
+        case: "解除隔離",
+        value: data.recovered,
+        color: "#6BBBA1",
+      },
+      {
+        case: "病中",
+        value: data.confirmed - data.recovered - data.deaths,
+        color: "#E25A42",
+      },
+      {
+        case: "死亡",
+        value: data.deaths,
+        color: "#BD2D28",
+      },
+    ],
+    [data]
+  );
 
   const colorPie = useMemo(() => pie().sort(null).value(dataValue), []);
 
