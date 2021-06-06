@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./LineChart.module.css";
+import styles from "./AreaChart.module.css";
 export const YMarkerLine = ({ value, yScale, innerWidth }) => {
   const markerLineY = yScale(value);
   const markerLineX1 = 0;

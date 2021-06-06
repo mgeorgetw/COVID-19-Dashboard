@@ -14,11 +14,11 @@ import { XMarkerLine } from "./XMarkerLine";
 import { YMarkerLine } from "./YMarkerLine";
 import { VoronoiOverlay } from "./VoronoiOverlay";
 import { ColorLegend } from "./ColorLegend";
-import styles from "./LineChart.module.css";
+import styles from "./AreaChart.module.css";
 
 const width = window.innerWidth < 1000 ? window.innerWidth : 1000;
-const height = width > 480 ? width * 0.6 : width * 0.8;
-const margin = { top: 20, right: 40, bottom: 80, left: 90 };
+const height = width > 480 ? width * 0.6 : width * 1;
+const margin = { top: 20, right: 65, bottom: 80, left: 50 };
 
 const xValue = (d) => d.date;
 const xAxisTickFormat = timeFormat("%-m/%-d, %Y");
@@ -26,25 +26,25 @@ const xTooltipFormat = timeFormat("%-m/%-d, %Y");
 
 const yValue = (d) => d.people_vaccinated;
 const yValue2 = (d) => d.people_fully_vaccinated;
-const yAxisLabel = "接種人次";
-const yAxisLabelOffset = 75;
+// const yAxisLabel = "接種人次";
+// const yAxisLabelOffset = 75;
 const siFormat = format("~s");
 const yAxisTickFormat = (tickValue) => siFormat(tickValue).replace("M", "百萬");
 
 // const ColorLegendLabel = "接種情形";
-const circleRadius = 8;
+const legendCircleRadius = 8;
 const legendItemSpacing = 26;
 
-export const LineChart = ({ data }) => {
+export const AreaChart = ({ data }) => {
   // Change state when different point is hovered
-  const [activeData, setActiveData] = useState();
+  const [activeData, setActiveData] = useState(data[data.length - 1]);
   const taiwanPopulation = 23514196;
 
   // The chart's real height and width
   const innerHeight = height - margin.top - margin.bottom;
   const innerWidth = width - margin.left - margin.right;
 
-  const legendX = innerWidth - legendItemSpacing / 2;
+  const legendX = innerWidth - 50;
   const legendY = margin.top + legendItemSpacing / 2;
 
   // X axis is time
@@ -107,7 +107,7 @@ export const LineChart = ({ data }) => {
       y={position === "down" ? 20 : -15}
     >
       <tspan x="0" dy="0" fontWeight="bold">
-        {scaleValue(activeData).toLocaleString()} (
+        {scaleValue(activeData).toLocaleString()}人 (
         {format(".0%")(scaleValue(activeData) / taiwanPopulation)})
       </tspan>
       {position === "up" ? (
@@ -135,14 +135,14 @@ export const LineChart = ({ data }) => {
             tickOffset={7}
             tickFormat={yAxisTickFormat}
           />
-          <text
-            className={styles.axisLabel}
-            textAnchor="middle"
-            transform={`translate(${-yAxisLabelOffset}, ${innerHeight / 2})`}
-            writingMode="vertical-lr"
-          >
-            {yAxisLabel}
-          </text>
+          {/* <text */}
+          {/*   className={styles.axisLabel} */}
+          {/*   textAnchor="middle" */}
+          {/*   transform={`translate(${-yAxisLabelOffset}, ${innerHeight / 2})`} */}
+          {/*   writingMode="vertical-lr" */}
+          {/* > */}
+          {/*   {yAxisLabel} */}
+          {/* </text> */}
           <g className={styles.primary}>
             <path d={areaGenerator(data)} />
           </g>
@@ -217,7 +217,7 @@ export const LineChart = ({ data }) => {
           <ColorLegend
             colorScale={colorScale}
             tickSpacing={legendItemSpacing}
-            tickSize={circleRadius}
+            tickSize={legendCircleRadius}
             tickTextOffset={16}
           />
         </g>

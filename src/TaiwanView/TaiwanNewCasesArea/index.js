@@ -3,7 +3,7 @@ import { useData } from "./useData";
 import { LoadSpinner } from "../../elements/CommonUIs";
 import { ChartTitle } from "./ChartTitle";
 import { DataTable } from "./DataTable";
-import { LineChart } from "./LineChart";
+import { AreaChart } from "./AreaChart";
 import { Collapsible } from "./Collapsible";
 
 const sumValuesInObject = (data, key) =>
@@ -12,29 +12,29 @@ const sumValuesInObject = (data, key) =>
     0 // initialValue
   );
 
-const title = "台灣每日新增確診案例數";
+const title = "COVID-19 台灣每日新增確診案例數";
 
-export const TaiwanCasesLineChart = () => {
+export const TaiwanNewCasesArea = () => {
   const data = useData();
   if (!data) return <LoadSpinner />;
   // if (data) console.log(data);
-  const lastSevenDaysAvg = sumValuesInObject(data.slice(-7), "newCases") / 7;
 
-  const beforeSevenDaysAvg =
+  const sevenDayAvg = sumValuesInObject(data.slice(-7), "newCases") / 7;
+  const prevSevenDayAvg =
     sumValuesInObject(data.slice(-14, -7), "newCases") / 7;
 
   const tableData = [
     {
       heading: "上週平均",
-      value: Math.round(beforeSevenDaysAvg).toLocaleString(),
+      value: Math.round(prevSevenDayAvg).toLocaleString(),
     },
     {
       heading: "本週平均",
-      value: Math.round(lastSevenDaysAvg).toLocaleString(),
+      value: Math.round(sevenDayAvg).toLocaleString(),
     },
     {
       heading: "增長因數",
-      value: (lastSevenDaysAvg / beforeSevenDaysAvg).toFixed(2),
+      value: (sevenDayAvg / prevSevenDayAvg).toFixed(2),
     },
   ];
 
@@ -42,7 +42,7 @@ export const TaiwanCasesLineChart = () => {
     <>
       <ChartTitle title={title} />
       <DataTable items={tableData} />
-      <LineChart data={data} />
+      <AreaChart data={data} />
       <Collapsible id={title} />
     </>
   );

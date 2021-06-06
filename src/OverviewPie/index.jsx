@@ -9,20 +9,16 @@ import { PieChart } from "./PieChart";
 import { Collapsible } from "./Collapsible";
 
 const width = window.innerWidth < 1000 ? window.innerWidth : 1000;
-const height = width * 0.6;
-const pieMargin = { top: 0, right: 20, bottom: 0, left: 0 };
+const height = width > 480 ? width * 0.6 : width * 0.7;
 const pieRadius = (width * 0.66) / 2;
 const pieOuterMargin = pieRadius * 0.7;
 
-const circleRadius = 8;
+const legendCircleRadius = 8;
 const legendItemSpacing = 26;
 const fadeOpacity = 0.3;
 
-// // The chart's real height and width
-const pieX = pieRadius + pieMargin.left;
-const pieY = pieRadius + pieMargin.top;
-const legendX = pieRadius * 2 + pieMargin.left + pieMargin.right;
-const legendY = pieRadius - legendItemSpacing / 2;
+const legendX = width * 0.66;
+const legendY = height / 2;
 
 const pieArc = arc().innerRadius(0).outerRadius(pieOuterMargin);
 
@@ -47,12 +43,12 @@ export const OverviewPie = () => {
     {
       case: "Recovered",
       value: data.recovered,
-      color: "#0F8C79",
+      color: "#6BBBA1",
     },
     {
       case: "Active",
       value: data.active,
-      color: "#E3BA22",
+      color: "#E25A42",
     },
   ];
   const colorPie = pie().sort(null).value(dataValue);
@@ -75,7 +71,7 @@ export const OverviewPie = () => {
       <ChartTitle title={title} />
       <DataTable items={pieData} dataType={dataType} dataValue={dataValue} />
       <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMinYMid">
-        <g transform={`translate(${pieX},${pieY})`}>
+        <g transform={`translate(${pieRadius},${height / 2})`}>
           <PieChart
             pieData={pieData}
             colorPie={colorPie}
@@ -95,7 +91,7 @@ export const OverviewPie = () => {
           <ColorLegend
             colorScale={colorScale}
             tickSpacing={legendItemSpacing}
-            tickSize={circleRadius}
+            tickSize={legendCircleRadius}
             tickTextOffset={16}
             onHover={setHoveredValue}
             hoveredValue={hoveredValue}

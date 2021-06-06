@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { Delaunay } from "d3-delaunay";
-import styles from "./LineChart.module.css";
+import styles from "./AreaChart.module.css";
 export const VoronoiOverlay = ({
   margin,
   data,

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { select, axisBottom } from "d3";
-import styles from "./LineChart.module.css";
+import styles from "./AreaChart.module.css";
 
 export const AxisBottom = ({
   xScale,
@@ -16,7 +16,13 @@ export const AxisBottom = ({
       .ticks(tickCount, tickFormat)
       .tickSize(-innerHeight)
       .tickPadding(tickOffset);
-    xAxisG.call(xAxis);
+    xAxisG
+      .call(xAxis)
+      .selectAll("text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("transform", "rotate(-55)");
   }, [xScale, innerHeight, tickFormat, tickOffset, tickCount]);
   return (
     <g

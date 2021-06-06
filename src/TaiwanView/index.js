@@ -2,8 +2,8 @@ import React from "react";
 import { Card } from "../elements/CommonUIs";
 import { TaiwanOverviewPie } from "./TaiwanOverviewPie/index";
 import { TaiwanTestsOverviewPie } from "./TaiwanTestsOverviewPie/index";
-import { TaiwanCasesLineChart } from "./TaiwanCasesLineChart/index";
-import { TaiwanVaccinationOverviewLineChart } from "./TaiwanVaccinationOverviewLineChart/index";
+import { TaiwanNewCasesArea } from "./TaiwanNewCasesArea/index";
+import { TaiwanVaccinationArea } from "./TaiwanVaccinationArea/index";
 
 export const TaiwanView = () => (
   <ul className="flex-card-list">
@@ -14,10 +14,10 @@ export const TaiwanView = () => (
       <TaiwanTestsOverviewPie />
     </Card>
     <Card>
-      <TaiwanCasesLineChart />
+      <TaiwanNewCasesArea />
     </Card>
     <Card>
-      <TaiwanVaccinationOverviewLineChart />
+      <TaiwanVaccinationArea />
     </Card>
   </ul>
 );

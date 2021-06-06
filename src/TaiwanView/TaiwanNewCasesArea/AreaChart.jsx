@@ -13,25 +13,25 @@ import { AxisBottom } from "./AxisBottom";
 import { AxisLeft } from "./AxisLeft";
 import { XMarkerLine } from "./XMarkerLine";
 import { VoronoiOverlay } from "./VoronoiOverlay";
-import styles from "./LineChart.module.css";
+import styles from "./AreaChart.module.css";
 
 const width = window.innerWidth < 1000 ? window.innerWidth : 1000;
-const height = width > 480 ? width * 0.6 : width * 0.8;
-const margin = { top: 20, right: 0, bottom: 40, left: 65 };
+const height = width > 480 ? width * 0.6 : width * 1;
+const margin = { top: 20, right: 0, bottom: 70, left: 40 };
 
 const xValue = (d) => d.date;
-const xAxisTickFormat = timeFormat("%b, %Y");
-const xTooltipFormat = timeFormat("%-m/%-d, %y");
+const xAxisTickFormat = timeFormat("%-m/%-d, %Y");
+const xTooltipFormat = timeFormat("%-m/%-d");
 
 const yValue = (d) => d.newCases;
 // const yAxisLabel = "New cases";
 // const yAxisLabelOffset = 60;
-const siFormat = format(".2s");
+const siFormat = format("~s");
 const yAxisTickFormat = (tickValue) => siFormat(tickValue);
 
-export const LineChart = ({ data }) => {
+export const AreaChart = ({ data }) => {
   // Change state when different point is hovered
-  const [activeData, setActiveData] = useState();
+  const [activeData, setActiveData] = useState(data[data.length - 1]);
 
   // The chart's real height and width
   const innerHeight = height - margin.top - margin.bottom;
@@ -73,9 +73,9 @@ export const LineChart = ({ data }) => {
   );
 
   const Tooltip = ({ activeData, className }) => (
-    <text className={className} textAnchor={"end"} x={0} y={-5}>
+    <text className={className} textAnchor={"end"} x={0} y={-35}>
       <tspan x="-10" dy="0" fontWeight="bold">
-        {activeData.newCases.toLocaleString()}
+        {activeData.newCases.toLocaleString()}例
       </tspan>
       <tspan x="-10" dy="1.5em">
         {xTooltipFormat(activeData.date)}

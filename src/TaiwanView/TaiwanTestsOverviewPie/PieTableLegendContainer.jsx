@@ -4,22 +4,20 @@ import styles from "./OverviewPie.module.css";
 import { ColorLegend } from "./ColorLegend";
 import { DataTable } from "./DataTable";
 import { PieChart } from "./PieChart";
+import { PieLabels } from "./PieLabels";
 
 const width = window.innerWidth < 1000 ? window.innerWidth : 1000;
-const height = width * 0.7;
-const pieMargin = { top: 20, right: 0, bottom: 0, left: 0 };
+const height = width > 480 ? width * 0.7 : width * 0.8;
+
 const pieRadius = (width * 0.66) / 2;
 const pieOuterMargin = pieRadius * 0.7;
 
-const circleRadius = 8;
+const legendCircleRadius = 8;
 const legendItemSpacing = 26;
-const fadeOpacity = 0.3;
-
-// // The chart's real height and width
-const pieX = pieRadius + pieMargin.left;
-const pieY = pieRadius + pieMargin.top;
-const legendX = pieRadius * 2 + pieMargin.left + pieMargin.right;
+const legendX = width * 0.66;
 const legendY = pieRadius - legendItemSpacing / 2;
+
+const fadeOpacity = 0.3;
 
 const pieArc = arc().innerRadius(0).outerRadius(pieOuterMargin);
 
@@ -29,7 +27,7 @@ const colorValue = (d) => d.color;
 
 const ColorLegendLabel = "篩檢現況";
 
-export const PieWithLegend = ({ data, testsData }) => {
+export const PieTableLegendContainer = ({ data, testsData }) => {
   const [hoveredValue, setHoveredValue] = useState(null);
 
   const tableData = [
@@ -45,7 +43,7 @@ export const PieWithLegend = ({ data, testsData }) => {
 
   const pieData = [
     {
-      case: "已檢驗，未通報",
+      case: "檢驗未通報",
       value: testsData.tests - data.tests,
       color: "#E5E2E0",
     },
@@ -75,12 +73,24 @@ export const PieWithLegend = ({ data, testsData }) => {
         .range(pieData.map(colorValue)),
     [pieData]
   );
+
   return (
     <>
       <DataTable items={tableData} dataType={dataType} dataValue={dataValue} />
       <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMinYMid">
-        <g transform={`translate(${pieX},${pieY})`}>
+        <g transform={`translate(${pieRadius},${height / 2})`}>
           <PieChart
+            pieData={pieData}
+            colorPie={colorPie}
+            colorValue={colorValue}
+            pieArc={pieArc}
+            dataType={dataType}
+            dataValue={dataValue}
+            onHover={setHoveredValue}
+            hoveredValue={hoveredValue}
+            fadeOpacity={fadeOpacity}
+          />
+          <PieLabels
             pieData={pieData}
             colorPie={colorPie}
             colorValue={colorValue}
@@ -99,7 +109,7 @@ export const PieWithLegend = ({ data, testsData }) => {
           <ColorLegend
             colorScale={colorScale}
             tickSpacing={legendItemSpacing}
-            tickSize={circleRadius}
+            tickSize={legendCircleRadius}
             tickTextOffset={16}
             onHover={setHoveredValue}
             hoveredValue={hoveredValue}

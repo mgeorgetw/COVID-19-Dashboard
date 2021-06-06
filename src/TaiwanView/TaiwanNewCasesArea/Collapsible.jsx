@@ -9,7 +9,7 @@ const SourceCredit = () => (
     )
   </p>
 );
-export const Collapsible = ({ children, id }) => {
+export const Collapsible = ({ id }) => {
   return (
     <div className="wrap-collapsible">
       <input id={id} className="toggle" type="checkbox" />

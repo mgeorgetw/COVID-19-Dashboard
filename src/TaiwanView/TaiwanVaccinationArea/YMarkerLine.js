@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./LineChart.module.css";
+import styles from "./AreaChart.module.css";
 export const YMarkerLine = ({
   value,
   yScale,
@@ -21,9 +21,9 @@ export const YMarkerLine = ({
       <text
         className={styles.tooltipStroke}
         textAnchor={"start"}
-        dominantBaseline={"start"}
+        dominantBaseline={"hanging"}
         x={labelOffset}
-        y={yScale(value) - labelOffset}
+        y={yScale(value) + labelOffset}
         fontWeight="bold"
       >
         全人口的75%
@@ -31,9 +31,9 @@ export const YMarkerLine = ({
       <text
         className={styles.tooltip}
         textAnchor={"start"}
-        dominantBaseline={"start"}
+        dominantBaseline={"hanging"}
         x={labelOffset}
-        y={yScale(value) - labelOffset}
+        y={yScale(value) + labelOffset}
         fontWeight="bold"
       >
         全人口的75%

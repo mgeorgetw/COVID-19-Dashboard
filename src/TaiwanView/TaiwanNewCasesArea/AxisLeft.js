@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { select, axisLeft } from "d3";
-import styles from "./LineChart.module.css";
+import styles from "./AreaChart.module.css";
 
 export const AxisLeft = ({
   yScale,

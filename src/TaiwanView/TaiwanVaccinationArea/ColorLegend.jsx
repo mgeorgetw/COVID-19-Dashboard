@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./LineChart.module.css";
+import styles from "./AreaChart.module.css";
 export const ColorLegend = ({
   colorScale,
   tickSpacing = 20,
