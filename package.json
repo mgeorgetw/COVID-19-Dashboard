@@ -15,7 +15,7 @@
     "chinese-conv": "^1.0.1",
     "concurrently": "^5.1.0",
     "d3": "^6.7.0",
-    "d3-delaunay": "^5.3.0",
+    "d3-delaunay": "^6.0.2",
     "express": "^4.17.1",
     "gh-pages": "^3.2.0",
     "papaparse": "^5.1.1",
@@ -24,7 +24,7 @@
     "react-dom": "^16.13.0",
     "react-grid-layout": "^0.18.2",
     "react-scripts": "3.4.0",
-    "victory": "^34.1.2"
+    "victory": "^35.8.4"
   },
   "scripts": {
     "predeploy": "npm run build",
