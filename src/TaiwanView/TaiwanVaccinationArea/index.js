@@ -15,7 +15,7 @@ export const TaiwanVaccinationArea = () => {
 
   const tableData = [
     {
-      heading: "疫苗總數",
+      heading: "接種人數總計",
       value: data[data.length - 1].total_vaccinations.toLocaleString(),
     },
     {

@@ -4,6 +4,7 @@ import { TaiwanOverviewPie } from "./TaiwanOverviewPie/index";
 import { TaiwanTestsOverviewPie } from "./TaiwanTestsOverviewPie/index";
 import { TaiwanNewCasesArea } from "./TaiwanNewCasesArea/index";
 import { TaiwanVaccinationArea } from "./TaiwanVaccinationArea/index";
+import { VaccinationRateByCountiesBar } from "./VaccinationRateByCountiesBar/index";
 
 export const TaiwanView = () => (
   <ul className="flex-card-list">
@@ -18,6 +19,9 @@ export const TaiwanView = () => (
     </Card>
     <Card>
       <TaiwanVaccinationArea />
+    </Card>
+    <Card>
+      <VaccinationRateByCountiesBar />
     </Card>
   </ul>
 );
