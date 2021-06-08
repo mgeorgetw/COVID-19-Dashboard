@@ -19,6 +19,10 @@ export const TaiwanNewCasesArea = () => {
   if (!data) return <LoadSpinner />;
   // if (data) console.log(data);
 
+  const filteredData = data.filter(
+    (obj) => obj.date.valueOf() >= new Date("2021-04-30").valueOf()
+  );
+
   const sevenDayAvg = sumValuesInObject(data.slice(-7), "newCases") / 7;
   const prevSevenDayAvg =
     sumValuesInObject(data.slice(-14, -7), "newCases") / 7;
@@ -42,7 +46,7 @@ export const TaiwanNewCasesArea = () => {
     <>
       <ChartTitle title={title} />
       <DataTable items={tableData} />
-      <AreaChart data={data} />
+      <AreaChart data={filteredData} />
       <Collapsible id={title} />
     </>
   );

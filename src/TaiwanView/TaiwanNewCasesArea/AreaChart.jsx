@@ -7,17 +7,17 @@ import {
   extent,
   max,
   format,
-  curveNatural,
 } from "d3";
 import { AxisBottom } from "./AxisBottom";
 import { AxisLeft } from "./AxisLeft";
 import { XMarkerLine } from "./XMarkerLine";
+import { CursorLine } from "./CursorLine.js";
 import { VoronoiOverlay } from "./VoronoiOverlay";
 import styles from "./AreaChart.module.css";
 
 const width = window.innerWidth < 1000 ? window.innerWidth : 1000;
 const height = width > 480 ? width * 0.6 : width * 1;
-const margin = { top: 20, right: 0, bottom: 70, left: 40 };
+const margin = { top: 20, right: 10, bottom: 70, left: 40 };
 
 const xValue = (d) => d.date;
 const xAxisTickFormat = timeFormat("%-m/%-d, %Y");
@@ -67,8 +67,7 @@ export const AreaChart = ({ data }) => {
       area()
         .x((d) => xScale(xValue(d)))
         .y1((d) => yScale(yValue(d)))
-        .y0(yScale(0))
-        .curve(curveNatural),
+        .y0(yScale(0)),
     [xScale, yScale]
   );
 
@@ -117,10 +116,10 @@ export const AreaChart = ({ data }) => {
               <g className={styles.marks}>
                 <path d={areaGenerator(data)} />
               </g>
-              <XMarkerLine
+              <CursorLine
                 value={activeData.date}
                 xScale={xScale}
-                innerHeight={innerHeight}
+                height={innerHeight}
               />
               <g
                 transform={`translate(${areaGenerator.x()(
@@ -136,6 +135,29 @@ export const AreaChart = ({ data }) => {
               </g>
             </>
           ) : null}
+          <XMarkerLine
+            value={new Date("2021-05-15T00:00")}
+            xScale={xScale}
+            height={innerHeight}
+          />
+          <text
+            className={styles.markerLineLabelStroke}
+            textAnchor={"start"}
+            x={xScale(new Date("2021-05-15T00:00")) - 15}
+            y={5}
+            writingMode="vertical-rl"
+          >
+            雙北實施三級警戒
+          </text>
+          <text
+            className={styles.markerLineLabel}
+            textAnchor={"start"}
+            x={xScale(new Date("2021-05-15T00:00")) - 15}
+            y={5}
+            writingMode="vertical-rl"
+          >
+            雙北實施三級警戒
+          </text>
           <VoronoiOverlay
             margin={margin}
             onHover={handleVoronoiHover}
