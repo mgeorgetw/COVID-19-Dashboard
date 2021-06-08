@@ -609,9 +609,11 @@ const AreasWithOutstandingCasesTable = () => {
                     (+{d.todayCases.toLocaleString()})
                   </div>
                   <div className="set-title">Deaths</div>
-                  <div className="dead-count numerical-data">{d.deaths}</div>
+                  <div className="dead-count numerical-data">
+                    {d.deaths.toLocaleString()}
+                  </div>
                   <div className="smaller-numbers numerical-data">
-                    (+{d.todayDeaths})
+                    (+{d.todayDeaths.toLocaleString()})
                   </div>
                   <div className="set-title">Death Rate</div>
                   <div className="current-dead-rate numerical-data">

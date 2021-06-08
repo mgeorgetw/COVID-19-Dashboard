@@ -189,8 +189,8 @@ h2.title-date {
 .data-set {
   margin: auto;
   margin-bottom: 5px;
-  width: 130px;
-  height: 170px;
+  width: 7.5em;
+  height: 9em;
   text-align: center;
   border: 2px solid black;
   border-radius: 15px;
@@ -208,7 +208,7 @@ div.vertical-inverted-title {
   padding-top: 7px;
   text-align: left;
   float: left;
-  height: 163px;
+  height: 8.7em;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }

@@ -17,7 +17,7 @@ import styles from "./AreaChart.module.css";
 
 const width = window.innerWidth < 1000 ? window.innerWidth : 1000;
 const height = width > 480 ? width * 0.6 : width * 1;
-const margin = { top: 20, right: 10, bottom: 70, left: 40 };
+const margin = { top: 30, right: 10, bottom: 70, left: 40 };
 
 const xValue = (d) => d.date;
 const xAxisTickFormat = timeFormat("%-m/%-d, %Y");
@@ -111,30 +111,6 @@ export const AreaChart = ({ data }) => {
           <g className={styles.marks}>
             <path d={areaGenerator(data)} />
           </g>
-          {activeData ? (
-            <>
-              <g className={styles.marks}>
-                <path d={areaGenerator(data)} />
-              </g>
-              <CursorLine
-                value={activeData.date}
-                xScale={xScale}
-                height={innerHeight}
-              />
-              <g
-                transform={`translate(${areaGenerator.x()(
-                  activeData
-                )}, ${areaGenerator.y1()(activeData)})`}
-              >
-                <circle className={styles.dataPoint} r={5} />
-                <Tooltip
-                  activeData={activeData}
-                  className={styles.tooltipStroke}
-                />
-                <Tooltip activeData={activeData} className={styles.tooltip} />
-              </g>
-            </>
-          ) : null}
           <XMarkerLine
             value={new Date("2021-05-15T00:00")}
             xScale={xScale}
@@ -158,6 +134,27 @@ export const AreaChart = ({ data }) => {
           >
             雙北實施三級警戒
           </text>
+          {activeData ? (
+            <>
+              <CursorLine
+                value={activeData.date}
+                xScale={xScale}
+                height={innerHeight}
+              />
+              <g
+                transform={`translate(${areaGenerator.x()(
+                  activeData
+                )}, ${areaGenerator.y1()(activeData)})`}
+              >
+                <circle className={styles.dataPoint} r={5} />
+                <Tooltip
+                  activeData={activeData}
+                  className={styles.tooltipStroke}
+                />
+                <Tooltip activeData={activeData} className={styles.tooltip} />
+              </g>
+            </>
+          ) : null}
           <VoronoiOverlay
             margin={margin}
             onHover={handleVoronoiHover}
