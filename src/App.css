@@ -190,7 +190,7 @@ h2.title-date {
   margin: auto;
   margin-bottom: 5px;
   width: 7.5em;
-  height: 9em;
+  height: 9.5em;
   text-align: center;
   border: 2px solid black;
   border-radius: 15px;
@@ -208,7 +208,7 @@ div.vertical-inverted-title {
   padding-top: 7px;
   text-align: left;
   float: left;
-  height: 8.7em;
+  height: 9.2em;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }
