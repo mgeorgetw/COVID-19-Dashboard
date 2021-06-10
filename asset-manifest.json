@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/static/css/main.2a2a206c.chunk.css",
-    "main.js": "/static/js/main.61387d34.chunk.js",
-    "main.js.map": "/static/js/main.61387d34.chunk.js.map",
+    "main.css": "/static/css/main.2105a262.chunk.css",
+    "main.js": "/static/js/main.c1fe06e3.chunk.js",
+    "main.js.map": "/static/js/main.c1fe06e3.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.4846074d.js",
     "runtime-main.js.map": "/static/js/runtime-main.4846074d.js.map",
     "static/js/2.5e44878e.chunk.js": "/static/js/2.5e44878e.chunk.js",
     "static/js/2.5e44878e.chunk.js.map": "/static/js/2.5e44878e.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.2a2a206c.chunk.css.map": "/static/css/main.2a2a206c.chunk.css.map",
+    "static/css/main.2105a262.chunk.css.map": "/static/css/main.2105a262.chunk.css.map",
     "static/js/2.5e44878e.chunk.js.LICENSE.txt": "/static/js/2.5e44878e.chunk.js.LICENSE.txt",
     "static/media/NotoSansMono-CondensedBold.e667a45f.ttf": "/static/media/NotoSansMono-CondensedBold.e667a45f.ttf"
   },
   "entrypoints": [
     "static/js/runtime-main.4846074d.js",
     "static/js/2.5e44878e.chunk.js",
-    "static/css/main.2a2a206c.chunk.css",
-    "static/js/main.61387d34.chunk.js"
+    "static/css/main.2105a262.chunk.css",
+    "static/js/main.c1fe06e3.chunk.js"
   ]
 }
