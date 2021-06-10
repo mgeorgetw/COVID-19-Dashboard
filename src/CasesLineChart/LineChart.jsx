@@ -31,7 +31,7 @@ const yAxisTickFormat = (tickValue) => siFormat(tickValue);
 
 export const LineChart = ({ data }) => {
   // Change state when different point is hovered
-  const [activeData, setActiveData] = useState();
+  const [activeData, setActiveData] = useState(data[data.length - 1]);
 
   // The chart's real height and width
   const innerHeight = height - margin.top - margin.bottom;

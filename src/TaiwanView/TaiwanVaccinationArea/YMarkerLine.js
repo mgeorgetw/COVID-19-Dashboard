@@ -1,11 +1,6 @@
 import React from "react";
 import styles from "./AreaChart.module.css";
-export const YMarkerLine = ({
-  value,
-  yScale,
-  innerWidth,
-  labelOffset = 10,
-}) => {
+export const YMarkerLine = ({ value, yScale, innerWidth, labelOffset = 8 }) => {
   const markerLineY = yScale(value);
   const markerLineX1 = 0;
   const markerLineX2 = innerWidth;
@@ -13,13 +8,14 @@ export const YMarkerLine = ({
     <>
       <line
         className={styles.markerLine}
+        strokeDasharray="10,10"
         x1={markerLineX1}
         y1={markerLineY}
         x2={markerLineX2}
         y2={markerLineY}
       />
       <text
-        className={styles.tooltipStroke}
+        className={styles.markerLineLabelStroke}
         textAnchor={"start"}
         dominantBaseline={"hanging"}
         x={labelOffset}
@@ -29,7 +25,7 @@ export const YMarkerLine = ({
         全人口的75%
       </text>
       <text
-        className={styles.tooltip}
+        className={styles.markerLineLabel}
         textAnchor={"start"}
         dominantBaseline={"hanging"}
         x={labelOffset}

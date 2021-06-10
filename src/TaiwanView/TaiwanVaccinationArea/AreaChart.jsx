@@ -10,7 +10,7 @@ import {
 } from "d3";
 import { AxisBottom } from "./AxisBottom";
 import { AxisLeft } from "./AxisLeft";
-import { XMarkerLine } from "./XMarkerLine";
+import { CursorLine } from "./CursorLine";
 import { YMarkerLine } from "./YMarkerLine";
 import { VoronoiOverlay } from "./VoronoiOverlay";
 import { ColorLegend } from "./ColorLegend";
@@ -151,7 +151,7 @@ export const AreaChart = ({ data }) => {
           </g>
           {activeData ? (
             <>
-              <XMarkerLine
+              <CursorLine
                 value={activeData.date}
                 xScale={xScale}
                 innerHeight={innerHeight}

@@ -1,0 +1,45 @@
+.marks,
+.interiors {
+  fill: none;
+  stroke: #cacaca;
+}
+
+.marks .sphere {
+  fill: #e8e8e8;
+}
+
+.marks .graticules,
+.tick line {
+  fill: none;
+  stroke: #ccc;
+}
+
+.menus-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-right: 60px;
+}
+
+.axis-label,
+.dropdown-label {
+  font-size: 0.5em;
+  fill: #635f5d;
+  color: #635f5d;
+}
+
+.dropdown-label {
+  margin-left: 60px;
+  margin-right: 10px;
+}
+
+.Dropdown-root {
+  font-size: 1.5em;
+  width: 300px;
+  display: inline-block;
+}
+
+.Dropdown-menu {
+  max-height: 500px !important;
+}

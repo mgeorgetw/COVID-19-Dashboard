@@ -29,6 +29,24 @@
 
 .markerLine {
   /* stroke: #bd2d28; */
+  stroke: #8e6c8a;
+  stroke-width: 2px;
+}
+
+.markerLineLabel {
+  fill: #8e6c8a;
+  font-weight: bold;
+}
+
+.markerLineLabelStroke {
+  fill: #8e6c8a;
+  stroke: white;
+  stroke-width: 2px;
+  font-weight: bold;
+}
+
+.cursorLine {
+  /* stroke: #bd2d28; */
   stroke: #42a5b3;
   stroke-width: 2px;
 }
