@@ -37,9 +37,14 @@ export const PieTableLegendContainer = ({ data }) => {
         value: data.recovered,
         color: "#6BBBA1",
       },
+      // {
+      //   case: "病中",
+      //   value: data.confirmed - data.recovered - data.deaths,
+      //   color: "#E25A42",
+      // },
       {
         case: "病中",
-        value: data.confirmed - data.recovered - data.deaths,
+        value: data.active,
         color: "#E25A42",
       },
       {
