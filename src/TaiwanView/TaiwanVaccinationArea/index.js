@@ -10,22 +10,23 @@ const title = "台灣 COVID-19 疫苗接種人次";
 
 export const TaiwanVaccinationArea = () => {
   const data = useData();
-  if (!data || !data[data.length - 1].people_vaccinated) return <LoadSpinner />;
+  if (!data) return <LoadSpinner />;
+  // if (!data || !data[data.length - 1].people_vaccinated) return <LoadSpinner />;
   // if (data) console.log(data[data.length - 1]);
 
   const tableData = [
     {
-      heading: "接種人數總計",
+      heading: "接種人次總計",
       value: data[data.length - 1].total_vaccinations.toLocaleString(),
     },
-    {
-      heading: "已接種人數",
-      value: data[data.length - 1].people_vaccinated.toLocaleString(),
-    },
-    {
-      heading: "充分接種人數",
-      value: data[data.length - 1].people_fully_vaccinated.toLocaleString(),
-    },
+    // {
+    //   heading: "已接種人數",
+    //   value: data[data.length - 1].people_vaccinated.toLocaleString(),
+    // },
+    // {
+    //   heading: "充分接種人數",
+    //   value: data[data.length - 1].people_fully_vaccinated.toLocaleString(),
+    // },
   ];
 
   return (
