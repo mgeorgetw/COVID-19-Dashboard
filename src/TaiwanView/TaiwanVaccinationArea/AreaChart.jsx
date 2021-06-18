@@ -24,6 +24,7 @@ const xValue = (d) => d.date;
 const xAxisTickFormat = timeFormat("%-m/%-d, %Y");
 const xTooltipFormat = timeFormat("%-m/%-d, %Y");
 
+// const yValue = (d) => d.total_vaccinations;
 const yValue = (d) => d.people_vaccinated;
 const yValue2 = (d) => d.people_fully_vaccinated;
 // const yAxisLabel = "接種人次";

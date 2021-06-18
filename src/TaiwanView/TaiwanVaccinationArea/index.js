@@ -10,8 +10,8 @@ const title = "台灣 COVID-19 疫苗接種人次";
 
 export const TaiwanVaccinationArea = () => {
   const data = useData();
-  if (!data) return <LoadSpinner />;
-  // if (data) console.log(data);
+  if (!data || !data[data.length - 1].people_vaccinated) return <LoadSpinner />;
+  // if (data) console.log(data[data.length - 1]);
 
   const tableData = [
     {
