@@ -18,7 +18,7 @@ const jsonUrl = "https://disease.sh/v3/covid-19/countries/Taiwan?strict=true";
 // Use JSON data
 export const useData = () => {
   const [data, setData] = useState(null);
-  if (data) console.log(data);
+  // if (data) console.log(data);
 
   useEffect(() => {
     json(jsonUrl).then(setData);

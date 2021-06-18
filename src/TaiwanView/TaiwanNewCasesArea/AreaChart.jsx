@@ -116,24 +116,6 @@ export const AreaChart = ({ data }) => {
             xScale={xScale}
             height={innerHeight}
           />
-          <text
-            className={styles.markerLineLabelStroke}
-            textAnchor={"start"}
-            x={xScale(new Date("2021-05-15T00:00")) - 15}
-            y={5}
-            writingMode="vertical-rl"
-          >
-            雙北實施三級警戒
-          </text>
-          <text
-            className={styles.markerLineLabel}
-            textAnchor={"start"}
-            x={xScale(new Date("2021-05-15T00:00")) - 15}
-            y={5}
-            writingMode="vertical-rl"
-          >
-            雙北實施三級警戒
-          </text>
           {activeData ? (
             <>
               <CursorLine
