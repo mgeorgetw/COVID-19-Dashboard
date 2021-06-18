@@ -4,10 +4,22 @@
   color: #635f5d;
 }
 
-.marks {
+.areaLabel {
+  font-family: sans-serif;
+  fill-opacity: 0.7;
+  fill: white;
+}
+
+.primary {
   /* fill: none; */
-  fill: black;
-  stroke: black;
+  /* fill: #7098a5; */
+  stroke: none;
+}
+
+.secondary {
+  /* fill: none; */
+  fill: #b1c1be;
+  stroke: #635f5d;
 }
 
 .tick text {
@@ -47,7 +59,8 @@
 
 .voronoi path {
   fill: none;
-  /* stroke: pink; */
+  stroke: pink;
+  stroke-width: 2px;
   pointer-events: all;
 }
 
@@ -64,6 +77,16 @@
 }
 
 .tooltipStroke {
+  stroke: white;
+  stroke-width: 4px;
+}
+
+.legend,
+.legendStroke {
+  fill: black;
+  font-size: 1em;
+}
+.legendStroke {
   stroke: white;
   stroke-width: 4px;
 }

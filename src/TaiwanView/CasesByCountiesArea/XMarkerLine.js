@@ -16,18 +16,18 @@ export const XMarkerLine = ({ value, xScale, height }) => {
       />
       <text
         className={styles.markerLineLabelStroke}
-        textAnchor={"start"}
-        x={xScale(new Date("2021-05-15T00:00")) - 15}
-        y={5}
+        textAnchor={"end"}
+        x={xScale(new Date("2021-05-15T08:00")) - 15}
+        y={height - 5}
         writingMode="vertical-rl"
       >
         雙北實施三級警戒
       </text>
       <text
         className={styles.markerLineLabel}
-        textAnchor={"start"}
-        x={xScale(new Date("2021-05-15T00:00")) - 15}
-        y={5}
+        textAnchor={"end"}
+        x={xScale(new Date("2021-05-15T08:00")) - 15}
+        y={height - 5}
         writingMode="vertical-rl"
       >
         雙北實施三級警戒
