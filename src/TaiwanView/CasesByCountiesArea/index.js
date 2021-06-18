@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { group, stack, stackOffsetWiggle, stackOrderAscending } from "d3";
 import { useData } from "./useData";
 import { LoadSpinner } from "../../elements/CommonUIs";
@@ -6,7 +6,6 @@ import { ChartTitle } from "./ChartTitle";
 // import { DataTable } from "./DataTable";
 import { AreaChart } from "./AreaChart";
 import { Collapsible } from "./Collapsible";
-import { DropdownMenu } from "./DropdownMenu";
 
 const title = "COVID-19 台灣各地區每日新增確診案例數比較";
 
