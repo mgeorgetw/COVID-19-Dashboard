@@ -1,13 +1,5 @@
 import React, { useState, useMemo, useCallback } from "react";
-import {
-  scaleLinear,
-  scaleTime,
-  scaleOrdinal,
-  area,
-  timeFormat,
-  extent,
-  format,
-} from "d3";
+import { scaleLinear, scaleTime, area, timeFormat, extent, format } from "d3";
 import { AxisBottom } from "./AxisBottom";
 import { AxisLeft } from "./AxisLeft";
 import { CursorLine } from "./CursorLine";
