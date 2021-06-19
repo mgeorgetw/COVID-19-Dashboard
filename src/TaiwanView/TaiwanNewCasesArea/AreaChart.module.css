@@ -67,3 +67,9 @@
   stroke: white;
   stroke-width: 4px;
 }
+
+/* View buttons */
+.nav {
+  display: block;
+  margin-bottom: 1em;
+}

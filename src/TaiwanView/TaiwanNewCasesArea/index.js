@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useData } from "./useData";
 import { LoadSpinner } from "../../elements/CommonUIs";
+import { NavBar } from "./NavBar";
 import { ChartTitle } from "./ChartTitle";
 import { DataTable } from "./DataTable";
 import { AreaChart } from "./AreaChart";
@@ -12,10 +13,19 @@ const sumValuesInObject = (data, key) =>
     0 // initialValue
   );
 
-const title = "COVID-19 台灣每日新增確診案例數";
+const title = "COVID-19 台灣每日新增案例數";
+
+const NEW_CONFIRMED_API =
+  "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/jhu/new_cases.csv";
+
+const NEW_DEATHS_API =
+  "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/jhu/new_deaths.csv";
 
 export const TaiwanNewCasesArea = () => {
-  const data = useData();
+  const [view, setView] = useState("confirmed");
+
+  const csvUrl = view === "confirmed" ? NEW_CONFIRMED_API : NEW_DEATHS_API;
+  const data = useData(csvUrl);
   if (!data) return <LoadSpinner />;
   // if (data) console.log(data);
 
@@ -45,6 +55,7 @@ export const TaiwanNewCasesArea = () => {
   return (
     <>
       <ChartTitle title={title} />
+      <NavBar view={view} setView={setView} />
       <DataTable items={tableData} />
       <AreaChart data={filteredData} />
       <Collapsible id={title} />

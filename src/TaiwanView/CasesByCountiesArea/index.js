@@ -53,6 +53,7 @@ export const CasesByCountiesArea = () => {
     .offset(stackOffsetWiggle)
     .order(stackOrderAscending)
     .keys(layers)(transformedData);
+  // console.log(stackedData);
 
   // const tableData = [
   //   {

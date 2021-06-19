@@ -39,6 +39,10 @@ export const PieTableLegendContainer = ({ data, testsData }) => {
       case: "累計通報件數",
       value: data.tests,
     },
+    {
+      case: "昨日通報件數",
+      value: data.testsYesterday,
+    },
   ];
 
   const pieData = useMemo(

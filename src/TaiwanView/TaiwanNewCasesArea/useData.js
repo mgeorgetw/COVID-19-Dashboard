@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import { csv, timeParse } from "d3";
 
-const csvUrl =
-  "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/jhu/new_cases.csv";
-
 const parseDay = timeParse("%Y-%m-%d");
 
 const transform = (rawData) => {
@@ -14,17 +11,17 @@ const transform = (rawData) => {
 };
 
 // Data: Covid daily new_cases
-export const useData = () => {
+export const useData = (api) => {
   const [data, setData] = useState(null);
   // if (data) console.log(data);
   useEffect(() => {
     let isMounted = true;
-    csv(csvUrl).then((rawData) => {
+    csv(api).then((rawData) => {
       if (isMounted) setData(transform(rawData));
     });
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [api]);
   return data;
 };
