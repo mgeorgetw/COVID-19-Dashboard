@@ -10,7 +10,7 @@ import styles from "./AreaChart.module.css";
 
 const width = window.innerWidth < 1000 ? window.innerWidth : 1000;
 const height = width > 480 ? width * 0.6 : width * 1;
-const margin = { top: 20, right: 65, bottom: 80, left: 50 };
+const margin = { top: 20, right: 50, bottom: 80, left: 50 };
 
 const xValue = (d) => d.date;
 const xAxisTickFormat = timeFormat("%-m/%-d, %Y");
@@ -97,11 +97,13 @@ export const AreaChart = ({ data }) => {
       textAnchor={"middle"}
       dominantBaseline={"middle"}
       x={0}
-      y={position === "down" ? 20 : -15}
+      y={position === "down" ? 40 : -15}
     >
       <tspan x="0" dy="0" fontWeight="bold">
-        {scaleValue(activeData).toLocaleString()}人 (
-        {format(".0%")(scaleValue(activeData) / taiwanPopulation)})
+        ({format(".1%")(scaleValue(activeData) / taiwanPopulation)})
+      </tspan>
+      <tspan x="0" dy="-1.3em" fontWeight="bold">
+        {scaleValue(activeData).toLocaleString()}人
       </tspan>
       {position === "up" ? (
         <tspan x="0" dy="-1.3em">
