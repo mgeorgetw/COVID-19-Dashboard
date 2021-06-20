@@ -11,9 +11,9 @@ export const VaccinationRateByCountiesBar = () => {
   if (!data) return <LoadSpinner />;
 
   // Get only the latest data.
-  const sortedData = data.sort((a, b) => b["日期"] - a["日期"]);
+  const sortedData = data.sort((a, b) => b.date - a.date);
   const latestData = sortedData.filter(
-    (obj, index, array) => obj["日期"].valueOf() === array[0]["日期"].valueOf()
+    (obj, index, array) => obj.date.valueOf() === array[0].date.valueOf()
   );
   // console.log(latestData);
 
