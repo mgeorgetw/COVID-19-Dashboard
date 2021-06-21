@@ -16,8 +16,8 @@ export const PieLabels = ({
     const domainValue = dataType(d.data);
     let pieLabelPosition = pieArc.centroid(d);
     if (d.endAngle - d.startAngle < 0.25) {
-      pieLabelPosition[0] *= 2.3;
-      pieLabelPosition[1] *= 2.3;
+      pieLabelPosition[0] *= 1.65;
+      pieLabelPosition[1] *= 1.65;
     }
     const dataPercentage = (
       (dataValue(d.data) / sum(pieData, (d) => d.value)) *

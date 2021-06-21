@@ -119,9 +119,10 @@ h2.title-date {
   outline: none;
   color: black;
   background-color: white;
-  border: 1.3px solid darkgray;
+  border: 1.3px solid silver;
+  border-bottom: 0;
   border-radius: 5px;
-  box-shadow: 0px 6px 0px #888, 0px 3px 9px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 6px 0px #666, 0px 3px 9px rgba(0, 0, 0, 0.3);
 
   background-image: linear-gradient (#eee, white);
   background-image: -o-linear-gradient (#eee, white);

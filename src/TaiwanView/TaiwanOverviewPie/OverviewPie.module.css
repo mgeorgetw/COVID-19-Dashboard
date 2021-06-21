@@ -14,7 +14,7 @@
 
 .pieLabelStroke {
   stroke: white;
-  stroke-width: 2.4px;
+  stroke-width: 3px;
 }
 
 .legendLabel {
@@ -39,4 +39,10 @@
   100% {
     opacity: 0;
   }
+}
+
+/* View buttons */
+.nav {
+  display: block;
+  margin-bottom: 1em;
 }

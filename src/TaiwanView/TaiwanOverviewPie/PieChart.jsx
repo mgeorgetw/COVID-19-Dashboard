@@ -4,7 +4,7 @@ export const PieChart = ({
   pieData,
   pieArc,
   colorPie,
-  colorValue,
+  colorScale,
   dataType,
   onHover,
   hoveredValue,
@@ -19,9 +19,9 @@ export const PieChart = ({
         onMouseEnter={() => onHover(domainValue)}
         onClick={() => onHover(domainValue)}
         onMouseLeave={() => onHover(null)}
-        key={dataType(d.data)}
+        key={d.data.case}
       >
-        <path fill={colorValue(d.data)} d={pieArc(d)} />
+        <path fill={colorScale(domainValue)} d={pieArc(d)} />
       </g>
     );
   });
