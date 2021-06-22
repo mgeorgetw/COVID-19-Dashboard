@@ -21,7 +21,7 @@ export const VaccinationRateByCountiesBar = () => {
     <>
       <ChartTitle title="台灣各縣市施打COVID-19疫苗統計" />
       <BarChart data={latestData} />
-      <Collapsible id="caseFatalityRetes" />
+      <Collapsible id="vaccinesByCounties" />
     </>
   );
 };

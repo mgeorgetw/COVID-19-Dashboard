@@ -1,12 +1,20 @@
 import React from "react";
 const SourceCredit = () => (
   <p className="footnote">
-    資料來源：衛生福利部疾病管制署（API by{" "}
-    <a href="https://disease.sh">disease.sh</a>. Data collected by{" "}
+    資料來源：衛生福利部疾病管制署（API：{" "}
+    <a href="https://disease.sh">disease.sh</a>、
+    <a href="https://covid-19.nchc.org.tw/dt_005-covidTable_taiwan.php">
+      國家高速網路與計算中心
+    </a>
+    。資料收集：
     <a href="https://www.worldometers.info/coronavirus/#countries">
       Worldometer
     </a>
-    .）
+    、
+    <a href="https://covid-19.nchc.org.tw/dt_005-covidTable_taiwan.php">
+      國家高速網路與計算中心
+    </a>
+    ）。
   </p>
 );
 export const Collapsible = ({ id }) => {
