@@ -4,7 +4,7 @@ import { AxisBottom } from "./AxisBottom";
 import { AxisLeft } from "./AxisLeft";
 import { CursorLine } from "./CursorLine";
 import { YMarkerLine } from "./YMarkerLine";
-import { VoronoiOverlay } from "./VoronoiOverlay";
+import { RectOverlay } from "./RectOverlay";
 // import { ColorLegend } from "./ColorLegend";
 import styles from "./AreaChart.module.css";
 
@@ -71,7 +71,7 @@ export const AreaChart = ({ data }) => {
   //   []
   // );
 
-  const handleVoronoiHover = useCallback(setActiveData, [setActiveData]);
+  const handleHover = useCallback(setActiveData, [setActiveData]);
 
   const areaGenerator = useMemo(
     () =>
@@ -196,9 +196,8 @@ export const AreaChart = ({ data }) => {
             yScale={yScale}
             innerWidth={innerWidth}
           />
-          <VoronoiOverlay
-            margin={margin}
-            onHover={handleVoronoiHover}
+          <RectOverlay
+            onHover={handleHover}
             data={data}
             areaGenerator={areaGenerator}
             innerWidth={innerWidth}
