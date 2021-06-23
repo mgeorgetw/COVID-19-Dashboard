@@ -23,14 +23,14 @@ import { AxisLeft } from "./AxisLeft";
 import { CursorLine } from "./CursorLine";
 import { XMarkerLine } from "./XMarkerLine";
 // import { YMarkerLine } from "./YMarkerLine";
-import { LineOverlay } from "./LineOverlay";
+import { RectOverlay } from "./RectOverlay";
 // import { ColorLegend } from "./ColorLegend";
 // import { areaLabel } from "d3-area-label";
 import styles from "./AreaChart.module.css";
 
 const width = window.innerWidth < 1000 ? window.innerWidth : 1000;
 const height = width > 480 ? width * 0.6 : width * 1;
-const margin = { top: 20, right: 5, bottom: 80, left: 50 };
+const margin = { top: 20, right: 10, bottom: 80, left: 50 };
 
 const xValue = (d) => d.date;
 const xAxisTickFormat = timeFormat("%-m/%-d, %Y");
@@ -176,10 +176,11 @@ export const AreaChart = ({ data, stackedData, view, setView }) => {
             {stackedData.map((d) => (
               <g
                 key={d.key}
-                onPointerEnter={(event) => {
-                  event.preventDefault();
+                onTouchStart={(event) => {
                   handleTypeHover(d.key);
+                  event.preventDefault();
                 }}
+                onPointerEnter={() => handleTypeHover(d.key)}
                 onMouseLeave={() => handleTypeHover(null)}
               >
                 <path
@@ -218,10 +219,13 @@ export const AreaChart = ({ data, stackedData, view, setView }) => {
                         />
                       </>
                     ) : null}
-                    <LineOverlay
+                    <RectOverlay
                       onHover={handleCursorHover}
                       data={d}
+                      xScale={xScale}
                       areaGenerator={areaGenerator}
+                      innerHeight={innerHeight}
+                      innerWidth={innerWidth}
                     />
                   </>
                 ) : null}

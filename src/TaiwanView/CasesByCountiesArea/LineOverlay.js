@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { pointer } from "d3";
 import styles from "./AreaChart.module.css";
 export const LineOverlay = ({ data, areaGenerator, onHover }) => {
   return useMemo(() => {
@@ -18,6 +19,8 @@ export const LineOverlay = ({ data, areaGenerator, onHover }) => {
             onPointerEnter={(event) => {
               event.preventDefault();
               onHover(data[i]);
+              const pointX = pointer(event)[0];
+              console.log(pointX);
             }}
             onMouseEnter={() => onHover(data[i])}
             onTouchMove={(event) => {
