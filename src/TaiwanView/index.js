@@ -14,26 +14,26 @@ export const TaiwanView = () => (
     {/* <Card> */}
     {/*   <ChoroplethMap /> */}
     {/* </Card> */}
-    {/* <Card> */}
-    {/*   <TaiwanOverviewPie /> */}
-    {/* </Card> */}
-    {/* <Card> */}
-    {/*   <TaiwanTestsOverviewPie /> */}
-    {/* </Card> */}
-    {/* <Card> */}
-    {/*   <TaiwanNewCasesArea /> */}
-    {/* </Card> */}
+    <Card>
+      <TaiwanOverviewPie />
+    </Card>
+    <Card>
+      <TaiwanTestsOverviewPie />
+    </Card>
+    <Card>
+      <TaiwanNewCasesArea />
+    </Card>
     <Card>
       <CasesByCountiesArea />
     </Card>
-    {/* <Card> */}
-    {/*   <CFRByAgeGroupBar /> */}
-    {/* </Card> */}
-    {/* <Card> */}
-    {/*   <TaiwanVaccinationArea /> */}
-    {/* </Card> */}
-    {/* <Card> */}
-    {/*   <VaccinationRateByCountiesBar /> */}
-    {/* </Card> */}
+    <Card>
+      <CFRByAgeGroupBar />
+    </Card>
+    <Card>
+      <TaiwanVaccinationArea />
+    </Card>
+    <Card>
+      <VaccinationRateByCountiesBar />
+    </Card>
   </ul>
 );
