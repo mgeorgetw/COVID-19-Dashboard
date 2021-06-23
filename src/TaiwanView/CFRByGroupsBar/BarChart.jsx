@@ -9,7 +9,7 @@ import { Marks } from "./Marks";
 
 const width = window.innerWidth < 1000 ? window.innerWidth : 1000;
 const height = width > 480 ? width * 0.6 : width * 1;
-const margin = { top: 0, right: 120, bottom: 45, left: 70 };
+const margin = { top: 0, right: 120, bottom: 45, left: 60 };
 
 // const formatDate = timeFormat("%Y/%-m/%-d");
 const yValue = (d) => d.age;

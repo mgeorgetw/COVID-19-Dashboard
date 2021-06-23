@@ -16,7 +16,7 @@ export const AxisLeft = ({ yScale, tickOffset = 3 }) =>
           dominantBaseline: "middle",
         }}
       >
-        {tickValue}歲
+        {tickValue}
       </text>
     </g>
   ));

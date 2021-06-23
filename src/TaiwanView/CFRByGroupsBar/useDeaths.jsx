@@ -38,6 +38,7 @@ export const useDeaths = () => {
       // console.log("json data", transformData(rawData));
       if (isMounted) {
         const transformedData = transformData(rawData);
+        const deathsByGender = countGroups(transformedData, "gender");
         const deathsByAge = countGroups(transformedData, "ageGroup");
         const sortedDeathsByAge = ((obj) => ({
           "0-9": obj["0"] ? obj["0"] : 0,
@@ -49,7 +50,9 @@ export const useDeaths = () => {
           "60-69": obj["60"],
           "70+": obj["70"] + obj["80"] + obj["90"] + obj["100"],
         }))(deathsByAge);
-        setData(sortedDeathsByAge);
+        console.log(deathsByGender);
+
+        setData({ age: sortedDeathsByAge, gender: deathsByGender });
       }
     });
     return () => {

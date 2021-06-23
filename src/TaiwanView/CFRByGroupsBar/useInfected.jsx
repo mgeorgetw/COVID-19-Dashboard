@@ -40,8 +40,9 @@ export const useInfected = () => {
       // console.log("json data", transformData(rawData));
       if (isMounted) {
         const transformedData = transformData(rawData);
+        const infectedByGender = countGroups(transformedData, "gender");
         const infectedByAge = countGroups(transformedData, "ageGroup");
-        const sortedInfectedData = ((obj) => ({
+        const sortedInfectedByAge = ((obj) => ({
           "0-9":
             obj["0"] + obj["1"] + obj["2"] + obj["3"] + obj["4"] + obj["5-9"],
           "10-19": obj["10-14"] + obj["15-19"],
@@ -53,7 +54,7 @@ export const useInfected = () => {
           "70+": obj["70+"],
         }))(infectedByAge);
 
-        setData(sortedInfectedData);
+        setData({ age: sortedInfectedByAge, gender: infectedByGender });
       }
     });
     return () => {

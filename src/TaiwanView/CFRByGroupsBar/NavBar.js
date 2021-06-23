@@ -7,14 +7,14 @@ export const NavBar = ({ view, setView }) => {
   // A series of buttons to switch between views of charts.
   const buttons = [
     {
-      name: "以人口比例計",
-      view_name: "rates",
-      className: view === "rates" ? "active view-button" : "view-button",
+      name: "年齡層",
+      view_name: "age",
+      className: view === "age" ? "active view-button" : "view-button",
     },
     {
-      name: "以實際劑數計",
-      view_name: "doses",
-      className: view === "doses" ? "active view-button" : "view-button",
+      name: "生理性別",
+      view_name: "gender",
+      className: view === "gender" ? "active view-button" : "view-button",
     },
   ];
 
