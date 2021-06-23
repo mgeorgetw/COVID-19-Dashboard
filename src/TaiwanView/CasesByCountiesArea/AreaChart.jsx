@@ -23,7 +23,7 @@ import { AxisLeft } from "./AxisLeft";
 import { CursorLine } from "./CursorLine";
 import { XMarkerLine } from "./XMarkerLine";
 // import { YMarkerLine } from "./YMarkerLine";
-import { RectOverlay } from "./RectOverlay";
+import { PathOverlay } from "./PathOverlay";
 // import { ColorLegend } from "./ColorLegend";
 // import { areaLabel } from "d3-area-label";
 import styles from "./AreaChart.module.css";
@@ -187,7 +187,7 @@ export const AreaChart = ({ data, stackedData, view, setView }) => {
                   d={areaGenerator(d)}
                   fill={colorScale(d.key)}
                   stroke={colorScale(d.key)}
-                  opacity={hoveredValue ? 0.4 : 1}
+                  opacity={hoveredValue ? 0.2 : 1}
                 >
                   <title>{d.key}</title>
                 </path>
@@ -219,13 +219,10 @@ export const AreaChart = ({ data, stackedData, view, setView }) => {
                         />
                       </>
                     ) : null}
-                    <RectOverlay
+                    <PathOverlay
                       onHover={handleCursorHover}
                       data={d}
-                      xScale={xScale}
                       areaGenerator={areaGenerator}
-                      innerHeight={innerHeight}
-                      innerWidth={innerWidth}
                     />
                   </>
                 ) : null}

@@ -56,13 +56,6 @@
   stroke-width: 2px;
 }
 
-.voronoi path {
-  fill: none;
-  stroke: pink;
-  stroke-width: 2px;
-  pointer-events: all;
-}
-
 .captureArea path {
   fill: none;
   pointer-events: all;
