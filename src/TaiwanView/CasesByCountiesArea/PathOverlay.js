@@ -21,6 +21,10 @@ export const PathOverlay = ({ data, areaGenerator, onHover }) => {
             const index = bisectCenter(points, -pointer(event)[0]);
             onHover(data[index]);
           }}
+          onMouseMove={(event) => {
+            const index = bisectCenter(points, -pointer(event)[0]);
+            onHover(data[index]);
+          }}
         ></path>
       </g>
     );

@@ -12,7 +12,7 @@ import { AxisBottom } from "./AxisBottom";
 import { AxisLeft } from "./AxisLeft";
 import { XMarkerLine } from "./XMarkerLine";
 import { CursorLine } from "./CursorLine.js";
-import { VoronoiOverlay } from "./VoronoiOverlay";
+import { RectOverlay } from "./RectOverlay";
 import styles from "./AreaChart.module.css";
 
 const width = window.innerWidth < 1000 ? window.innerWidth : 1000;
@@ -144,8 +144,7 @@ export const AreaChart = ({ data }) => {
               </g>
             </>
           ) : null}
-          <VoronoiOverlay
-            margin={margin}
+          <RectOverlay
             onHover={handleVoronoiHover}
             data={data}
             areaGenerator={areaGenerator}
