@@ -33,6 +33,11 @@
   pointer-events: all;
 }
 
+.captureArea rect {
+  fill: none;
+  pointer-events: all;
+}
+
 .dataPoint {
   fill: none;
   stroke: #42a5b3;
