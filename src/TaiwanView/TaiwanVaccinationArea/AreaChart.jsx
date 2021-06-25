@@ -4,6 +4,7 @@ import { AxisBottom } from "./AxisBottom";
 import { AxisLeft } from "./AxisLeft";
 import { CursorLine } from "./CursorLine";
 import { YMarkerLine } from "./YMarkerLine";
+import { XMarkerLine } from "./XMarkerLine";
 import { RectOverlay } from "./RectOverlay";
 // import { ColorLegend } from "./ColorLegend";
 import styles from "./AreaChart.module.css";
@@ -144,6 +145,17 @@ export const AreaChart = ({ data }) => {
           {/* <g className={styles.secondary}> */}
           {/*   <path d={areaGenerator2(data)} /> */}
           {/* </g> */}
+          <YMarkerLine
+            value={taiwanPopulation * 0.75}
+            yScale={yScale}
+            innerWidth={innerWidth}
+          />
+          <XMarkerLine
+            value={new Date("2021-06-15T00:00")}
+            xScale={xScale}
+            height={innerHeight}
+            label={"七五歲以上疫苗開打"}
+          />
           {activeData ? (
             <>
               <CursorLine
@@ -191,11 +203,6 @@ export const AreaChart = ({ data }) => {
               {/* </g> */}
             </>
           ) : null}
-          <YMarkerLine
-            value={taiwanPopulation * 0.75}
-            yScale={yScale}
-            innerWidth={innerWidth}
-          />
           <RectOverlay
             onHover={handleHover}
             data={data}

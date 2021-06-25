@@ -5,18 +5,18 @@ import { ColorLegend } from "./ColorLegend";
 import { DataTable } from "./DataTable";
 import { PieChart } from "./PieChart";
 import { PieLabels } from "./PieLabels";
+// import { AnimatedPieHooks } from "./AnimatedPieHooks";
 
 const width = window.innerWidth < 1000 ? window.innerWidth : 1000;
 const height = width > 480 ? width * 0.6 : width * 0.7;
 
-const pieRadius = (width * 0.66) / 2;
+const pieRadius = Math.min(width * 0.66, height) / 2;
 const pieOuterMargin = pieRadius * 0.7;
 const pieInnerMargin = pieRadius * 0.25;
 
 const legendX = width * 0.66;
 const legendCircleRadius = 8;
 const legendItemSpacing = 26;
-const legendY = legendItemSpacing * 2;
 
 const fadeOpacity = 0.3;
 
@@ -42,6 +42,11 @@ export const PieTableLegendContainer = ({ data, view }) => {
   );
   // console.log(pieData);
 
+  const legendY = useMemo(
+    () => (height - (pieData.length - 1) * legendItemSpacing) / 2,
+    [pieData]
+  );
+
   let pieCenterLabel;
   switch (view) {
     case "condition":
@@ -57,6 +62,7 @@ export const PieTableLegendContainer = ({ data, view }) => {
       pieCenterLabel = "";
       break;
   }
+
   const colorPie = useMemo(() => pie().sort(null).value(dataValue), []);
 
   const colorScale = useMemo(
@@ -98,6 +104,12 @@ export const PieTableLegendContainer = ({ data, view }) => {
             hoveredValue={hoveredValue}
             fadeOpacity={fadeOpacity}
           />
+          {/* <AnimatedPieHooks */}
+          {/*   data={pieData} */}
+          {/*   innerRadius={pieInnerMargin} */}
+          {/*   outerRadius={pieOuterMargin} */}
+          {/*   dataValue={dataValue} */}
+          {/* /> */}
         </g>
         <g transform={`translate(${legendX}, ${legendY})`}>
           <text className={styles.legendLabel} x={-7} y={-legendItemSpacing}>

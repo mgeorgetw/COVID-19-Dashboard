@@ -1,4 +1,6 @@
 import React from "react";
+// import { useEffect, useRef } from "react";
+// import { select, transition } from "d3";
 import styles from "./OverviewPie.module.css";
 export const PieChart = ({
   pieData,
@@ -9,8 +11,15 @@ export const PieChart = ({
   onHover,
   hoveredValue,
   fadeOpacity = 0.2,
-}) =>
-  colorPie(pieData).map((d) => {
+}) => {
+  // const refPie = useRef(null);
+  // useEffect(() => {
+  //   const t = transition().duration(750).text("agggg").style("fill", "red");
+
+  //   const textG = select(refPie.current);
+  //   textG.enter().transition(t);
+  // }, []);
+  return colorPie(pieData).map((d) => {
     const domainValue = dataType(d.data);
     return (
       <g
@@ -25,3 +34,4 @@ export const PieChart = ({
       </g>
     );
   });
+};

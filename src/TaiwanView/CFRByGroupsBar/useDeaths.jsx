@@ -50,7 +50,6 @@ export const useDeaths = () => {
           "60-69": obj["60"],
           "70+": obj["70"] + obj["80"] + obj["90"] + obj["100"],
         }))(deathsByAge);
-        console.log(deathsByGender);
 
         setData({ age: sortedDeathsByAge, gender: deathsByGender });
       }
