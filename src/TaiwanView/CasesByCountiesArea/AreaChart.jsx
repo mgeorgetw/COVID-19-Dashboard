@@ -24,6 +24,7 @@ import { CursorLine } from "./CursorLine";
 import { XMarkerLine } from "./XMarkerLine";
 // import { YMarkerLine } from "./YMarkerLine";
 import { PathOverlay } from "./PathOverlay";
+import { Tooltip } from "./Tooltip";
 // import { ColorLegend } from "./ColorLegend";
 // import { areaLabel } from "d3-area-label";
 import styles from "./AreaChart.module.css";
@@ -109,25 +110,6 @@ export const AreaChart = ({ data, stackedData, view, setView }) => {
     [xScale, yScale]
   );
 
-  const Tooltip = ({ activeData, hoveredValue, className }) => (
-    <text
-      className={className}
-      textAnchor={"start"}
-      dominantBaseline={"middle"}
-      x={0}
-      y={20}
-    >
-      <tspan x="10" dy="0" fontWeight="bold">
-        {`${hoveredValue}：${
-          activeData && activeData.data[hoveredValue].toLocaleString()
-        }人`}
-      </tspan>
-      <tspan x="10" dy="1.3em">
-        {xTooltipFormat(activeData && activeData.data.date)}
-      </tspan>
-    </text>
-  );
-
   // useEffect(() => {
   //   const labelG = select(ref.current);
   //   const labels = labelG.selectAll("text").data(stackedData);
@@ -186,7 +168,8 @@ export const AreaChart = ({ data, stackedData, view, setView }) => {
                 <path
                   d={areaGenerator(d)}
                   fill={colorScale(d.key)}
-                  stroke={colorScale(d.key)}
+                  stroke={"#ddd"}
+                  strokeWidth={0.1}
                   opacity={hoveredValue ? 0.2 : 1}
                 >
                   <title>{d.key}</title>
@@ -196,7 +179,8 @@ export const AreaChart = ({ data, stackedData, view, setView }) => {
                     <path
                       d={areaGenerator(d)}
                       fill={colorScale(d.key)}
-                      stroke={colorScale(d.key)}
+                      stroke={"#ddd"}
+                      strokeWidth={0.1}
                     >
                       <title>{d.key}</title>
                     </path>
@@ -210,12 +194,7 @@ export const AreaChart = ({ data, stackedData, view, setView }) => {
                         <Tooltip
                           activeData={activeData}
                           hoveredValue={hoveredValue}
-                          className={styles.tooltipStroke}
-                        />
-                        <Tooltip
-                          activeData={activeData}
-                          hoveredValue={hoveredValue}
-                          className={styles.tooltip}
+                          xTooltipFormat={xTooltipFormat}
                         />
                       </>
                     ) : null}
