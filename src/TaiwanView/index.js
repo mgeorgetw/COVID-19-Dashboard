@@ -4,7 +4,7 @@ import { TaiwanOverviewPie } from "./TaiwanOverviewPie/index";
 import { TaiwanTestsOverviewPie } from "./TaiwanTestsOverviewPie/index";
 import { TaiwanNewCasesArea } from "./TaiwanNewCasesArea/index";
 import { TaiwanVaccinationArea } from "./TaiwanVaccinationArea/index";
-import { VaccinationRateByCountiesBar } from "./VaccinationRateByCountiesBar/index";
+// import { VaccinationRateByCountiesBar } from "./VaccinationRateByCountiesBar/index";
 import { CFRByGroupsBar } from "./CFRByGroupsBar/index";
 import { CasesByCountiesArea } from "./CasesByCountiesArea/index";
 // import { ChoroplethMap } from "./ChoroplethMap/index";
@@ -32,8 +32,8 @@ export const TaiwanView = () => (
     <Card>
       <TaiwanVaccinationArea />
     </Card>
-    <Card>
-      <VaccinationRateByCountiesBar />
-    </Card>
+    {/* <Card> */}
+    {/*   <VaccinationRateByCountiesBar /> */}
+    {/* </Card> */}
   </ul>
 );
