@@ -1,24 +1,41 @@
 import { useState, useEffect } from "react";
-import { csv } from "d3";
+import { json } from "d3";
+// import { csv, autoType } from "d3";
 
-// Share of Population infected with HIV/AIDS (Source: IHME)
-const csvUrl =
-  "https://gist.githubusercontent.com/curran/470752f12c027f8ff4266e7c96f26a56/raw/66908b56e371e7c9f5a1c0911ac3250f570a4c83/share-of-population-infected-with-hiv-ihme.csv";
+// const csvUrl =
+//   "https://gist.githubusercontent.com/mgeorgetw/690d02dfc6bdbb99e58f6d1c622836c9/raw/covidtable_taiwan_cdc5.csv";
 
+const CORS = "https://morning-wave-49482.herokuapp.com/";
+const API =
+  "https://covid-19.nchc.org.tw/api/covid19?CK=covid-19@nchc.org.tw&querydata=5003&limited=全部縣市";
+const jsonUrl = CORS + API;
+
+const transformData = (rawData) =>
+  rawData.map((d) => {
+    d["日期"] = new Date(d.a01);
+    d["縣市別"] = d.a02;
+    d["區域"] = d.a03;
+    d["新增確診人數"] = +d.a04;
+    d["累計確診人數"] = +d.a05;
+    d["七天移動平均新增確診"] = +d.a06;
+    return d;
+  });
+
+// Data: Covid vaccinations in Taiwan
 export const useData = () => {
   const [data, setData] = useState(null);
-  // if (data) console.log(data[0]);
-
+  // if (data) console.log(data);
   useEffect(() => {
-    const row = d => {
-      // + = parseFloat()
-      d.aids = +d[
-        "Prevalence - HIV/AIDS - Sex: Both - Age: 15-49 years (Percent) (%)"
-      ];
-      return d;
+    let isMounted = true;
+    // csv(csvUrl, autoType).then((d) => {
+    //   if (isMounted) setData(d);
+    // });
+    json(jsonUrl).then((rawData) => {
+      if (isMounted) setData(transformData(rawData));
+    });
+    return () => {
+      isMounted = false;
     };
-    // I only want the top 10 countries
-    csv(csvUrl, row).then(setData);
   }, []);
   return data;
 };

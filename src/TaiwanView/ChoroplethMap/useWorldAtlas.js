@@ -7,7 +7,7 @@ const jsonUrl = "https://unpkg.com/world-atlas@2.0.2/countries-50m.json";
 // Use JSON data
 export const useWorldAtlas = () => {
   const [data, setData] = useState(null);
-  console.log(data);
+  // console.log(data);
 
   useEffect(() => {
     json(jsonUrl).then((topology) => {

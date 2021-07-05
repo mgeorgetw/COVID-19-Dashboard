@@ -7,7 +7,6 @@ import { PieTableLegendContainer } from "./PieTableLegendContainer";
 import { Collapsible } from "./Collapsible";
 
 const title = "COVID-19 台灣染疫現況";
-
 const ChartTitle = ({ title }) => <div className="chart-title">{title}</div>;
 
 const countGroups = (array, group) => {

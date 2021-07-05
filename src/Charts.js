@@ -235,7 +235,7 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
     "https://disease.sh/v3/covid-19/historical?lastdays=90",
     null
   );
-  const [chosen, setChosen] = useState("Taiwan");
+  const [chosen, setChosen] = useState("UK");
   const [lineData, setLineData] = useState({});
   // if (data) console.log(data[0]);
   const CHART_TYPES = {

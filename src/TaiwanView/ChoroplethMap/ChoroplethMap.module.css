@@ -1,7 +1,8 @@
 .marks,
 .interiors {
   fill: none;
-  stroke: #cacaca;
+  stroke: gray;
+  stroke-width: 0.5px;
 }
 
 .marks .sphere {
@@ -42,4 +43,12 @@
 
 .Dropdown-menu {
   max-height: 500px !important;
+}
+
+.sliderContainer > * {
+  display: inline;
+  vertical-align: middle;
+}
+.sliderContainer > pre {
+  margin-left: 1em;
 }
