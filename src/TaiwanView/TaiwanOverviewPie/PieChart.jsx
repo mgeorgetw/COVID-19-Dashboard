@@ -16,8 +16,8 @@ export const PieChart = ({
       <g
         className={styles.pieChart}
         opacity={hoveredValue && domainValue !== hoveredValue ? fadeOpacity : 1}
-        onMouseEnter={() => onHover(domainValue)}
         onClick={() => onHover(domainValue)}
+        onMouseEnter={() => onHover(domainValue)}
         onMouseLeave={() => onHover(null)}
         key={d.data.case}
       >

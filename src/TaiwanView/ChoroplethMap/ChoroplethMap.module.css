@@ -12,7 +12,13 @@
 .marks .graticules,
 .tick line {
   fill: none;
-  stroke: #ccc;
+  stroke: black;
+}
+
+.tick text {
+  fill: #635f5d;
+  cursor: default;
+  font-size: 14px;
 }
 
 .menus-container {
@@ -49,6 +55,18 @@
   display: inline;
   vertical-align: middle;
 }
-.sliderContainer > pre {
+.sliderContainer > input {
   margin-left: 1em;
+}
+
+.tooltip,
+.tooltipStroke {
+  fill: black;
+  font-size: 1.2em;
+  cursor: default;
+}
+
+.tooltipStroke {
+  stroke: white;
+  stroke-width: 4px;
 }

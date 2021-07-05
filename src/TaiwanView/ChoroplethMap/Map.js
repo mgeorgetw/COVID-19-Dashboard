@@ -1,11 +1,16 @@
 import { useState } from "react";
-// import { Marks } from "./Marks";
+import { scaleSequential, interpolateGreys, max, scaleLinear } from "d3";
+import { AxisBottom } from "./AxisBottom";
 import { TaiwanMarks } from "./TaiwanMarks";
-import { scaleSequential, interpolateGreys, max } from "d3";
 import styles from "./ChoroplethMap.module.css";
 
-const width = window.innerWidth < 1000 ? window.innerWidth : 1000;
-const height = width > 480 ? width * 0.9 : width * 1.1;
+const width = window.innerWidth < 800 ? window.innerWidth : 800;
+const height = width > 480 ? width * 0.9 : width * 1.6;
+const viewBoxWidth = width + 50;
+
+const xAxisTickFormat = (d) => d;
+const legendPadding = 5;
+const legendWidth = viewBoxWidth - legendPadding * 2;
 
 const transformData = (data, view) => {
   let obj = { date: data[0]["日期"], dateString: data[0].a01 };
@@ -19,6 +24,7 @@ const transformData = (data, view) => {
 
 const Slider = ({ range, selected, handleChange }) => (
   <div className={styles.sliderContainer}>
+    <pre>{selected}</pre>
     <input
       className={styles.slider}
       type="range"
@@ -27,12 +33,12 @@ const Slider = ({ range, selected, handleChange }) => (
       value={range.indexOf(selected)}
       onChange={(e) => handleChange(range[e.target.value])}
     />
-    <pre>{selected}</pre>
   </div>
 );
 
 export const Map = ({ data, atlas, view }) => {
   const [selectedDate, setSelectedDate] = useState(data[0].a01);
+  const [hoveredValue, setHoveredValue] = useState(null);
 
   // Choropleth Map can only display one day of data
   const filteredData =
@@ -55,6 +61,10 @@ export const Map = ({ data, atlas, view }) => {
     max(filteredData.map((d) => d["累計確診人數"])),
   ]);
 
+  const xScale = scaleLinear()
+    .range([0, legendWidth])
+    .domain(colorScale.domain());
+
   return (
     <>
       <Slider
@@ -62,12 +72,25 @@ export const Map = ({ data, atlas, view }) => {
         selected={selectedDate}
         handleChange={setSelectedDate}
       />
-      <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMinYMid">
+      <svg
+        viewBox={`0 0 ${viewBoxWidth} ${height}`}
+        preserveAspectRatio="xMinYMid"
+      >
         <TaiwanMarks
           atlas={atlas}
           colorScale={colorScale}
           data={transformedData}
-          view={view}
+          hoveredValue={hoveredValue}
+          onHover={setHoveredValue}
+        />
+        <AxisBottom
+          innerHeight={height}
+          width={legendWidth}
+          xScale={xScale}
+          colorScale={colorScale}
+          tickFormat={xAxisTickFormat}
+          tickOffset={legendPadding}
+          tickCount={6}
         />
       </svg>
     </>
