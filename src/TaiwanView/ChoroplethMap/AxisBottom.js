@@ -7,7 +7,7 @@ export const AxisBottom = ({
   innerHeight,
   width,
   colorScale,
-  // tickFormat,
+  tickFormat,
   tickCount = 6,
   tickOffset = 3,
 }) => {
@@ -16,7 +16,7 @@ export const AxisBottom = ({
   useEffect(() => {
     const xAxisG = select(ref.current);
     const xAxis = axisBottom(xScale)
-      .ticks(tickCount)
+      .ticks(tickCount, tickFormat)
       .tickSize(-legendHeight - 3)
       .tickPadding(tickOffset);
     xAxisG
@@ -24,7 +24,7 @@ export const AxisBottom = ({
       .selectAll("text")
       .style("text-anchor", "middle")
       .attr("dy", "-2.2em");
-  }, [xScale, innerHeight, tickOffset, tickCount]);
+  }, [xScale, innerHeight, tickOffset, tickCount, tickFormat]);
   return (
     <>
       <g transform={`translate(${tickOffset}, 0)`}>

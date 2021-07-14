@@ -1,5 +1,11 @@
-import { useState } from "react";
-import { scaleSequential, interpolateGreys, max, scaleLinear } from "d3";
+import { useState, useMemo } from "react";
+import {
+  scaleSequential,
+  interpolateGreys,
+  max,
+  scaleLinear,
+  format,
+} from "d3";
 import { AxisBottom } from "./AxisBottom";
 import { TaiwanMarks } from "./TaiwanMarks";
 import styles from "./ChoroplethMap.module.css";
@@ -8,9 +14,11 @@ const width = window.innerWidth < 800 ? window.innerWidth : 800;
 const height = width > 480 ? width * 0.9 : width * 1.6;
 const viewBoxWidth = width + 50;
 
-const xAxisTickFormat = (d) => d;
+const xAxisTickFormat = format(",d");
 const legendPadding = 5;
 const legendWidth = viewBoxWidth - legendPadding * 2;
+
+const colorValue = (d) => d["累計確診人數"];
 
 const transformData = (data, view) => {
   let obj = { date: data[0]["日期"], dateString: data[0].a01 };
@@ -39,31 +47,38 @@ const Slider = ({ range, selected, handleChange }) => (
 export const Map = ({ data, atlas, view }) => {
   const [selectedDate, setSelectedDate] = useState(data[0].a01);
   const [hoveredValue, setHoveredValue] = useState(null);
+  const [points, setPoints] = useState(null);
 
   // Choropleth Map can only display one day of data
-  const filteredData =
+  const dataFilteredByAreas =
     view === "全台灣"
       ? data.filter((d) => d["區域"] === "全區")
       : data.filter((d) => d["縣市別"] === view);
 
+  // Prepare all dates for the range slider
   const allDates = Array.from(
-    new Set(filteredData.map((d) => d.a01))
+    new Set(dataFilteredByAreas.map((d) => d.a01))
   ).reverse();
 
-  const selectedData = filteredData.filter(
+  const dataSelectedByDate = dataFilteredByAreas.filter(
     (d) => d["日期"].valueOf() === new Date(selectedDate).valueOf()
   );
 
-  const transformedData = transformData(selectedData, view);
+  const heatmapData = transformData(dataSelectedByDate, view);
 
-  const colorScale = scaleSequential(interpolateGreys).domain([
-    0,
-    max(filteredData.map((d) => d["累計確診人數"])),
-  ]);
+  const colorScale = useMemo(
+    () =>
+      scaleSequential(interpolateGreys).domain([
+        0,
+        max(dataFilteredByAreas.map(colorValue)),
+      ]),
+    [dataFilteredByAreas]
+  );
 
-  const xScale = scaleLinear()
-    .range([0, legendWidth])
-    .domain(colorScale.domain());
+  const xScale = useMemo(
+    () => scaleLinear().range([0, legendWidth]).domain(colorScale.domain()),
+    [colorScale]
+  );
 
   return (
     <>
@@ -79,10 +94,31 @@ export const Map = ({ data, atlas, view }) => {
         <TaiwanMarks
           atlas={atlas}
           colorScale={colorScale}
-          data={transformedData}
+          data={heatmapData}
           hoveredValue={hoveredValue}
-          onHover={setHoveredValue}
+          handleHover={setHoveredValue}
+          handlePointerMove={setPoints}
         />
+        {hoveredValue ? (
+          <g>
+            <text
+              className={styles.tooltipStroke}
+              x={points[0]}
+              y={points[1]}
+              textAnchor={points[0] > width / 2 ? "end" : "start"}
+            >
+              {hoveredValue}累計確診：{heatmapData[hoveredValue]}
+            </text>
+            <text
+              className={styles.tooltip}
+              x={points[0]}
+              y={points[1]}
+              textAnchor={points[0] > width / 2 ? "end" : "start"}
+            >
+              {hoveredValue}累計確診：{heatmapData[hoveredValue]}
+            </text>
+          </g>
+        ) : null}
         <AxisBottom
           innerHeight={height}
           width={legendWidth}

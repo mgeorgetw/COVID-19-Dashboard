@@ -11,6 +11,7 @@ export const useData = () => {
     let isMounted = true;
     csv(csvUrl, autoType).then((rawData) => {
       let prevVaccinated, prevFullyVaccinated, prevTotal;
+      // Fill empty cells with data from the last available row
       const row = rawData.map((d) => {
         d.people_vaccinated !== null
           ? (prevVaccinated = d.people_vaccinated)

@@ -1,18 +1,17 @@
-import { useState } from "react";
 import { geoPath, pointer } from "d3";
 import styles from "./ChoroplethMap.module.css";
 const missingDataColor = "white";
 
 export const TaiwanMarks = ({
-  atlas: { counties, interiors },
+  atlas: { counties, interiors, compBorders },
   data,
   colorScale,
-  onHover,
-  hoveredValue,
+  handleHover,
+  handlePointerMove,
 }) => {
-  const [points, setPoints] = useState(null);
-  const width = window.innerWidth;
-  const path = geoPath(); // creates a new geographic path generator
+  // const projection = geoMercator().scale(9000).center([121, 24]);
+  // const path = geoPath().projection(projection); // creates a new geographic path generator
+  const path = geoPath();
   return (
     <>
       <g className={styles.marks}>
@@ -25,41 +24,22 @@ export const TaiwanMarks = ({
               d={path(feature)}
               onTouchStart={(event) => {
                 event.preventDefault();
-                onHover(d);
-                setPoints(pointer(event));
+                handleHover(d);
+                handlePointerMove(pointer(event));
               }}
               onMouseMove={(event) => {
-                onHover(d);
-                setPoints(pointer(event));
+                handleHover(d);
+                handlePointerMove(pointer(event));
               }}
               onPointerMove={(event) => {
-                onHover(d);
-                setPoints(pointer(event));
+                handleHover(d);
+                handlePointerMove(pointer(event));
               }}
             />
           );
         })}
-        {hoveredValue ? (
-          <g>
-            <text
-              className={styles.tooltipStroke}
-              x={points[0]}
-              y={points[1]}
-              textAnchor={points[0] > width / 2 ? "end" : "start"}
-            >
-              {hoveredValue}累計確診：{data[hoveredValue]}
-            </text>
-            <text
-              className={styles.tooltip}
-              x={points[0]}
-              y={points[1]}
-              textAnchor={points[0] > width / 2 ? "end" : "start"}
-            >
-              {hoveredValue}累計確診：{data[hoveredValue]}
-            </text>
-          </g>
-        ) : null}
         {/* <path className={styles.interiors} d={path(interiors)} /> */}
+        <path className={styles.marks} d={path(compBorders)} />
       </g>
     </>
   );

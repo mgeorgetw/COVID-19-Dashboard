@@ -1,7 +1,7 @@
 // import { useState } from "react";
+import { useData } from "./useData";
 import { useTaiwanAtlas } from "./useTaiwanAtlas";
 import { LoadSpinner } from "../../elements/CommonUIs";
-import { useData } from "./useData";
 import { Map } from "./Map";
 
 const title = "COVID-19 台灣累計確診分佈圖";
