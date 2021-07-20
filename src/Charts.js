@@ -10,6 +10,12 @@ const CheckError = (response) => {
   }
 };
 
+const sumValuesInObject = (data, key) =>
+  data.reduce(
+    (prev, cur) => prev + cur[key],
+    0 // initialValue
+  );
+
 // Transposes {'Key': 'Value'} to {x: key, y:value}
 const transposeKeyValue = (data) =>
   Object.entries(data).map(([key, value]) => ({
@@ -28,12 +34,6 @@ const calDailyDifference = (data) =>
 
 const calPercentage = (numerator, denominator) =>
   Number(((numerator / denominator) * 100).toFixed(2));
-
-//const sumValuesInObject = (data, key) =>
-//data.reduce(
-//(prev, cur) => (parseInt(prev) || 0) + (parseInt(cur[key]) || 0),
-//0
-//);
 
 // API Users
 // Generic hook to fetch data v1
@@ -238,6 +238,7 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
   const [chosen, setChosen] = useState("UK");
   const [lineData, setLineData] = useState({});
   // if (data) console.log(data[0]);
+
   const CHART_TYPES = {
     newCases: "Daily New Cases in ",
     newDeaths: "Daily Deaths in ",
@@ -266,7 +267,8 @@ const DailyLineChartInAnArea = ({ chart_type }) => {
           heading: "Growth Factor",
           datum: data.newCases
             ? (
-                data.newCases.slice(-1)[0].y / data.newCases.slice(-2)[0].y
+                sumValuesInObject(data.newCases.slice(-7), "y") /
+                sumValuesInObject(data.newCases.slice(-14, -7), "y")
               ).toFixed(2)
             : "loading",
         },
@@ -554,7 +556,7 @@ const ConfirmedCasesInSelectedCountriesLineChart = () => {
 
 const AreasWithOutstandingCasesTable = () => {
   const [{ data, isLoading, isError }] = useDataApi(
-    "https://disease.sh/v2/countries",
+    "https://disease.sh/v3/covid-19/countries?yesterday=true",
     []
   );
   const [sortBy, setSortBy] = useState("cases");
