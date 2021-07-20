@@ -4,10 +4,11 @@ import { TaiwanOverviewPie } from "./TaiwanOverviewPie/index";
 import { TaiwanTestsOverviewPie } from "./TaiwanTestsOverviewPie/index";
 import { TaiwanNewCasesArea } from "./TaiwanNewCasesArea/index";
 import { TaiwanVaccinationArea } from "./TaiwanVaccinationArea/index";
+import { ChoroplethMap } from "./ChoroplethMap/index";
 import { CFRByGroupsBar } from "./CFRByGroupsBar/index";
 import { CasesByCountiesArea } from "./CasesByCountiesArea/index";
+import { TaiwanMobilityLine } from "./TaiwanMobilityLine/index";
 // import { VaccinationRateByCountiesBar } from "./VaccinationRateByCountiesBar/index";
-import { ChoroplethMap } from "./ChoroplethMap/index";
 
 export const TaiwanView = () => (
   <ul className="flex-card-list">
@@ -31,6 +32,9 @@ export const TaiwanView = () => (
     </Card>
     <Card>
       <TaiwanVaccinationArea />
+    </Card>
+    <Card>
+      <TaiwanMobilityLine />
     </Card>
     {/* <Card> */}
     {/*   <VaccinationRateByCountiesBar /> */}

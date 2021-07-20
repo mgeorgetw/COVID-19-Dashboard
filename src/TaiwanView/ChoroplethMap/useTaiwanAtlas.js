@@ -15,7 +15,7 @@ export const useTaiwanAtlas = () => {
 
   useEffect(() => {
     json(jsonUrl).then((topology) => {
-      console.log("topo", topology);
+      // console.log("topo", topology);
       const { nation, counties, towns, compBorders } = topology.objects;
       setData({
         // topojson.feature(topology, object) converts TopoJSON to GeoJSON,

@@ -166,7 +166,7 @@ export const AreaChart = ({ data }) => {
             value={new Date("2021-06-15T00:00")}
             xScale={xScale}
             height={innerHeight}
-            label={"七五歲以上疫苗開打"}
+            label={"公費疫苗開打"}
           />
           {activeData ? (
             <>
