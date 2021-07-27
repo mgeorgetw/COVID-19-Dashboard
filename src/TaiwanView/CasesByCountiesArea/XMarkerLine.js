@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./AreaChart.module.css";
-export const XMarkerLine = ({ value, xScale, height }) => {
+export const XMarkerLine = ({ value, xScale, height, label }) => {
   const markerLineX = xScale(value);
   const markerLineY1 = 0;
   const markerLineY2 = height;
@@ -17,20 +17,20 @@ export const XMarkerLine = ({ value, xScale, height }) => {
       <text
         className={styles.markerLineLabelStroke}
         textAnchor={"end"}
-        x={xScale(new Date("2021-05-15T08:00")) - 15}
+        x={markerLineX - 15}
         y={height - 5}
         writingMode="vertical-rl"
       >
-        雙北實施三級警戒
+        {label}
       </text>
       <text
         className={styles.markerLineLabel}
         textAnchor={"end"}
-        x={xScale(new Date("2021-05-15T08:00")) - 15}
+        x={markerLineX - 15}
         y={height - 5}
         writingMode="vertical-rl"
       >
-        雙北實施三級警戒
+        {label}
       </text>
     </>
   );

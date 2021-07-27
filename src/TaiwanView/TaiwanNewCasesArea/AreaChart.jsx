@@ -123,6 +123,12 @@ export const AreaChart = ({ data }) => {
             height={innerHeight}
             label={"七五歲以上疫苗開打"}
           />
+          <XMarkerLine
+            value={new Date("2021-07-27T00:00")}
+            xScale={xScale}
+            height={innerHeight}
+            label={"全國三級警戒解除"}
+          />
           {activeData ? (
             <>
               <CursorLine

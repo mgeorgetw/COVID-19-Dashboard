@@ -159,6 +159,12 @@ export const LineChart = ({ data }) => {
             height={innerHeight}
             label={"雙北實施三級警戒"}
           />
+          <XMarkerLine
+            value={new Date("2021-07-27T00:00")}
+            xScale={xScale}
+            height={innerHeight}
+            label={"全國三級警戒解除"}
+          />
           {/* {activeData ? ( */}
           {/*   <> */}
           {/*     <CursorLine */}

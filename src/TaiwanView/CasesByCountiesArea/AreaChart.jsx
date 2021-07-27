@@ -212,6 +212,13 @@ export const AreaChart = ({ data, stackedData, view, setView }) => {
             value={new Date("2021-05-15T08:00")}
             xScale={xScale}
             height={innerHeight}
+            label={"雙北實施三級警戒"}
+          />
+          <XMarkerLine
+            value={new Date("2021-07-27T08:00")}
+            xScale={xScale}
+            height={innerHeight}
+            label={"全國三級警戒解除"}
           />
         </g>
         {/* <g transform={`translate(${legendX}, ${legendY})`}> */}
