@@ -36,12 +36,12 @@ const jsonUrl = CORS + API;
 
 const transformData = (rawData) =>
   rawData.map((d) => {
-    d.date = new Date(d.a01);
-    d.county = d.a02;
-    d.area = d.a03;
-    d.gender = d.a04;
-    d.foreign = d.a05;
-    d.ageGroup = d.a06;
+    d.date = new Date(d.a02);
+    d.county = d.a03;
+    d.area = d.a04;
+    d.gender = d.a05;
+    d.foreign = d.a06;
+    d.ageGroup = d.a07;
     return d;
   });
 

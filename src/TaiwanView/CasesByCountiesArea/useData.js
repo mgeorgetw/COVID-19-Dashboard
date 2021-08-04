@@ -12,12 +12,12 @@ const jsonUrl = CORS + API;
 
 const transformData = (rawData) =>
   rawData.map((d) => {
-    d["日期"] = new Date(d.a01);
-    d["縣市別"] = d.a02;
-    d["區域"] = d.a03;
-    d["新增確診人數"] = +d.a04;
-    d["累計確診人數"] = +d.a05;
-    d["七天移動平均新增確診"] = +d.a06;
+    d["日期"] = new Date(d.a02);
+    d["縣市別"] = d.a03;
+    d["區域"] = d.a04;
+    d["新增確診人數"] = +d.a05;
+    d["累計確診人數"] = +d.a06;
+    d["七天移動平均新增確診"] = +d.a07;
     return d;
   });
 

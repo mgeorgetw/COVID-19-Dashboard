@@ -21,7 +21,7 @@ const legendWidth = viewBoxWidth - legendPadding * 2;
 const colorValue = (d) => d["累計確診人數"];
 
 const transformData = (data, view) => {
-  let obj = { date: data[0]["日期"], dateString: data[0].a01 };
+  let obj = { date: data[0]["日期"], dateString: data[0].a02 };
   if (view === "全台灣") {
     data.map(({ 縣市別, 累計確診人數 }) => (obj[縣市別] = 累計確診人數));
   } else {
