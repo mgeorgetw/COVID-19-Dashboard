@@ -7,13 +7,13 @@
 .primary {
   /* fill: none; */
   fill: #7098a5;
-  /* stroke: #635f5d; */
+  stroke: #635f5d;
 }
 
 .secondary {
   /* fill: none; */
   fill: #b1c1be;
-  /* stroke: #635f5d; */
+  stroke: #635f5d;
 }
 
 .tick text {

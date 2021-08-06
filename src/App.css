@@ -238,7 +238,7 @@ div.set-title {
   display: block;
   float: right;
   /*margin-right: 10px;*/
-  margin-bottom: 0;
+  margin: 0.5rem 0;
   text-align: center;
   font-size: 1rem;
 }

@@ -35,9 +35,12 @@ export const Marks = ({
         </rect>
         <text
           x={xScale(d[key]) + 3}
-          y={ageScale(key) + countryScale(countryValue(d))}
-          dy=".68em"
-          style={{ textAnchor: "start", dominantBaseline: "middle" }}
+          y={
+            ageScale(key) +
+            countryScale(countryValue(d)) +
+            countryScale.bandwidth() / 2
+          }
+          style={{ textAnchor: "start", dominantBaseline: "central" }}
         >
           {tooltipFormat(d[key])}
         </text>

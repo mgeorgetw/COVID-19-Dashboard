@@ -6,7 +6,7 @@ import { Marks } from "./Marks";
 // import { ColorLegend } from "./ColorLegend";
 
 const width = window.innerWidth < 1000 ? window.innerWidth : 1000;
-const height = width > 480 ? width * 0.9 : width * 2;
+const height = width > 480 ? width * 1.1 : width * 2;
 const margin = { top: 20, right: 40, bottom: 30, left: 170 };
 
 const countryValue = (d) => d.Country;

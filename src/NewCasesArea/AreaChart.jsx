@@ -11,7 +11,7 @@ import {
 } from "d3";
 import { AxisBottom } from "./AxisBottom";
 import { AxisLeft } from "./AxisLeft";
-import { XMarkerLine } from "./XMarkerLine";
+// import { XMarkerLine } from "./XMarkerLine";
 import { CursorLine } from "./CursorLine";
 import { ColorLegend } from "./ColorLegend";
 import { Tooltip } from "./Tooltip";
@@ -29,13 +29,13 @@ const xTooltipFormat = timeFormat("%-m/%-d");
 const yValue = (d) => d.newCases;
 // const yAxisLabel = "New cases";
 // const yAxisLabelOffset = 60;
-const roundedFormat = format("d");
+const siFormat = format("~s");
 const yAxisTickFormat = (tickValue) =>
-  roundedFormat(tickValue < 0 ? -tickValue : tickValue);
+  siFormat(tickValue < 0 ? -tickValue : tickValue);
 
 // const ColorLegendLabel = "接種情形";
 const legendCircleRadius = 8;
-const legendItemSpacing = 100;
+const legendItemSpacing = 150;
 
 export const AreaChart = ({ dataTop, dataDown }) => {
   // Change state when different point is hovered
@@ -94,7 +94,7 @@ export const AreaChart = ({ dataTop, dataDown }) => {
   const colorScale = useMemo(
     () =>
       scaleOrdinal()
-        .domain(["新增確診", "新增死亡"])
+        .domain(["Newly infected", "New deaths"])
         .range(["black", "#BD2D28"]),
     []
   );
@@ -132,24 +132,12 @@ export const AreaChart = ({ dataTop, dataDown }) => {
           <g className={styles.marksDown}>
             <path d={areaGeneratorDown(dataDown)} />
           </g>
-          <XMarkerLine
-            value={new Date("2021-05-15T00:00")}
-            xScale={xScale}
-            height={innerHeight}
-            label={"雙北實施三級警戒"}
-          />
-          <XMarkerLine
-            value={new Date("2021-06-15T00:00")}
-            xScale={xScale}
-            height={innerHeight}
-            label={"七五歲以上疫苗開打"}
-          />
-          <XMarkerLine
-            value={new Date("2021-07-27T00:00")}
-            xScale={xScale}
-            height={innerHeight}
-            label={"全國三級警戒解除"}
-          />
+          {/* <XMarkerLine */}
+          {/*   value={new Date("2021-05-15T00:00")} */}
+          {/*   xScale={xScale} */}
+          {/*   height={innerHeight} */}
+          {/*   label={"雙北實施三級警戒"} */}
+          {/* /> */}
           {activeDate ? (
             <>
               <CursorLine

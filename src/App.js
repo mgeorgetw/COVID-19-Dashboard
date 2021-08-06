@@ -9,7 +9,8 @@ import { Card, Footer } from "./elements/CommonUIs";
 import { AppTitle } from "./elements/AppTitle";
 import { NavBar } from "./elements/NavBar";
 import { OverviewPie } from "./OverviewPie/index";
-import { CasesLineChart } from "./CasesLineChart/index";
+import { DailyNewCasesWorldwideArea } from "./DailyNewCasesWorldwideArea/index";
+import { NewCasesArea } from "./NewCasesArea/index";
 import { CaseFatalityRatesByAgeBarChart } from "./CaseFatalityRatesByAgeBarChart/index";
 
 // Pull to refresh
@@ -17,15 +18,13 @@ import PullToRefresh from "pulltorefreshjs";
 import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const area = "Taiwan";
-
 const GlobalView = () => (
   <ul className="flex-card-list">
     <Card>
       <OverviewPie />
     </Card>
     <Card>
-      <CasesLineChart />
+      <DailyNewCasesWorldwideArea />
     </Card>
     {/* <Card> */}
     {/*   <Charts.WorldwideRecoveryProgressPieChart /> */}
@@ -37,11 +36,14 @@ const GlobalView = () => (
       <Charts.AreasWithOutstandingCasesTable />
     </Card>
     <Card>
-      <Charts.DailyLineChartInAnArea area={area} chart_type="newCases" />
+      <NewCasesArea />
     </Card>
-    <Card>
-      <Charts.DailyLineChartInAnArea area={area} chart_type="newDeaths" />
-    </Card>
+    {/* <Card> */}
+    {/*   <Charts.DailyLineChartInAnArea area={area} chart_type="newCases" /> */}
+    {/* </Card> */}
+    {/* <Card> */}
+    {/*   <Charts.DailyLineChartInAnArea area={area} chart_type="newDeaths" /> */}
+    {/* </Card> */}
     {/* <Card> */}
     {/*   <Charts.ConfirmedCasesInSelectedCountriesLineChart /> */}
     {/* </Card> */}

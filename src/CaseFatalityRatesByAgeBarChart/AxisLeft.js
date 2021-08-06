@@ -22,19 +22,26 @@ export const AxisLeft = ({
         height={ageScale.bandwidth() + 8}
       />
       <text
-        dy=".32em"
         x={-margin.left + tickOffset}
-        style={{ fontSize: "1.1em", fontWeight: "bold", textAnchor: "start" }}
+        style={{
+          fontSize: "1.1em",
+          fontWeight: "bold",
+          textAnchor: "start",
+          dominantBaseline: "central",
+        }}
       >
         {tickValue}
       </text>
       {countryScale.domain().map((tickValue) => (
         <text
           key={tickValue}
-          dy=".72em"
           x={-tickOffset}
-          y={countryScale(tickValue) - ageScale.bandwidth() / 2}
-          style={{ textAnchor: "end", dominantBaseline: "middle" }}
+          y={
+            countryScale(tickValue) +
+            countryScale.bandwidth() / 2 -
+            ageScale.bandwidth() / 2
+          }
+          style={{ textAnchor: "end", dominantBaseline: "central" }}
         >
           {tickValue}
         </text>

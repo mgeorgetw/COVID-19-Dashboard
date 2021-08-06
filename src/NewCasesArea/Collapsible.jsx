@@ -14,7 +14,7 @@ export const Collapsible = ({ id }) => {
     <div className="wrap-collapsible">
       <input id={id} className="toggle" type="checkbox" />
       <label htmlFor={id} className="lbl-toggle">
-        這張圖表可以怎麼看？
+        What does this chart tell us?
       </label>
       <div className="collapsible-content">
         <div className="content-inner">
@@ -28,12 +28,7 @@ export const Collapsible = ({ id }) => {
             就各國的經驗看來，由於大多數社會都是以週為單位在運作，所以光看每日的新增病例數不一定準。為了避免過度解讀，這張圖表列出的增長因數以週平均數來計算。
           </p>
           <p>
-            <s>
-              2021年6月20日新增「死亡人數」按鈕，死亡不會傳染，但可以觀察確診人數與死亡人數的相對關係。
-            </s>
-          </p>
-          <p>
-            2021年8月5日，將確診人數與死亡人數合併為一張圖表，方便觀察確診與死亡之間的關係；對照疫苗接種的情形，或許也能顯示出疫苗接種與染病死亡率之間的關係。
+            2021年6月20日新增「死亡人數」按鈕，死亡不會傳染，但可以觀察確診人數與死亡人數的相對關係。
           </p>
           <SourceCredit />
         </div>

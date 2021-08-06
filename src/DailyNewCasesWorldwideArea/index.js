@@ -25,7 +25,7 @@ const SourceCredit = () => (
   </p>
 );
 
-export const CasesLineChart = () => {
+export const DailyNewCasesWorldwideArea = () => {
   const data = useData();
   if (!data) return <LoadSpinner />;
   // if (data) console.log(data);
