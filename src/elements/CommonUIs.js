@@ -33,7 +33,7 @@ Card.propTypes = {
 export const Footer = () => (
   <div className="footer">
     <p>
-      © 2020 <a href="https://eternallogger.com">George Huang</a>. All rights
+      © 2021 <a href="https://eternallogger.com">George Huang</a>. All rights
       reserved.
     </p>
   </div>

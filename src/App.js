@@ -6,6 +6,7 @@ import { cookieExists, setCookie, findCookie } from "./utils/useCookies";
 import { TaiwanView } from "./TaiwanView/index";
 import * as Charts from "./Charts.js";
 import { Card, Footer } from "./elements/CommonUIs";
+import { GitHubStarBtn } from "./GitHubStarBtn";
 import { AppTitle } from "./elements/AppTitle";
 import { NavBar } from "./elements/NavBar";
 import { OverviewPie } from "./OverviewPie/index";
@@ -82,6 +83,7 @@ const App = () => {
   }, []);
   return (
     <div className="App">
+      <GitHubStarBtn user="mgeorgetw" repo="COVID-19-Dashboard" />
       <AppTitle />
       <NavBar view={view} setView={setView} />
       {view === "global" ? <GlobalView /> : <TaiwanView />}

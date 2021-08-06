@@ -45,7 +45,7 @@ const Slider = ({ range, selected, handleChange }) => (
 );
 
 export const Map = ({ data, atlas, view }) => {
-  const [selectedDate, setSelectedDate] = useState(data[0].a01);
+  const [selectedDate, setSelectedDate] = useState(data[0].a02);
   const [hoveredValue, setHoveredValue] = useState(null);
   const [points, setPoints] = useState(null);
 
@@ -57,14 +57,12 @@ export const Map = ({ data, atlas, view }) => {
 
   // Prepare all dates for the range slider
   const allDates = Array.from(
-    new Set(dataFilteredByAreas.map((d) => d.a01))
+    new Set(dataFilteredByAreas.map((d) => d.a02))
   ).reverse();
 
   const dataSelectedByDate = dataFilteredByAreas.filter(
     (d) => d["日期"].valueOf() === new Date(selectedDate).valueOf()
   );
-
-  const heatmapData = transformData(dataSelectedByDate, view);
 
   const colorScale = useMemo(
     () =>
@@ -79,6 +77,9 @@ export const Map = ({ data, atlas, view }) => {
     () => scaleLinear().range([0, legendWidth]).domain(colorScale.domain()),
     [colorScale]
   );
+
+  if (!dataSelectedByDate.length) return <pre>loading...</pre>;
+  const heatmapData = transformData(dataSelectedByDate, view);
 
   return (
     <>
