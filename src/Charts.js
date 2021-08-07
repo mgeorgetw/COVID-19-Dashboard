@@ -598,27 +598,43 @@ const AreasWithOutstandingCasesTable = () => {
             {data
               .sort((a, b) => b[sortBy] - a[sortBy])
               .slice(0, 12)
-              .map((d) => (
+              .map((d, index) => (
                 <div className="data-set" key={d.country}>
-                  <div className="country-name vertical-inverted-title">
-                    {d.country}
+                  <div className="vertical-inverted-title">
+                    {index + 1} {d.country}
                   </div>
                   <div className="set-title">Confirmed</div>
-                  <div className="confirmed-count numerical-data">
+                  <div
+                    className={`numerical-data ${
+                      sortBy === "cases" ? "selected" : null
+                    }`}
+                  >
                     {d.cases.toLocaleString()}
                   </div>
-                  <div className="smaller-numbers numerical-data">
+                  <div
+                    className={`smaller-numbers numerical-data ${
+                      sortBy === "todayCases" ? "selected" : null
+                    }`}
+                  >
                     (+{d.todayCases.toLocaleString()})
                   </div>
                   <div className="set-title">Deaths</div>
-                  <div className="dead-count numerical-data">
+                  <div
+                    className={`numerical-data ${
+                      sortBy === "deaths" ? "selected" : null
+                    }`}
+                  >
                     {d.deaths.toLocaleString()}
                   </div>
-                  <div className="smaller-numbers numerical-data">
+                  <div
+                    className={`smaller-numbers numerical-data ${
+                      sortBy === "todayDeaths" ? "selected" : null
+                    }`}
+                  >
                     (+{d.todayDeaths.toLocaleString()})
                   </div>
                   <div className="set-title">Death Rate</div>
-                  <div className="current-dead-rate numerical-data">
+                  <div className="numerical-data">
                     {calPercentage(d.deaths, d.cases)}%
                   </div>
                 </div>

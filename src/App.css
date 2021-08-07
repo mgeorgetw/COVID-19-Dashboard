@@ -197,6 +197,10 @@ h2.title-date {
   border-radius: 15px;
 }
 
+.data-set .selected {
+  color: #e25a42;
+}
+
 div.vertical-inverted-title {
   background-color: black;
   line-height: 28px;
