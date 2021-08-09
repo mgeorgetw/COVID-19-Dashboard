@@ -11,6 +11,7 @@ import { AppTitle } from "./elements/AppTitle";
 import { NavBar } from "./elements/NavBar";
 import { OverviewPie } from "./OverviewPie/index";
 import { DailyNewCasesWorldwideArea } from "./DailyNewCasesWorldwideArea/index";
+import { AreasWithOutstandingCasesTable } from "./AreasWithOutstandingCasesTable/index";
 import { NewCasesArea } from "./NewCasesArea/index";
 import { CaseFatalityRatesByAgeBarChart } from "./CaseFatalityRatesByAgeBarChart/index";
 
@@ -27,15 +28,18 @@ const GlobalView = () => (
     <Card>
       <DailyNewCasesWorldwideArea />
     </Card>
+    <Card>
+      <AreasWithOutstandingCasesTable />
+    </Card>
     {/* <Card> */}
     {/*   <Charts.WorldwideRecoveryProgressPieChart /> */}
     {/* </Card> */}
     {/* <Card> */}
     {/*   <Charts.DailyNewCasesWorldwideLineChart /> */}
     {/* </Card> */}
-    <Card>
-      <Charts.AreasWithOutstandingCasesTable />
-    </Card>
+    {/* <Card> */}
+    {/*   <Charts.AreasWithOutstandingCasesTable /> */}
+    {/* </Card> */}
     <Card>
       <NewCasesArea />
     </Card>
