@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { arc, pie, scaleOrdinal } from "d3";
 import styles from "./OverviewPie.module.css";
 import { useData } from "./useData";
-import { LoadSpinner } from "../elements/CommonUIs";
+import { LoadSpinner } from "../../elements/CommonUIs";
 import { ColorLegend } from "./ColorLegend";
 import { DataTable } from "./DataTable";
 import { PieChart } from "./PieChart";

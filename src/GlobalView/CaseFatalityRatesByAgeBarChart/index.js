@@ -1,7 +1,7 @@
 import React from "react";
 import { useData } from "./useData";
 import { BarChart } from "./BarChart";
-import { LoadSpinner } from "../elements/CommonUIs";
+import { LoadSpinner } from "../../elements/CommonUIs";
 import { Collapsible } from "./Collapsible";
 
 const ChartTitle = ({ title }) => <div className="chart-title">{title}</div>;

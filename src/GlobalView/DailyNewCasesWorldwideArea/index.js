@@ -1,6 +1,6 @@
 import React from "react";
 import { useData } from "./useData";
-import { LoadSpinner } from "../elements/CommonUIs";
+import { LoadSpinner } from "../../elements/CommonUIs";
 import { ChartTitle } from "./ChartTitle";
 import { DataTable } from "./DataTable";
 import { LineChart } from "./LineChart";

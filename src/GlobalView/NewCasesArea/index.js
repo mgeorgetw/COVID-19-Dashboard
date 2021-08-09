@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Select from "react-select";
 import { useData } from "./useData";
 import { useLocations } from "./useLocations";
-import { LoadSpinner } from "../elements/CommonUIs";
+import { LoadSpinner } from "../../elements/CommonUIs";
 import { ChartTitle } from "./ChartTitle";
 import { DataTable } from "./DataTable";
 import { AreaChart } from "./AreaChart";
