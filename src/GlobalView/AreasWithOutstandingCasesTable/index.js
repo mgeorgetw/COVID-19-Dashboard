@@ -29,7 +29,7 @@ const SourceCredit = () => (
 export const AreasWithOutstandingCasesTable = () => {
   const [sortBy, setSortBy] = useState("new_cases");
   const data = useData();
-  if (!data) return <LoadSpinner />;
+  if (!data || !data.length) return <LoadSpinner />;
   // if (data) console.log(data[0]);
   const tableData = data
     .sort((a, b) => b[sortBy] - a[sortBy])

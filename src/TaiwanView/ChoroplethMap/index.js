@@ -13,7 +13,8 @@ export const ChoroplethMap = () => {
   const taiwanAtlas = useTaiwanAtlas();
   const rawData = useData();
 
-  if (!rawData || !taiwanAtlas) return <LoadSpinner />;
+  if (!rawData || !taiwanAtlas || !rawData.length || !taiwanAtlas.length)
+    return <LoadSpinner />;
 
   return (
     <>

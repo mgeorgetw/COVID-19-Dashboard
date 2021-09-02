@@ -23,7 +23,13 @@ const NEW_DEATHS_API =
 export const TaiwanNewCasesArea = () => {
   const new_confirmed_data = useData(NEW_CONFIRMED_API);
   const new_deaths_data = useData(NEW_DEATHS_API);
-  if (!new_confirmed_data || !new_deaths_data) return <LoadSpinner />;
+  if (
+    !new_confirmed_data ||
+    !new_confirmed_data.length ||
+    !new_deaths_data ||
+    !new_deaths_data.length
+  )
+    return <LoadSpinner />;
 
   const filteredConfirmed = new_confirmed_data.filter(
     (obj) => obj.date.valueOf() >= new Date("2021-04-30").valueOf()

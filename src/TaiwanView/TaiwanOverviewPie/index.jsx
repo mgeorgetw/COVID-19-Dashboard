@@ -25,9 +25,8 @@ export const TaiwanOverviewPie = () => {
   const [view, setView] = useState("condition");
   const data = useData();
   const categoriesData = useCategories();
-  if (!data || !categoriesData) return <LoadSpinner />;
-  // console.log(data);
-  // console.log(categoriesData);
+  if (!data || !categoriesData || !categoriesData.length)
+    return <LoadSpinner />;
 
   let viewData;
   switch (view) {

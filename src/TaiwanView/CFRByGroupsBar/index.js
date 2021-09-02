@@ -13,7 +13,13 @@ export const CFRByGroupsBar = () => {
   const deathsData = useDeaths();
   const infectedData = useInfected();
 
-  if (!deathsData || !infectedData) return <LoadSpinner />;
+  if (
+    !deathsData ||
+    !infectedData ||
+    !deathsData.length ||
+    !infectedData.length
+  )
+    return <LoadSpinner />;
   // console.log(infectedData);
   // console.log(deathsData);
 

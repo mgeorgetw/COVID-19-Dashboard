@@ -12,8 +12,6 @@ export const TaiwanTestsOverviewPie = () => {
   const data = useData();
   const testsData = useTests();
   if (!data || !testsData) return <LoadSpinner />;
-  // console.log(data);
-  // console.log(testsData);
   return (
     <>
       <ChartTitle title={title} />

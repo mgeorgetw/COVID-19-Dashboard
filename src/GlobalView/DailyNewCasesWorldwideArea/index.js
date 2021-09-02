@@ -27,7 +27,7 @@ const SourceCredit = () => (
 
 export const DailyNewCasesWorldwideArea = () => {
   const data = useData();
-  if (!data) return <LoadSpinner />;
+  if (!data || !data.length) return <LoadSpinner />;
   // if (data) console.log(data);
   const lastSevenDaysAvg = sumValuesInObject(data.slice(-7), "newCases") / 7;
 

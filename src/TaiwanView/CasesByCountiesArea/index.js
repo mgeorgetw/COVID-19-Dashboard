@@ -32,7 +32,8 @@ const transformData = (data, view) => {
 export const CasesByCountiesArea = () => {
   const [view, setView] = useState("全台灣");
   const rawData = useData();
-  if (!rawData) return <LoadSpinner />;
+
+  if (!rawData || !rawData.length) return <LoadSpinner />;
   // if (rawData) console.log(rawData);
 
   const filteredData =

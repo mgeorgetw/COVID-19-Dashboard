@@ -8,7 +8,7 @@ const ChartTitle = ({ title }) => <div className="chart-title">{title}</div>;
 
 export const VaccinationRateByCountiesBar = () => {
   const data = useData();
-  if (!data) return <LoadSpinner />;
+  if (!data || !data.length) return <LoadSpinner />;
 
   // Get only the latest data.
   const sortedData = data.sort((a, b) => b.date - a.date);

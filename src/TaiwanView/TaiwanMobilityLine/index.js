@@ -16,7 +16,7 @@ export const TaiwanMobilityLine = () => {
   const regions = useRegions();
   const data = useData(view, setLoading);
   // if (data) console.log(data[0]);
-  if (!regions || !data) return <LoadSpinner />;
+  if (!regions || !data || !data.length) return <LoadSpinner />;
   const filteredData = data.filter((obj) => obj.date >= new Date("2021-01-01"));
 
   const tableData = [

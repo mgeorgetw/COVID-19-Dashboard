@@ -34,6 +34,7 @@ export const OverviewPie = () => {
 
   const data = useData();
   if (!data) return <LoadSpinner />;
+  // if (data) console.log(data);
   const pieData = [
     {
       case: "Deaths",

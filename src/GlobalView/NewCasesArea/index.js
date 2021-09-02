@@ -25,8 +25,16 @@ export const NewCasesArea = () => {
   const new_confirmed_data = useData(NEW_CONFIRMED_API, selected);
   const new_deaths_data = useData(NEW_DEATHS_API, selected);
   const locations = useLocations();
-  if (!new_confirmed_data || !new_deaths_data || !locations)
+  if (
+    !new_confirmed_data ||
+    !new_confirmed_data.length ||
+    !new_deaths_data ||
+    !new_deaths_data.length ||
+    !locations ||
+    !locations.length
+  )
     return <LoadSpinner />;
+  // console.log(new_confirmed_data, new_deaths_data, locations);
 
   // Filter data for the lastest 90 days
   const filteredConfirmed = new_confirmed_data.filter(

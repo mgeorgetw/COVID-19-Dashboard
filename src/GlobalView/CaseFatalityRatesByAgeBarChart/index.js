@@ -8,7 +8,7 @@ const ChartTitle = ({ title }) => <div className="chart-title">{title}</div>;
 
 export const CaseFatalityRatesByAgeBarChart = () => {
   const data = useData();
-  if (!data) return <LoadSpinner />;
+  if (!data || !data.length) return <LoadSpinner />;
 
   return (
     <>
