@@ -12,14 +12,9 @@ export const CFRByGroupsBar = () => {
   const [view, setView] = useState("age");
   const deathsData = useDeaths();
   const infectedData = useInfected();
+  console.log(deathsData, infectedData);
 
-  if (
-    !deathsData ||
-    !infectedData ||
-    !deathsData.length ||
-    !infectedData.length
-  )
-    return <LoadSpinner />;
+  if (!deathsData || !infectedData) return <LoadSpinner />;
   // console.log(infectedData);
   // console.log(deathsData);
 
