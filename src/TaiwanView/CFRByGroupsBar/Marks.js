@@ -1,4 +1,5 @@
 import React from "react";
+import { pointer } from "d3";
 import styles from "./BarChart.module.css";
 export const Marks = ({
   data,
@@ -8,6 +9,7 @@ export const Marks = ({
   yValue,
   tooltipFormat,
   onHover,
+  onMove,
   hoveredValue,
   fadeOpacity = 0.2,
   tooltipOffset = 22,
@@ -18,6 +20,10 @@ export const Marks = ({
       key={yValue(d)}
       onMouseEnter={() => onHover(yValue(d))}
       onMouseLeave={() => onHover(null)}
+      onPointerMove={(event) => {
+        onHover(yValue(d));
+        onMove(pointer(event));
+      }}
       opacity={hoveredValue && hoveredValue !== yValue(d) ? fadeOpacity : 1}
     >
       <rect
@@ -47,41 +53,5 @@ export const Marks = ({
       >
         {tooltipFormat(xValue(d))}
       </text>
-      {hoveredValue && hoveredValue === yValue(d) ? (
-        <>
-          <text
-            className={styles.tooltipStroke}
-            x={xScale(xValue(d)) + 10}
-            y={yScale(yValue(d)) + yScale.bandwidth() / 2 + tooltipOffset}
-            dy=".21em"
-          >
-            {`染疫：${d.confirmed.toLocaleString()}人`}
-          </text>
-          <text
-            className={styles.tooltip}
-            x={xScale(xValue(d)) + 10}
-            y={yScale(yValue(d)) + yScale.bandwidth() / 2 + tooltipOffset}
-            dy=".21em"
-          >
-            {`染疫：${d.confirmed.toLocaleString()}人`}
-          </text>
-          <text
-            className={styles.tooltipStroke}
-            x={xScale(xValue(d)) + 10}
-            y={yScale(yValue(d)) + yScale.bandwidth() / 2 + tooltipOffset * 2}
-            dy=".21em"
-          >
-            {`死亡：${d.deaths.toLocaleString()}人`}
-          </text>
-          <text
-            className={styles.tooltip}
-            x={xScale(xValue(d)) + 10}
-            y={yScale(yValue(d)) + yScale.bandwidth() / 2 + tooltipOffset * 2}
-            dy=".21em"
-          >
-            {`死亡：${d.deaths.toLocaleString()}人`}
-          </text>
-        </>
-      ) : null}
     </g>
   ));

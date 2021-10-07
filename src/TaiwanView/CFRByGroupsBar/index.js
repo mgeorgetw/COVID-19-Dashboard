@@ -12,7 +12,7 @@ export const CFRByGroupsBar = () => {
   const [view, setView] = useState("age");
   const deathsData = useDeaths();
   const infectedData = useInfected();
-  console.log(deathsData, infectedData);
+  // console.log(deathsData, infectedData);
 
   if (!deathsData || !infectedData) return <LoadSpinner />;
   // console.log(infectedData);
@@ -22,7 +22,7 @@ export const CFRByGroupsBar = () => {
   const deaths = view === "age" ? deathsData.age : deathsData.gender;
 
   const data = Object.keys(infected).map((key) => ({
-    age: key,
+    group: key,
     CFR: deaths[key] / infected[key],
     confirmed: infected[key],
     deaths: deaths[key],

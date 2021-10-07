@@ -4,6 +4,7 @@ import { scaleBand, scaleLinear, max, format } from "d3";
 import { AxisBottom } from "./AxisBottom";
 import { AxisLeft } from "./AxisLeft";
 import { Marks } from "./Marks";
+import { Tooltip } from "./Tooltip";
 // import { ColorLegend } from "./ColorLegend";
 // import styles from "./BarChart.module.css";
 
@@ -12,7 +13,7 @@ const height = width > 480 ? width * 0.6 : width * 1;
 const margin = { top: 5, right: 120, bottom: 45, left: 60 };
 
 // const formatDate = timeFormat("%Y/%-m/%-d");
-const yValue = (d) => d.age;
+const yValue = (d) => d.group;
 const xValue = (d) => d.CFR;
 
 const xAxisTickFormat = (tickValue) => format("~%")(tickValue);
@@ -33,6 +34,8 @@ const fadeOpacity = 0.3;
 
 export const BarChart = ({ data }) => {
   const [hoveredValue, setHoveredValue] = useState(null);
+  const [points, setPoints] = useState(null);
+  const trackPointer = useCallback(setPoints, [setPoints]);
   // console.log(data);
   const handleHover = useCallback(setHoveredValue, [setHoveredValue]);
 
@@ -81,9 +84,18 @@ export const BarChart = ({ data }) => {
             yValue={yValue}
             tooltipFormat={labelFormat}
             onHover={handleHover}
+            onMove={trackPointer}
             hoveredValue={hoveredValue}
             fadeOpacity={fadeOpacity}
           />
+          {hoveredValue && points ? (
+            <Tooltip
+              data={data}
+              hoveredValue={hoveredValue}
+              points={points}
+              labelOffset={10}
+            />
+          ) : null}
         </g>
         {/* <g transform={`translate(${legendX}, ${legendY})`}> */}
         {/*   <text className={styles.legendLabel} x={-7} y={-legendItemSpacing}> */}
