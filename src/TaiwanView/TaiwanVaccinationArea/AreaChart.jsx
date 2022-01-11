@@ -15,6 +15,7 @@ import { YMarkerLine } from "./YMarkerLine";
 import { XMarkerLine } from "./XMarkerLine";
 import { RectOverlay } from "./RectOverlay";
 import { ColorLegend } from "./ColorLegend";
+import { Tooltip } from "./Tooltip";
 import styles from "./AreaChart.module.css";
 
 const width = window.innerWidth < 1000 ? window.innerWidth : 1000;
@@ -25,9 +26,24 @@ const xValue = (d) => d.date;
 const xAxisTickFormat = timeFormat("%-m/%-d, %Y");
 const xTooltipFormat = timeFormat("%-m/%-d, %Y");
 
+const yValues = [
+  { name: "已接種一劑", value: (d) => d.people_vaccinated, color: "#7098a5" },
+  {
+    name: "已接種二劑",
+    value: (d) => d.people_fully_vaccinated,
+    color: "#b1c1be",
+  },
+  {
+    name: "追加第三劑",
+    value: (d) => (d.total_boosters ? d.total_boosters : 0),
+    color: "#8acaa7",
+  },
+];
+
 // const yValue = (d) => d.total_vaccinations;
-const yValue = (d) => d.people_vaccinated;
-const yValue2 = (d) => d.people_fully_vaccinated;
+const areaNames = yValues.map((item) => item.name);
+const areaColors = yValues.map((item) => item.color);
+
 // const yAxisLabel = "接種人次";
 // const yAxisLabelOffset = 75;
 const siFormat = format("~s");
@@ -73,168 +89,106 @@ export const AreaChart = ({ data }) => {
   );
 
   const colorScale = useMemo(
-    () =>
-      scaleOrdinal()
-        .domain(["已接種一次", "已充分接種"])
-        .range(["#7098a5", "#b1c1be"]),
+    () => scaleOrdinal().domain(areaNames).range(areaColors),
     []
   );
 
   const handleHover = useCallback(setActiveData, [setActiveData]);
 
-  const areaGenerator = useMemo(
-    () =>
-      area()
-        .x((d) => xScale(xValue(d)))
-        .y1((d) => yScale(yValue(d)))
-        .y0(yScale(0)),
-    [xScale, yScale]
-  );
+  const multipleAreasGenerator = (yAccessor) =>
+    area()
+      .x((d) => xScale(xValue(d)))
+      .y1((d) => yScale(yAccessor(d)))
+      .y0(yScale(0));
 
-  const areaGenerator2 = useMemo(
-    () =>
-      area()
-        .x((d) => xScale(xValue(d)))
-        .y1((d) => yScale(yValue2(d)))
-        .y0(yScale(0)),
-    [xScale, yScale]
-  );
-
-  const Tooltip = ({ activeData, scaleValue, className, position }) => (
-    <text
-      className={className}
-      textAnchor={"middle"}
-      dominantBaseline={"middle"}
-      x={0}
-      y={position === "down" ? 40 : -15}
-    >
-      <tspan x="0" dy="0" fontWeight="bold">
-        (
-        {scaleValue(activeData) &&
-          format(".1%")(scaleValue(activeData) / taiwanPopulation)}
-        )
-      </tspan>
-      <tspan x="0" dy="-1.3em" fontWeight="bold">
-        {scaleValue(activeData) &&
-          `${scaleValue(activeData).toLocaleString()}人`}
-      </tspan>
-      {position === "up" ? (
-        <tspan x="0" dy="-1.3em">
-          {xTooltipFormat(activeData.date)}
-        </tspan>
-      ) : null}
-    </text>
-  );
   return (
-    <>
-      <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMinYMid">
-        {/* Adds margin to left and top  */}
-        <g transform={`translate(${margin.left}, ${margin.top})`}>
-          <AxisBottom
-            innerHeight={innerHeight}
-            xScale={xScale}
-            tickFormat={xAxisTickFormat}
-            tickOffset={7}
-            tickCount={width > 480 ? 6 : 2}
-          />
-          <AxisLeft
-            innerWidth={innerWidth}
-            yScale={yScale}
-            tickOffset={7}
-            tickFormat={yAxisTickFormat}
-          />
-          {/* <text */}
-          {/*   className={styles.axisLabel} */}
-          {/*   textAnchor="middle" */}
-          {/*   transform={`translate(${-yAxisLabelOffset}, ${innerHeight / 2})`} */}
-          {/*   writingMode="vertical-lr" */}
-          {/* > */}
-          {/*   {yAxisLabel} */}
-          {/* </text> */}
-          <g className={styles.primary}>
-            <path d={areaGenerator(data)} />
+    <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMinYMid">
+      {/* Adds margin to left and top  */}
+      <g transform={`translate(${margin.left}, ${margin.top})`}>
+        <AxisBottom
+          innerHeight={innerHeight}
+          xScale={xScale}
+          tickFormat={xAxisTickFormat}
+          tickOffset={7}
+          tickCount={width > 480 ? 6 : 2}
+        />
+
+        <AxisLeft
+          innerWidth={innerWidth}
+          yScale={yScale}
+          tickOffset={7}
+          tickFormat={yAxisTickFormat}
+        />
+
+        {yValues.map((item, index) => (
+          <g key={index} style={{ fill: item.color, stroke: "#635f5d" }}>
+            <path d={multipleAreasGenerator(item.value)(data)} />
           </g>
-          <g className={styles.secondary}>
-            <path d={areaGenerator2(data)} />
-          </g>
-          <YMarkerLine
-            value={taiwanPopulation * 0.75}
-            yScale={yScale}
-            innerWidth={innerWidth}
-          />
-          <XMarkerLine
-            value={new Date("2021-06-15T00:00")}
+        ))}
+
+        <YMarkerLine
+          value={taiwanPopulation * 0.75}
+          yScale={yScale}
+          innerWidth={innerWidth}
+        />
+
+        <XMarkerLine
+          value={new Date("2021-06-15T00:00")}
+          xScale={xScale}
+          height={innerHeight}
+          label={"公費疫苗開打"}
+        />
+
+        {activeData
+          ? yValues.map(
+              (item, index) =>
+                item.value(activeData) &&
+                item.value(activeData) !== 0 && (
+                  <g
+                    key={`tooltip-${index}`}
+                    transform={`translate(${multipleAreasGenerator(
+                      item.value
+                    ).x()(activeData)}, ${multipleAreasGenerator(
+                      item.value
+                    ).y1()(activeData)})`}
+                  >
+                    <circle className={styles.dataPoint} r={5} />
+                    <Tooltip>
+                      {`${item.value(activeData).toLocaleString()}人 (${format(
+                        ".1%"
+                      )(item.value(activeData) / taiwanPopulation)})`}
+                    </Tooltip>
+                  </g>
+                )
+            )
+          : null}
+
+        {activeData ? (
+          <CursorLine
+            value={activeData.date}
             xScale={xScale}
-            height={innerHeight}
-            label={"公費疫苗開打"}
-          />
-          {activeData ? (
-            <>
-              <CursorLine
-                value={activeData.date}
-                xScale={xScale}
-                innerHeight={innerHeight}
-              />
-              <g
-                transform={`translate(${areaGenerator.x()(
-                  activeData
-                )}, ${areaGenerator.y1()(activeData)})`}
-              >
-                <circle className={styles.dataPoint} r={5} />
-                <Tooltip
-                  activeData={activeData}
-                  scaleValue={yValue}
-                  className={styles.tooltipStroke}
-                  position="up"
-                />
-                <Tooltip
-                  activeData={activeData}
-                  scaleValue={yValue}
-                  className={styles.tooltip}
-                  position="up"
-                />
-              </g>
-              <g
-                transform={`translate(${areaGenerator.x()(
-                  activeData
-                )}, ${areaGenerator2.y1()(activeData)})`}
-              >
-                <circle className={styles.dataPoint} r={5} />
-                <Tooltip
-                  activeData={activeData}
-                  scaleValue={yValue2}
-                  className={styles.tooltipStroke}
-                  position="down"
-                />
-                <Tooltip
-                  activeData={activeData}
-                  scaleValue={yValue2}
-                  className={styles.tooltip}
-                  position="down"
-                />
-              </g>
-            </>
-          ) : null}
-          <RectOverlay
-            onHover={handleHover}
-            data={data}
-            areaGenerator={areaGenerator}
-            innerWidth={innerWidth}
             innerHeight={innerHeight}
+            xTooltipFormat={xTooltipFormat}
           />
-        </g>
-        <g transform={`translate(${legendX}, ${legendY})`}>
-          {/* <text className={styles.legendLabel} x={-7} y={-legendItemSpacing}> */}
-          {/*   {ColorLegendLabel} */}
-          {/* </text> */}
-          <ColorLegend
-            colorScale={colorScale}
-            tickSpacing={legendItemSpacing}
-            tickSize={legendCircleRadius}
-            tickTextOffset={16}
-          />
-        </g>
-      </svg>
-    </>
+        ) : null}
+
+        <RectOverlay
+          onHover={handleHover}
+          data={data}
+          areaGenerator={multipleAreasGenerator(yValues[0].value)}
+          innerWidth={innerWidth}
+          innerHeight={innerHeight}
+        />
+      </g>
+
+      <g transform={`translate(${legendX}, ${legendY})`}>
+        <ColorLegend
+          colorScale={colorScale}
+          tickSpacing={legendItemSpacing}
+          tickSize={legendCircleRadius}
+          tickTextOffset={16}
+        />
+      </g>
+    </svg>
   );
 };

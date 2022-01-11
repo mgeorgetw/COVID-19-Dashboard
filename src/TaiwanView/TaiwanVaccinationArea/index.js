@@ -20,12 +20,16 @@ export const TaiwanVaccinationArea = () => {
       value: data[data.length - 1].total_vaccinations.toLocaleString(),
     },
     {
-      heading: "已接種一次",
+      heading: "已接種一劑",
       value: data[data.length - 1].people_vaccinated.toLocaleString(),
     },
     {
-      heading: "充分接種人數",
+      heading: "已接種二劑",
       value: data[data.length - 1].people_fully_vaccinated.toLocaleString(),
+    },
+    {
+      heading: "追加第三劑",
+      value: data[data.length - 1].total_boosters.toLocaleString(),
     },
   ];
 

@@ -16,6 +16,11 @@
   stroke: #635f5d;
 }
 
+.third {
+  fill: #2084ff;
+  stroke: #635f5d;
+}
+
 .tick text {
   fill: #635f5d;
   cursor: default;
@@ -65,12 +70,12 @@
 .tooltip,
 .tooltipStroke {
   fill: black;
-  font-size: 1.2em;
+  font-size: 1em;
 }
 
 .tooltipStroke {
   stroke: white;
-  stroke-width: 4px;
+  stroke-width: 3px;
 }
 
 .legend,
