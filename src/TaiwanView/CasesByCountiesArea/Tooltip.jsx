@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./AreaChart.module.css";
 export const Tooltip = ({
-  activeData,
+  activeDataPoint,
   hoveredValue,
   xScale,
   xTooltipFormat,
@@ -12,12 +12,12 @@ export const Tooltip = ({
       className={styles.tooltipStroke}
       textAnchor={"end"}
       dominantBaseline={"middle"}
-      x={xScale(activeData.data.date) + tooltipOffsetX}
+      x={xScale(activeDataPoint.data.date) + tooltipOffsetX}
       y={20}
     >
       {`${hoveredValue}：${
-        activeData && activeData.data[hoveredValue]
-          ? activeData.data[hoveredValue].toLocaleString()
+        activeDataPoint && activeDataPoint.data[hoveredValue]
+          ? activeDataPoint.data[hoveredValue].toLocaleString()
           : 0
       }人`}
     </text>
@@ -25,13 +25,13 @@ export const Tooltip = ({
       className={styles.tooltip}
       textAnchor={"end"}
       dominantBaseline={"middle"}
-      x={xScale(activeData.data.date) + tooltipOffsetX}
+      x={xScale(activeDataPoint.data.date) + tooltipOffsetX}
       y={20}
       fontWeight="bold"
     >
       {`${hoveredValue}：${
-        activeData && activeData.data[hoveredValue]
-          ? activeData.data[hoveredValue].toLocaleString()
+        activeDataPoint && activeDataPoint.data[hoveredValue]
+          ? activeDataPoint.data[hoveredValue].toLocaleString()
           : 0
       }人`}
     </text>
@@ -39,10 +39,10 @@ export const Tooltip = ({
       className={styles.tooltip}
       textAnchor={"end"}
       dominantBaseline={"middle"}
-      x={xScale(activeData.data.date) + tooltipOffsetX}
+      x={xScale(activeDataPoint.data.date) + tooltipOffsetX}
       y={-10}
     >
-      {xTooltipFormat(activeData && activeData.data.date)}
+      {xTooltipFormat(activeDataPoint && activeDataPoint.data.date)}
     </text>
   </>
 );
