@@ -23,16 +23,6 @@
   flex: 1 0 100%;
 }
 
-/* Code to adjust the layout to 2 cards per row */
-@media all and (min-width: 40em) {
-  /* Float layout */
-  .flex-card-list li {
-    flex: 1 0 100%;
-    /* width: 50%; */
-    /*padding-left: 1em;*/
-  }
-}
-
 /* Code to adjust the layout to 3 cards per row */
 .flex-card {
   display: flex;

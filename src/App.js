@@ -18,13 +18,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const App = () => {
   const [view, setView] = useState("global");
   useEffect(() => {
-    // Checks if there's a cookie for view, if not, set it to Indices View
-    if (cookieExists("view")) {
-      // Set view according to cookie, if exists
-      setView(findCookie("view"));
-    } else {
-      setCookie("view", "global");
-    }
+    cookieExists("view")
+      ? setView(findCookie("view"))
+      : setCookie("view", "global");
 
     PullToRefresh.init({
       mainElement: "body",

@@ -7,7 +7,7 @@ import { json } from "d3";
 
 const CORS = "https://morning-wave-49482.herokuapp.com/";
 const API =
-  "https://covid-19.nchc.org.tw/api/covid19?CK=covid-19@nchc.org.tw&querydata=5003&limited=全部縣市";
+  "https://covid-19.nchc.org.tw/api/covid19?CK=covid-19@nchc.org.tw&querydata=5002&limited=全部縣市";
 const jsonUrl = CORS + API;
 
 const transformData = (rawData) =>
@@ -31,7 +31,8 @@ export const useData = () => {
     //   if (isMounted) setData(d);
     // });
     json(jsonUrl).then((rawData) => {
-      if (isMounted) setData(transformData(rawData));
+      const transformedData = transformData(rawData);
+      if (isMounted) setData(transformedData);
     });
     return () => {
       isMounted = false;

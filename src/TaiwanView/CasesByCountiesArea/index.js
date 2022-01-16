@@ -54,22 +54,6 @@ export const CasesByCountiesArea = () => {
     .offset(stackOffsetWiggle)
     .order(stackOrderAscending)
     .keys(layers)(transformedData);
-  // console.log(stackedData);
-
-  // const tableData = [
-  //   {
-  //     heading: "接種人數總計",
-  //     value: data[data.length - 1].total_vaccinations.toLocaleString(),
-  //   },
-  //   {
-  //     heading: "已接種人數",
-  //     value: data[data.length - 1].people_vaccinated.toLocaleString(),
-  //   },
-  //   {
-  //     heading: "充分接種人數",
-  //     value: data[data.length - 1].people_fully_vaccinated.toLocaleString(),
-  //   },
-  // ];
 
   return (
     <>

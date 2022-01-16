@@ -1,38 +1,48 @@
 import React from "react";
 import styles from "./AreaChart.module.css";
-export const Tooltip = ({ activeData, hoveredValue, xTooltipFormat }) => (
+export const Tooltip = ({
+  activeData,
+  hoveredValue,
+  xScale,
+  xTooltipFormat,
+  tooltipOffsetX = -10,
+}) => (
   <>
     <text
       className={styles.tooltipStroke}
-      textAnchor={"start"}
+      textAnchor={"end"}
       dominantBaseline={"middle"}
-      x={0}
+      x={xScale(activeData.data.date) + tooltipOffsetX}
       y={20}
     >
-      <tspan x="10" dy="0" fontWeight="bold">
-        {`${hoveredValue}：${
-          activeData && activeData.data[hoveredValue].toLocaleString()
-        }人`}
-      </tspan>
-      <tspan x="10" dy="1.3em">
-        {xTooltipFormat(activeData && activeData.data.date)}
-      </tspan>
+      {`${hoveredValue}：${
+        activeData && activeData.data[hoveredValue]
+          ? activeData.data[hoveredValue].toLocaleString()
+          : 0
+      }人`}
     </text>
     <text
       className={styles.tooltip}
-      textAnchor={"start"}
+      textAnchor={"end"}
       dominantBaseline={"middle"}
-      x={0}
+      x={xScale(activeData.data.date) + tooltipOffsetX}
       y={20}
+      fontWeight="bold"
     >
-      <tspan x="10" dy="0" fontWeight="bold">
-        {`${hoveredValue}：${
-          activeData && activeData.data[hoveredValue].toLocaleString()
-        }人`}
-      </tspan>
-      <tspan x="10" dy="1.3em">
-        {xTooltipFormat(activeData && activeData.data.date)}
-      </tspan>
+      {`${hoveredValue}：${
+        activeData && activeData.data[hoveredValue]
+          ? activeData.data[hoveredValue].toLocaleString()
+          : 0
+      }人`}
+    </text>
+    <text
+      className={styles.tooltip}
+      textAnchor={"end"}
+      dominantBaseline={"middle"}
+      x={xScale(activeData.data.date) + tooltipOffsetX}
+      y={-10}
+    >
+      {xTooltipFormat(activeData && activeData.data.date)}
     </text>
   </>
 );

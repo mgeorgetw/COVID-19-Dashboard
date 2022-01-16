@@ -1,7 +1,8 @@
 import React, { useMemo } from "react";
 import { pointer, bisectCenter } from "d3";
 import styles from "./AreaChart.module.css";
-export const RectOverlay = ({
+
+export const PointerTrackerOverlay = ({
   data,
   areaGenerator,
   onHover,

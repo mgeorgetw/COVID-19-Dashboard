@@ -13,9 +13,9 @@ import { AxisLeft } from "./AxisLeft";
 import { CursorLine } from "./CursorLine";
 import { YMarkerLine } from "./YMarkerLine";
 import { XMarkerLine } from "./XMarkerLine";
-import { RectOverlay } from "./RectOverlay";
 import { ColorLegend } from "./ColorLegend";
 import { Tooltip } from "./Tooltip";
+import { PointerTrackerOverlay } from "./PointerTrackerOverlay";
 import styles from "./AreaChart.module.css";
 
 const width = window.innerWidth < 1000 ? window.innerWidth : 1000;
@@ -46,6 +46,7 @@ const areaColors = yValues.map((item) => item.color);
 
 // const yAxisLabel = "接種人次";
 // const yAxisLabelOffset = 75;
+const tickOffset = 7;
 const siFormat = format("~s");
 const yAxisTickFormat = (tickValue) => siFormat(tickValue).replace("M", "百萬");
 
@@ -61,9 +62,6 @@ export const AreaChart = ({ data }) => {
   // The chart's real height and width
   const innerHeight = height - margin.top - margin.bottom;
   const innerWidth = width - margin.left - margin.right;
-
-  const legendX = margin.left + legendCircleRadius * 2;
-  const legendY = margin.top + legendItemSpacing / 2;
 
   // X axis is time
   const xScale = useMemo(
@@ -88,18 +86,18 @@ export const AreaChart = ({ data }) => {
     [innerHeight]
   );
 
+  const multipleAreasGenerator = (yAccessor) =>
+    area()
+      .x((d) => xScale(xValue(d)))
+      .y1((d) => yScale(yAccessor(d)))
+      .y0(yScale(0));
+
   const colorScale = useMemo(
     () => scaleOrdinal().domain(areaNames).range(areaColors),
     []
   );
 
   const handleHover = useCallback(setActiveData, [setActiveData]);
-
-  const multipleAreasGenerator = (yAccessor) =>
-    area()
-      .x((d) => xScale(xValue(d)))
-      .y1((d) => yScale(yAccessor(d)))
-      .y0(yScale(0));
 
   return (
     <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMinYMid">
@@ -109,14 +107,14 @@ export const AreaChart = ({ data }) => {
           innerHeight={innerHeight}
           xScale={xScale}
           tickFormat={xAxisTickFormat}
-          tickOffset={7}
+          tickOffset={tickOffset}
           tickCount={width > 480 ? 6 : 2}
         />
 
         <AxisLeft
           innerWidth={innerWidth}
           yScale={yScale}
-          tickOffset={7}
+          tickOffset={tickOffset}
           tickFormat={yAxisTickFormat}
         />
 
@@ -139,54 +137,57 @@ export const AreaChart = ({ data }) => {
           label={"公費疫苗開打"}
         />
 
-        {activeData
-          ? yValues.map(
-              (item, index) =>
-                item.value(activeData) &&
-                item.value(activeData) !== 0 && (
-                  <g
-                    key={`tooltip-${index}`}
-                    transform={`translate(${multipleAreasGenerator(
-                      item.value
-                    ).x()(activeData)}, ${multipleAreasGenerator(
-                      item.value
-                    ).y1()(activeData)})`}
-                  >
-                    <circle className={styles.dataPoint} r={5} />
-                    <Tooltip>
-                      {`${item.value(activeData).toLocaleString()}人 (${format(
-                        ".1%"
-                      )(item.value(activeData) / taiwanPopulation)})`}
-                    </Tooltip>
-                  </g>
-                )
-            )
-          : null}
-
-        {activeData ? (
+        {activeData && (
           <CursorLine
             value={activeData.date}
             xScale={xScale}
             innerHeight={innerHeight}
             xTooltipFormat={xTooltipFormat}
           />
-        ) : null}
+        )}
 
-        <RectOverlay
+        {activeData &&
+          yValues.map(
+            (item, index) =>
+              item.value(activeData) &&
+              item.value(activeData) !== 0 && (
+                <g
+                  key={`tooltip-${index}`}
+                  transform={`translate(${multipleAreasGenerator(
+                    item.value
+                  ).x()(activeData)}, ${multipleAreasGenerator(item.value).y1()(
+                    activeData
+                  )})`}
+                >
+                  <circle className={styles.dataPoint} r={5} />
+                  <Tooltip>
+                    {`${item.value(activeData).toLocaleString()}人 (${format(
+                      ".1%"
+                    )(item.value(activeData) / taiwanPopulation)})`}
+                  </Tooltip>
+                </g>
+              )
+          )}
+
+        <g
+          transform={`translate(${tickOffset + legendCircleRadius}, ${
+            tickOffset + legendCircleRadius
+          })`}
+        >
+          <ColorLegend
+            colorScale={colorScale}
+            tickSpacing={legendItemSpacing}
+            tickSize={legendCircleRadius}
+            tickTextOffset={tickOffset + legendCircleRadius}
+          />
+        </g>
+
+        <PointerTrackerOverlay
           onHover={handleHover}
           data={data}
           areaGenerator={multipleAreasGenerator(yValues[0].value)}
           innerWidth={innerWidth}
           innerHeight={innerHeight}
-        />
-      </g>
-
-      <g transform={`translate(${legendX}, ${legendY})`}>
-        <ColorLegend
-          colorScale={colorScale}
-          tickSpacing={legendItemSpacing}
-          tickSize={legendCircleRadius}
-          tickTextOffset={16}
         />
       </g>
     </svg>
