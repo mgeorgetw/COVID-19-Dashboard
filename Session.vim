@@ -11,79 +11,48 @@ set shortmess=aoO
 argglobal
 %argdel
 $argadd src/App.js
-edit src/TaiwanView/CasesByCountiesArea/AreaChart.jsx
+edit src/TaiwanView/CasesByCountiesArea/Tooltip.jsx
 argglobal
+balt src/TaiwanView/CasesByCountiesArea/AreaChart.jsx
 setlocal fdm=indent
 setlocal fde=0
 setlocal fmr={{{,}}}
 setlocal fdi=#
-setlocal fdl=10
+setlocal fdl=3
 setlocal fml=1
 setlocal fdn=10
 setlocal fen
-41
+10
 normal! zo
-52
+11
 normal! zo
-53
+18
 normal! zo
-105
+19
 normal! zo
-113
+20
 normal! zo
-123
+32
 normal! zo
-124
+33
 normal! zo
-132
+34
 normal! zo
-137
-normal! zo
-139
-normal! zo
-151
-normal! zo
-152
-normal! zo
-153
-normal! zo
-162
-normal! zo
-163
-normal! zo
-194
-normal! zo
-194
-normal! zo
-193
-normal! zo
-210
-normal! zo
-211
-normal! zo
-218
-normal! zo
-229
-normal! zo
-230
-normal! zo
-239
-normal! zo
-240
-normal! zo
-let s:l = 29 - ((28 * winheight(0) + 23) / 47)
+let s:l = 16 - ((15 * winheight(0) + 23) / 47)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 29
-normal! 020|
+keepjumps 16
+normal! 081|
 lcd ~/Git/covid_19_dashboard
 tabnext 1
-badd +97 ~/Git/covid_19_dashboard/src/TaiwanView/CasesByCountiesArea/AreaChart.jsx
-badd +125 term://~/Git/covid_19_dashboard//84912:yarn\ dev
+badd +28 ~/Git/covid_19_dashboard/src/TaiwanView/CasesByCountiesArea/AreaChart.jsx
+badd +0 ~/Git/covid_19_dashboard/src/App.js
+badd +23 term://~/Git/covid_19_dashboard//42215:yarn\ dev
 badd +17 ~/Git/covid_19_dashboard/src/TaiwanView/CasesByCountiesArea/useData.js
 badd +24 ~/Git/covid_19_dashboard/src/TaiwanView/index.js
 badd +3 ~/Git/covid_19_dashboard/src/TaiwanView/CasesByCountiesArea/CursorLine.js
+badd +45 ~/Git/covid_19_dashboard/src/TaiwanView/CasesByCountiesArea/Tooltip.jsx
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
