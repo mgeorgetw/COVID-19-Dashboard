@@ -1,7 +1,12 @@
 import React from "react";
 import styles from "./AreaChart.module.css";
-export const CursorLine = ({ value, xScale, innerHeight }) => {
-  const markerLineX = xScale(value);
+export const CursorLine = ({
+  activeDataPoint,
+  xValue,
+  xScale,
+  innerHeight,
+}) => {
+  const markerLineX = xScale(xValue(activeDataPoint.data));
   const markerLineY1 = 0;
   const markerLineY2 = innerHeight;
   return (

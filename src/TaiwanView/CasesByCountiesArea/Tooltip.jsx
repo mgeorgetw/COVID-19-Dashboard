@@ -3,6 +3,7 @@ import styles from "./AreaChart.module.css";
 export const Tooltip = ({
   activeDataPoint,
   hoveredValue,
+  xValue,
   xScale,
   xTooltipFormat,
   tooltipOffsetX = -10,
@@ -12,7 +13,7 @@ export const Tooltip = ({
       className={styles.tooltipStroke}
       textAnchor={"end"}
       dominantBaseline={"middle"}
-      x={xScale(activeDataPoint.data.date) + tooltipOffsetX}
+      x={xScale(xValue(activeDataPoint.data)) + tooltipOffsetX}
       y={20}
     >
       {`${hoveredValue}：${
@@ -25,7 +26,7 @@ export const Tooltip = ({
       className={styles.tooltip}
       textAnchor={"end"}
       dominantBaseline={"middle"}
-      x={xScale(activeDataPoint.data.date) + tooltipOffsetX}
+      x={xScale(xValue(activeDataPoint.data)) + tooltipOffsetX}
       y={20}
       fontWeight="bold"
     >
@@ -39,10 +40,10 @@ export const Tooltip = ({
       className={styles.tooltip}
       textAnchor={"end"}
       dominantBaseline={"middle"}
-      x={xScale(activeDataPoint.data.date) + tooltipOffsetX}
+      x={xScale(xValue(activeDataPoint.data)) + tooltipOffsetX}
       y={-10}
     >
-      {xTooltipFormat(activeDataPoint && activeDataPoint.data.date)}
+      {xTooltipFormat(activeDataPoint && xValue(activeDataPoint.data))}
     </text>
   </>
 );

@@ -15,7 +15,7 @@ import {
   extent,
   min,
   max,
-  interpolateViridis,
+  interpolateTurbo,
   select,
 } from "d3";
 
@@ -30,7 +30,7 @@ import styles from "./AreaChart.module.css";
 
 const margin = { top: 20, right: 10, bottom: 80, left: 50 };
 
-const xValue = (d) => d.date;
+const xValue = (d) => d["日期"];
 const xAxisTickFormat = timeFormat("%-m/%-d, %Y");
 const xTooltipFormat = timeFormat("%-m/%-d, %Y");
 const formatDate = timeFormat("%Y/%-m/%-d");
@@ -38,7 +38,7 @@ const formatDate = timeFormat("%Y/%-m/%-d");
 const yAxisTickFormat = (tickValue) => (tickValue < 0 ? -tickValue : tickValue);
 
 export const AreaChart = ({ data, stackedData, view, setView }) => {
-  const [width, setWidth] = useState(null);
+  const [width, setWidth] = useState(480);
   const height = width > 480 ? width * 0.6 : width * 1;
   const innerHeight = height - margin.top - margin.bottom;
   const innerWidth = width - margin.left - margin.right;
@@ -46,18 +46,16 @@ export const AreaChart = ({ data, stackedData, view, setView }) => {
   const [activeDataPoint, setActiveDataPoint] = useState(null);
   const [hoveredValue, setHoveredValue] = useState(null);
 
-  const scrollableDivRef = useRef();
-
   const xScale = useMemo(
     () =>
       scaleTime()
-        // Domain is an array of actual dates
-        // d3.extent(iterable[, accessor]) returns the [max, min] of iterable
-        .domain(extent(data, (d) => d["日期"]))
-        // Range is where the data is shown in pixels, starts from 0 to chart's width
+        .domain(extent(data, xValue))
         .range([0, innerWidth * 3]),
     [data, innerWidth]
   );
+  const minX = xScale(xValue(data[data.length - 1]));
+  const maxX = xScale(xValue(data[0]));
+  const overwidth = maxX - minX + margin.left + margin.right;
 
   const yScale = useMemo(
     () =>
@@ -76,7 +74,7 @@ export const AreaChart = ({ data, stackedData, view, setView }) => {
       scaleOrdinal().range(
         stackedData.map((area, i) => {
           const t = i / stackedData.length;
-          return interpolateViridis(t);
+          return interpolateTurbo(t);
         })
       ),
     [stackedData]
@@ -88,35 +86,32 @@ export const AreaChart = ({ data, stackedData, view, setView }) => {
         .x((d) => xScale(xValue(d.data)))
         .y0((d) => yScale(d[0]))
         .y1((d) => yScale(d[1]))
-        .defined((d) => d[1] || d[1] === "0"),
+        // Fills empty data with zeroes
+        .defined((d) => d[1] || d[1] === 0),
     [xScale, yScale]
   );
 
-  const minX = xScale(data[data.length - 1]["日期"]);
-  const maxX = xScale(data[0]["日期"]);
-  const overwidth = maxX - minX + margin.left + margin.right;
-
+  const handleAreaHover = useCallback(setHoveredValue, [setHoveredValue]);
   const handleCursorHover = useCallback(setActiveDataPoint, [
     setActiveDataPoint,
   ]);
-  const handleTypeHover = useCallback(setHoveredValue, [setHoveredValue]);
+
+  const svgParentDivRef = useRef();
+  const scrollableDivRef = useRef();
 
   function initializeSVGWidth() {
-    const flexCardWidth =
-      document.getElementsByClassName("flex-card")[0].offsetWidth;
-    const cardMarginAndPadding = (16 + 8) * 2;
-    const cardInnerWidth = flexCardWidth - cardMarginAndPadding;
-    setWidth(cardInnerWidth);
+    const SVGContainerWidth = svgParentDivRef.current.offsetWidth;
+    setWidth(SVGContainerWidth);
   }
 
   useEffect(() => {
+    initializeSVGWidth();
+    scrollChartToLatest();
+
     function scrollChartToLatest() {
       const divToScroll = select(scrollableDivRef.current);
       divToScroll.node().scrollBy(overwidth, 0);
     }
-
-    initializeSVGWidth();
-    scrollChartToLatest();
   }, [overwidth]);
 
   return (
@@ -124,17 +119,17 @@ export const AreaChart = ({ data, stackedData, view, setView }) => {
       <DropdownMenu
         chosen={view}
         setChosen={setView}
-        handleTypeHover={handleTypeHover}
+        handleAreaHover={handleAreaHover}
         handleCursorHover={handleCursorHover}
       />
       <pre>資料更新時間：{formatDate(data[0]["日期"])}</pre>
-      <div>
+
+      <div ref={svgParentDivRef}>
         <svg
           style={{ position: "absolute", pointerEvents: "none", zIndex: 1 }}
           width={width}
           height={height}
         >
-          {/* Adds margin to left and top  */}
           <g transform={`translate(${margin.left}, ${margin.top})`}>
             <AxisLeft
               innerWidth={innerWidth}
@@ -144,6 +139,7 @@ export const AreaChart = ({ data, stackedData, view, setView }) => {
             />
           </g>
         </svg>
+
         <div
           style={{ overflowX: "scroll", width: width }}
           ref={scrollableDivRef}
@@ -162,14 +158,14 @@ export const AreaChart = ({ data, stackedData, view, setView }) => {
                 {stackedData.map((d) => (
                   <StreamGraphWithHoverEffect
                     key={d.key}
-                    d={d}
+                    dataPoint={d}
                     areaGenerator={areaGenerator}
                     colorScale={colorScale}
                     activeDataPoint={activeDataPoint}
                     hoveredValue={hoveredValue}
                     xScale={xScale}
                     innerHeight={innerHeight}
-                    handleTypeHover={handleTypeHover}
+                    handleAreaHover={handleAreaHover}
                     handleCursorHover={handleCursorHover}
                   />
                 ))}
@@ -197,62 +193,67 @@ export const AreaChart = ({ data, stackedData, view, setView }) => {
 };
 
 const StreamGraphWithHoverEffect = ({
-  d,
+  dataPoint,
   areaGenerator,
   colorScale,
   activeDataPoint,
   hoveredValue,
   xScale,
   innerHeight,
-  handleTypeHover,
+  handleAreaHover,
   handleCursorHover,
 }) => (
   <g
     onTouchStart={(event) => {
-      handleTypeHover(d.key);
+      handleAreaHover(dataPoint.key);
       event.preventDefault();
     }}
-    onPointerEnter={() => handleTypeHover(d.key)}
-    onMouseLeave={() => handleTypeHover(null)}
+    onPointerEnter={() => handleAreaHover(dataPoint.key)}
+    onMouseLeave={() => handleAreaHover(null)}
   >
     <path
-      d={areaGenerator(d)}
-      fill={colorScale(d.key)}
+      d={areaGenerator(dataPoint)}
+      fill={colorScale(dataPoint.key)}
       stroke={"#ddd"}
       strokeWidth={0.1}
       opacity={hoveredValue ? 0.2 : 1}
     >
-      <title>{d.key}</title>
+      <title>{dataPoint.key}</title>
     </path>
 
-    {hoveredValue === d.key && (
+    {hoveredValue === dataPoint.key && (
       <>
         <path
-          d={areaGenerator(d)}
-          fill={colorScale(d.key)}
+          d={areaGenerator(dataPoint)}
+          fill={colorScale(dataPoint.key)}
           stroke={"#ddd"}
           strokeWidth={0.1}
         >
-          <title>{d.key}</title>
+          <title>{dataPoint.key}</title>
         </path>
+
         {activeDataPoint && (
           <>
             <CursorLine
-              value={activeDataPoint.data.date}
+              activeDataPoint={activeDataPoint}
+              xValue={xValue}
               xScale={xScale}
               innerHeight={innerHeight}
             />
+
             <Tooltip
               activeDataPoint={activeDataPoint}
+              xValue={xValue}
               xScale={xScale}
               hoveredValue={hoveredValue}
               xTooltipFormat={xTooltipFormat}
             />
           </>
         )}
+
         <PathOverlay
           onHover={handleCursorHover}
-          data={d}
+          data={dataPoint}
           areaGenerator={areaGenerator}
         />
       </>

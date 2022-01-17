@@ -1,5 +1,3 @@
-import React, { useState, useEffect } from "react";
-
 const dropdownItems = [
   "全台灣",
   "南投縣",
@@ -26,38 +24,32 @@ const dropdownItems = [
   "高雄市",
 ];
 
+const labelValuePairs = dropdownItems.map((d) => ({
+  label: d,
+  value: d,
+}));
+
 export const DropdownMenu = ({
   chosen,
   setChosen,
-  handleTypeHover,
+  handleAreaHover,
   handleCursorHover,
-}) => {
-  const [items, setItems] = useState([]);
-  useEffect(() => {
-    setItems(
-      dropdownItems.map((d) => ({
-        label: d,
-        value: d,
-      }))
-    );
-  }, []);
-  return (
-    <div className="dropdown-container">
-      區域：
-      <select
-        value={chosen}
-        onChange={(e) => {
-          setChosen(e.currentTarget.value);
-          handleTypeHover(null);
-          handleCursorHover(null);
-        }}
-      >
-        {items.map(({ label, value }) => (
-          <option className="region-name" key={label} value={value}>
-            {label}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-};
+}) => (
+  <div className="dropdown-container">
+    區域：
+    <select
+      value={chosen}
+      onChange={(e) => {
+        setChosen(e.currentTarget.value);
+        handleAreaHover(null);
+        handleCursorHover(null);
+      }}
+    >
+      {labelValuePairs.map(({ label, value }) => (
+        <option className="region-name" key={label} value={value}>
+          {label}
+        </option>
+      ))}
+    </select>
+  </div>
+);
