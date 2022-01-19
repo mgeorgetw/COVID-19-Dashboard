@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import { pointer, bisectCenter } from "d3";
 import styles from "./AreaChart.module.css";
 
-// Use d3.bisect() to decide the value hovered
 export const PathOverlay = ({ data, areaGenerator, onHover }) => {
   return useMemo(() => {
     // d3.bisect() only works with ascending values

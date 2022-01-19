@@ -26,6 +26,7 @@ import { CursorLine } from "./CursorLine";
 import { XMarkerLine } from "./XMarkerLine";
 import { PathOverlay } from "./PathOverlay";
 import { Tooltip } from "./Tooltip";
+import { calculateRemToPixels } from "../../utils/helper";
 import styles from "./AreaChart.module.css";
 
 const margin = { top: 20, right: 10, bottom: 80, left: 50 };
@@ -100,7 +101,9 @@ export const AreaChart = ({ data, stackedData, view, setView }) => {
   const scrollableDivRef = useRef();
 
   function initializeSVGWidth() {
-    const SVGContainerWidth = svgParentDivRef.current.offsetWidth;
+    const appWidth = window.innerWidth < 1000 ? window.innerWidth : 1000;
+    const cardOffsetOneSide = calculateRemToPixels(1.5);
+    const SVGContainerWidth = appWidth - cardOffsetOneSide * 2;
     setWidth(SVGContainerWidth);
   }
 
@@ -113,6 +116,8 @@ export const AreaChart = ({ data, stackedData, view, setView }) => {
       divToScroll.node().scrollBy(overwidth, 0);
     }
   }, [overwidth]);
+
+  useEffect(() => window.addEventListener("resize", initializeSVGWidth), []);
 
   return (
     <>

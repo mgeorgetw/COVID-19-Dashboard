@@ -16,3 +16,6 @@ export const calDailyDifference = (data) =>
 
 export const calPercentage = (numerator, denominator) =>
   Number(((numerator / denominator) * 100).toFixed(2));
+
+export const calculateRemToPixels = (rem) =>
+  rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
