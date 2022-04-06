@@ -26,8 +26,7 @@
     "react-dom": "^18.0.0",
     "react-scripts": "5.0.0",
     "react-select": "^5.2.2",
-    "topojson": "^3.0.2",
-    "victory": "^35.8.4"
+    "topojson": "^3.0.2"
   },
   "scripts": {
     "predeploy": "yarn run build",
