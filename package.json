@@ -13,7 +13,7 @@
     "@testing-library/user-event": "^14.0.4",
     "axios": "^0.26.1",
     "chinese-conv": "^1.0.1",
-    "concurrently": "^6.2.0",
+    "concurrently": "^7.1.0",
     "d3": "^6.7.0",
     "d3-area-label": "^1.5.0",
     "d3-delaunay": "^6.0.2",
