@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { json } from "d3";
 
+const CORS = "https://morning-wave-49482.herokuapp.com/";
 const jsonUrl = "https://disease.sh/v3/covid-19/apple/countries/Taiwan";
 
 const transformData = (rawData) => {
@@ -15,13 +16,12 @@ const transformData = (rawData) => {
   });
 };
 
-// Data: Apple Mobility Trends in Taiwan
 export const useData = (region, setLoading) => {
   const [data, setData] = useState(null);
   useEffect(() => {
     setLoading(true);
     let isMounted = true;
-    json(`${jsonUrl}/${region}`).then((data) => {
+    json(`${CORS}${jsonUrl}/${region}`).then((data) => {
       if (isMounted) {
         setData(transformData(data.data));
         setLoading(false);
