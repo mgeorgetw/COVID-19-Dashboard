@@ -1,10 +1,7 @@
 import React from "react";
 import styles from "./OverviewPie.module.css";
-// import PropTypes from "prop-types";
-// import { setCookie } from "../utils/useCookies";
 
 export const NavBar = ({ view, setView }) => {
-  // A series of buttons to switch between views of charts.
   const buttons = [
     {
       name: "現況",
