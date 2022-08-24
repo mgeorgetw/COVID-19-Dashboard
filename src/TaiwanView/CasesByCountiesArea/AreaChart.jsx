@@ -214,7 +214,7 @@ const StreamGraphWithHoverEffect = ({
       event.preventDefault();
     }}
     onPointerEnter={() => handleAreaHover(dataPoint.key)}
-    onMouseLeave={() => handleAreaHover(null)}
+    onPointerLeave={() => handleAreaHover(null)}
   >
     <path
       d={areaGenerator(dataPoint)}
