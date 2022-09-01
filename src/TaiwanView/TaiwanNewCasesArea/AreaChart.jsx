@@ -27,13 +27,10 @@ const xAxisTickFormat = timeFormat("%-m/%-d, %Y");
 const xTooltipFormat = timeFormat("%-m/%-d");
 
 const yValue = (d) => d.newCases;
-// const yAxisLabel = "New cases";
-// const yAxisLabelOffset = 60;
 const roundedFormat = format("~s");
 const yAxisTickFormat = (tickValue) =>
   roundedFormat(tickValue < 0 ? -tickValue : tickValue);
 
-// const ColorLegendLabel = "接種情形";
 const legendCircleRadius = 8;
 const legendItemSpacing = 100;
 
@@ -53,9 +50,6 @@ export const AreaChart = ({ dataTop, dataDown }) => {
     () => scaleTime().domain(extent(dataTop, xValue)).range([0, totalWidth]),
     [dataTop, totalWidth]
   );
-  const maxX = xScale(xValue(dataTop[dataTop.length - 1]));
-  const minX = xScale(xValue(dataTop[0]));
-  const overwidth = maxX - minX + margin.left + margin.right;
 
   const yScale = useMemo(
     () =>
@@ -96,6 +90,10 @@ export const AreaChart = ({ dataTop, dataDown }) => {
 
   const svgParentDivRef = useRef();
   const scrollableDivRef = useRef();
+
+  const maxX = xScale(xValue(dataTop[dataTop.length - 1]));
+  const minX = xScale(xValue(dataTop[0]));
+  const overwidth = maxX - minX + margin.left + margin.right;
 
   function initializeSVGWidth() {
     const appWidth = window.innerWidth < 1000 ? window.innerWidth : 1000;
