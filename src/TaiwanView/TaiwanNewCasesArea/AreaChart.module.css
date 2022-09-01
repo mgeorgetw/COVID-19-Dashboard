@@ -24,6 +24,7 @@
 .tick line {
   fill: none;
   stroke: #ccc;
+  stroke-dasharray: 5 10;
 }
 
 .markerLine {

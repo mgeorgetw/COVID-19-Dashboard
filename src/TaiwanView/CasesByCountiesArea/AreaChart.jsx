@@ -43,16 +43,14 @@ export const AreaChart = ({ data, stackedData, view, setView }) => {
   const height = width > 480 ? width * 0.6 : width * 1;
   const innerHeight = height - margin.top - margin.bottom;
   const innerWidth = width - margin.left - margin.right;
+  const totalWidth = innerWidth * 3;
 
   const [activeDataPoint, setActiveDataPoint] = useState(null);
   const [hoveredValue, setHoveredValue] = useState(null);
 
   const xScale = useMemo(
-    () =>
-      scaleTime()
-        .domain(extent(data, xValue))
-        .range([0, innerWidth * 3]),
-    [data, innerWidth]
+    () => scaleTime().domain(extent(data, xValue)).range([0, totalWidth]),
+    [data, totalWidth]
   );
   const minX = xScale(xValue(data[data.length - 1]));
   const maxX = xScale(xValue(data[0]));

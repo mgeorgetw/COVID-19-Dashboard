@@ -1,25 +1,25 @@
-import React, { useState, useMemo, useCallback } from "react";
 import {
-  scaleLinear,
-  scaleTime,
-  scaleOrdinal,
   area,
-  timeFormat,
   extent,
-  max,
   format,
+  select,
+  max,
+  scaleLinear,
+  scaleOrdinal,
+  scaleTime,
+  timeFormat,
 } from "d3";
+import { useCallback, useEffect, useRef, useMemo, useState } from "react";
+import styles from "./AreaChart.module.css";
 import { AxisBottom } from "./AxisBottom";
 import { AxisLeft } from "./AxisLeft";
-import { XMarkerLine } from "./XMarkerLine";
-import { CursorLine } from "./CursorLine";
 import { ColorLegend } from "./ColorLegend";
-import { Tooltip } from "./Tooltip";
+import { CursorLine } from "./CursorLine";
 import { RectOverlay } from "./RectOverlay";
-import styles from "./AreaChart.module.css";
+import { Tooltip } from "./Tooltip";
+import { XMarkerLine } from "./XMarkerLine";
+import { calculateRemToPixels } from "../../utils/helper";
 
-const width = window.innerWidth < 1000 ? window.innerWidth : 1000;
-const height = width > 480 ? width * 0.6 : width * 1;
 const margin = { top: 30, right: 10, bottom: 70, left: 40 };
 
 const xValue = (d) => d.date;
@@ -29,7 +29,7 @@ const xTooltipFormat = timeFormat("%-m/%-d");
 const yValue = (d) => d.newCases;
 // const yAxisLabel = "New cases";
 // const yAxisLabelOffset = 60;
-const roundedFormat = format("d");
+const roundedFormat = format("~s");
 const yAxisTickFormat = (tickValue) =>
   roundedFormat(tickValue < 0 ? -tickValue : tickValue);
 
@@ -38,30 +38,25 @@ const legendCircleRadius = 8;
 const legendItemSpacing = 100;
 
 export const AreaChart = ({ dataTop, dataDown }) => {
-  // Change state when different point is hovered
   const [activeDate, setActiveDate] = useState(
     dataTop[dataTop.length - 1].date
   );
   // if (activeDate) console.log(activeDate);
 
-  // The chart's real height and width
+  const [width, setWidth] = useState(480);
+  const height = width > 480 ? width * 0.6 : width * 1;
   const innerHeight = height - margin.top - margin.bottom;
   const innerWidth = width - margin.left - margin.right;
+  const totalWidth = innerWidth * 3;
 
-  // X axis is population, thus use linear scale
   const xScale = useMemo(
-    () =>
-      scaleTime()
-        // Domain is an array of actual dates
-        // d3.extent(iterable[, accessor]) returns the [max, min] of iterable
-        .domain(extent(dataTop, xValue))
-        // Range is where the data is shown in pixels, starts from 0 to chart's width
-        .range([0, innerWidth])
-        .nice(),
-    [dataTop, innerWidth]
+    () => scaleTime().domain(extent(dataTop, xValue)).range([0, totalWidth]),
+    [dataTop, totalWidth]
   );
+  const maxX = xScale(xValue(dataTop[dataTop.length - 1]));
+  const minX = xScale(xValue(dataTop[0]));
+  const overwidth = maxX - minX + margin.left + margin.right;
 
-  // Y is countries is categorical, band scale is for ordinal or categorical dimension
   const yScale = useMemo(
     () =>
       scaleLinear()
@@ -99,129 +94,182 @@ export const AreaChart = ({ dataTop, dataDown }) => {
     []
   );
 
+  const svgParentDivRef = useRef();
+  const scrollableDivRef = useRef();
+
+  function initializeSVGWidth() {
+    const appWidth = window.innerWidth < 1000 ? window.innerWidth : 1000;
+    const cardOffsetOneSide = calculateRemToPixels(1.5);
+    const SVGContainerWidth = appWidth - cardOffsetOneSide * 2;
+    setWidth(SVGContainerWidth);
+  }
+
+  useEffect(() => {
+    initializeSVGWidth();
+    scrollChartToLatest();
+
+    function scrollChartToLatest() {
+      const divToScroll = select(scrollableDivRef.current);
+      divToScroll.node().scrollBy(overwidth, 0);
+    }
+  }, [overwidth]);
+
+  useEffect(() => window.addEventListener("resize", initializeSVGWidth), []);
+
   return (
     <>
-      <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMinYMid">
-        {/* Adds margin to left and top  */}
-        <g transform={`translate(${margin.left}, ${margin.top})`}>
-          <AxisBottom
-            innerHeight={innerHeight}
-            xScale={xScale}
-            tickFormat={xAxisTickFormat}
-            tickOffset={7}
-            tickCount={width > 480 ? 6 : 2}
-          />
-          <AxisLeft
-            innerWidth={innerWidth}
-            yScale={yScale}
-            tickOffset={7}
-            tickFormat={yAxisTickFormat}
-          />
-          {/* <text */}
-          {/*   className={styles.axisLabel} */}
-          {/*   textAnchor="middle" */}
-          {/*   transform={`translate(${-yAxisLabelOffset}, ${ */}
-          {/*     innerHeight / 2 */}
-          {/*   }) rotate(-90)`} */}
-          {/* > */}
-          {/*   {yAxisLabel} */}
-          {/* </text> */}
-          <g className={styles.marks}>
-            <path d={areaGenerator(dataTop)} />
-          </g>
-          <g className={styles.marksDown}>
-            <path d={areaGeneratorDown(dataDown)} />
-          </g>
-          <XMarkerLine
-            value={new Date("2021-05-15T00:00")}
-            xScale={xScale}
-            height={innerHeight}
-            label={"雙北實施三級警戒"}
-          />
-          <XMarkerLine
-            value={new Date("2021-06-15T00:00")}
-            xScale={xScale}
-            height={innerHeight}
-            label={"七五歲以上疫苗開打"}
-          />
-          <XMarkerLine
-            value={new Date("2021-07-27T00:00")}
-            xScale={xScale}
-            height={innerHeight}
-            label={"全國三級警戒解除"}
-          />
-          {activeDate ? (
-            <>
-              <CursorLine
-                value={activeDate}
-                xScale={xScale}
-                height={innerHeight}
-              />
-              <g
-                transform={`translate(${areaGenerator.x()(
-                  dataTop.find(
-                    (obj) => obj.date.valueOf() === activeDate.valueOf()
-                  )
-                )}, ${areaGenerator.y1()(
-                  dataTop.find(
-                    (obj) => obj.date.valueOf() === activeDate.valueOf()
-                  )
-                )})`}
-              >
-                <circle className={styles.dataPoint} r={5} />
-                <Tooltip
-                  colorScale={colorScale}
-                  dataTop={dataTop}
-                  dataDown={dataDown}
-                  activeDate={activeDate}
-                  className={styles.tooltipStroke}
-                  xTooltipFormat={xTooltipFormat}
-                />
-                <Tooltip
-                  colorScale={colorScale}
-                  dataTop={dataTop}
-                  dataDown={dataDown}
-                  activeDate={activeDate}
-                  className={styles.tooltip}
-                  xTooltipFormat={xTooltipFormat}
-                />
-              </g>
-              <g
-                transform={`translate(${areaGeneratorDown.x()(
-                  dataDown.find(
-                    (obj) => obj.date.valueOf() === activeDate.valueOf()
-                  )
-                )}, ${areaGeneratorDown.y1()(
-                  dataDown.find(
-                    (obj) => obj.date.valueOf() === activeDate.valueOf()
-                  )
-                )})`}
-              >
-                <circle className={styles.dataPoint} r={5} />
-              </g>
-            </>
-          ) : null}
-          <g
-            transform={`translate(${legendCircleRadius}, ${
-              -legendCircleRadius * 2
-            })`}
-          >
-            <ColorLegend
-              colorScale={colorScale}
-              tickSpacing={legendItemSpacing}
-              tickSize={legendCircleRadius}
-              tickTextOffset={legendCircleRadius * 2}
+      <div ref={svgParentDivRef}>
+        <svg
+          style={{ position: "absolute", pointerEvents: "none", zIndex: 1 }}
+          width={width}
+          height={height}
+        >
+          <g transform={`translate(${margin.left}, ${margin.top})`}>
+            <AxisLeft
+              innerWidth={innerWidth}
+              yScale={yScale}
+              tickOffset={7}
+              tickFormat={yAxisTickFormat}
             />
           </g>
-          <RectOverlay
-            onHover={handleVoronoiHover}
-            data={dataTop}
-            areaGenerator={areaGenerator}
-            innerWidth={innerWidth}
-            innerHeight={innerHeight}
-          />
-        </g>
-      </svg>
+        </svg>
+
+        <div
+          style={{ overflowX: "scroll", width: width }}
+          ref={scrollableDivRef}
+        >
+          <svg display="block" width={overwidth} height={height}>
+            <g transform={`translate(${margin.left}, ${margin.top})`}>
+              <AxisBottom
+                innerHeight={innerHeight}
+                xScale={xScale}
+                tickFormat={xAxisTickFormat}
+                tickOffset={7}
+                tickCount={width > 480 ? 6 : 2}
+              />
+
+              <g className={styles.marks}>
+                <path d={areaGenerator(dataTop)} />
+              </g>
+              <g className={styles.marksDown}>
+                <path d={areaGeneratorDown(dataDown)} />
+              </g>
+
+              <XMarkerLine
+                value={new Date("2021-05-15T00:00")}
+                xScale={xScale}
+                height={innerHeight}
+                label={"雙北實施三級警戒"}
+              />
+              <XMarkerLine
+                value={new Date("2021-06-15T00:00")}
+                xScale={xScale}
+                height={innerHeight}
+                label={"公費疫苗大規模開打"}
+              />
+              <XMarkerLine
+                value={new Date("2021-07-27T00:00")}
+                xScale={xScale}
+                height={innerHeight}
+                label={"全國三級警戒解除"}
+              />
+              <XMarkerLine
+                value={new Date("2021-12-02T00:00")}
+                xScale={xScale}
+                height={innerHeight}
+                label={"第三劑疫苗開打"}
+              />
+              <XMarkerLine
+                value={new Date("2022-03-07T00:00")}
+                xScale={xScale}
+                height={innerHeight}
+                label={"開放商務客入境，檢疫十天"}
+              />
+              <XMarkerLine
+                value={new Date("2022-04-06T00:00")}
+                xScale={xScale}
+                height={innerHeight}
+                label={"居家檢疫放寬，可同戶隔離"}
+              />
+
+              {activeDate ? (
+                <>
+                  <CursorLine
+                    value={activeDate}
+                    xScale={xScale}
+                    height={innerHeight}
+                  />
+
+                  <g
+                    transform={`translate(${areaGenerator.x()(
+                      dataTop.find(
+                        (obj) => obj.date.valueOf() === activeDate.valueOf()
+                      )
+                    )}, ${areaGenerator.y1()(
+                      dataTop.find(
+                        (obj) => obj.date.valueOf() === activeDate.valueOf()
+                      )
+                    )})`}
+                  >
+                    <circle className={styles.dataPoint} r={5} />
+                    <Tooltip
+                      colorScale={colorScale}
+                      dataTop={dataTop}
+                      dataDown={dataDown}
+                      activeDate={activeDate}
+                      className={styles.tooltipStroke}
+                      xTooltipFormat={xTooltipFormat}
+                    />
+                    <Tooltip
+                      colorScale={colorScale}
+                      dataTop={dataTop}
+                      dataDown={dataDown}
+                      activeDate={activeDate}
+                      className={styles.tooltip}
+                      xTooltipFormat={xTooltipFormat}
+                    />
+                  </g>
+
+                  <g
+                    transform={`translate(${areaGeneratorDown.x()(
+                      dataDown.find(
+                        (obj) => obj.date.valueOf() === activeDate.valueOf()
+                      )
+                    )}, ${areaGeneratorDown.y1()(
+                      dataDown.find(
+                        (obj) => obj.date.valueOf() === activeDate.valueOf()
+                      )
+                    )})`}
+                  >
+                    <circle className={styles.dataPoint} r={5} />
+                  </g>
+                </>
+              ) : null}
+
+              <g
+                transform={`translate(${legendCircleRadius}, ${
+                  -legendCircleRadius * 2
+                })`}
+              >
+                <ColorLegend
+                  colorScale={colorScale}
+                  tickSpacing={legendItemSpacing}
+                  tickSize={legendCircleRadius}
+                  tickTextOffset={legendCircleRadius * 2}
+                />
+              </g>
+
+              <RectOverlay
+                onHover={handleVoronoiHover}
+                data={dataTop}
+                areaGenerator={areaGenerator}
+                innerWidth={totalWidth}
+                innerHeight={innerHeight}
+              />
+            </g>
+          </svg>
+        </div>
+      </div>
     </>
   );
 };
