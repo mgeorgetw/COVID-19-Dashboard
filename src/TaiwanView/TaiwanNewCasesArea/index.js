@@ -5,12 +5,7 @@ import { ChartTitle } from "./ChartTitle";
 import { DataTable } from "./DataTable";
 import { AreaChart } from "./AreaChart";
 import { Collapsible } from "./Collapsible";
-
-const sumValuesInObject = (data, key) =>
-  data.reduce(
-    (prev, cur) => prev + cur[key],
-    0 // initialValue
-  );
+import { sumValuesInObject } from "../../utils/helper";
 
 const title = "COVID-19 台灣每日新增案例數";
 

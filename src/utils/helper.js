@@ -19,3 +19,9 @@ export const calPercentage = (numerator, denominator) =>
 
 export const calculateRemToPixels = (rem) =>
   rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+
+export const sumValuesInObject = (data, key) =>
+  data.reduce(
+    (prev, cur) => prev + cur[key],
+    0 // initialValue
+  );

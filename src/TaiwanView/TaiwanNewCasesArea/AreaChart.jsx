@@ -118,7 +118,7 @@ export const AreaChart = ({ dataTop, dataDown }) => {
     <>
       <div ref={svgParentDivRef}>
         <svg
-          style={{ position: "absolute", pointerEvents: "none", zIndex: 1 }}
+          style={{ position: "absolute", pointerEvents: "none" }}
           width={width}
           height={height}
         >
