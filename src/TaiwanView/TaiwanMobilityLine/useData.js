@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { json } from "d3";
+import { fetchAndBypassCORS } from "../../utils/dataFetcher";
 
-const CORS = "https://morning-wave-49482.herokuapp.com/";
-const jsonUrl = "https://disease.sh/v3/covid-19/apple/countries/Taiwan";
+const API = "https://disease.sh/v3/covid-19/apple/countries/Taiwan";
 
 const transformData = (rawData) => {
   return rawData.map((d) => {
@@ -21,7 +20,7 @@ export const useData = (region, setLoading) => {
   useEffect(() => {
     setLoading(true);
     let isMounted = true;
-    json(`${CORS}${jsonUrl}/${region}`).then((data) => {
+    fetchAndBypassCORS(`${API}/${region}`).then((data) => {
       if (isMounted) {
         setData(transformData(data.data));
         setLoading(false);

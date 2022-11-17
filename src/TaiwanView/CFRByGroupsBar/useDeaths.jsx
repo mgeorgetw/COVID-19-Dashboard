@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
-import { json } from "d3";
+import { fetchAndBypassCORS } from "../../utils/dataFetcher";
 
-const CORS = "https://morning-wave-49482.herokuapp.com/";
-// 死亡案例分項統計
 const API =
   "https://covid-19.nchc.org.tw/api/covid19?CK=covid-19@nchc.org.tw&querydata=4002";
-const jsonUrl = CORS + API;
 
 const countGroups = (array, group) => {
   const uniqueGroups = Array.from(new Set(array.map((obj) => obj[group])));
@@ -34,7 +31,7 @@ export const useDeaths = () => {
   // if (data) console.log(data);
   useEffect(() => {
     let isMounted = true;
-    json(jsonUrl).then((rawData) => {
+    fetchAndBypassCORS(API).then((rawData) => {
       // console.log("json data", transformData(rawData));
       if (isMounted) {
         const transformedData = transformData(rawData);

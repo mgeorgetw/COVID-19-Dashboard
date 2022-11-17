@@ -9,7 +9,6 @@ const CORS = "https://morning-wave-49482.herokuapp.com/";
 const API =
   "https://covid-19.nchc.org.tw/api/covid19?CK=covid-19@nchc.org.tw&querydata=5003&limited=全部縣市";
 const jsonUrl = CORS + API;
-
 const transformData = (rawData) =>
   rawData.map((d) => {
     d["日期"] = new Date(d.a02);
